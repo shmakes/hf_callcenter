@@ -1,5 +1,5 @@
 /// <reference path="../typings/angular2-meteor.d.ts" />
- 
+
 import {Component, View, NgZone} from 'angular2/core';
 import {NgFor} from 'angular2/common';
 import {bootstrap} from 'angular2/platform/browser';
@@ -12,17 +12,16 @@ import {CallCenters} from 'collections/call_centers';
 @View({
     templateUrl: 'client/app.html',
     directives: [NgFor]
-    
 })
 
 class HFCallCenter {
   parties: Array<Object>;
- 
+
   constructor (zone: NgZone) {
     Tracker.autorun(() => zone.run(() => {
       this.parties = CallCenters.find().fetch();
     }));
- }
+  }
 }
 
 bootstrap(HFCallCenter);
