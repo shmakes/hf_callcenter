@@ -15,11 +15,11 @@ import {CallCenters} from 'collections/call_centers';
 })
 
 class HFCallCenter {
-  parties: Array<Object>;
+  callCenters: Array<Object>;
 
   constructor (zone: NgZone) {
     Tracker.autorun(() => zone.run(() => {
-      this.parties = CallCenters.find().fetch();
+      this.callCenters = CallCenters.find().fetch();
     }));
   }
 }

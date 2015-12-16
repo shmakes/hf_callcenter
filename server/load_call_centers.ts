@@ -1,28 +1,40 @@
+import {Organizations} from 'collections/organizations';
 import {CallCenters} from 'collections/call_centers';
  
 export function loadCallCenters() {
     if (CallCenters.find().count() === 0) {
- 
-    var parties = [
+
+    var organizations = [
         {
-            'name': 'Dubstep-Free Zone',
-            'description': 'Can we please just for an evening not listen to dubstep.',
-            'location': 'Palo Alto'
-        },
-        {
-            'name': 'All dubstep all the time',
-            'description': 'Get it on!',
-            'location': 'Palo Alto'
-        },
-        {
-            'name': 'Savage lounging',
-            'description': 'Leisure suit required. And only fiercest manners.',
-            'location': 'San Francisco'
+          'orgName': 'SSHF',
+          'dbUrl': 'http://dvr01:5984/hf',
+          'dDoc': 'basic',
+          'dbUser': '<user>',
+          'dbPass': '<pass>'
         }
     ];
+    for (var i = 0; i < organizations.length; i++) {
+        Organizations.insert(organizations[i]);
+    }
  
-    for (var i = 0; i < parties.length; i++) {
-        CallCenters.insert(parties[i]);
+    var callCenters = [
+        {
+            'name': 'April 2016',
+            'orgName': 'SSHF',
+            'flightName': 'SSHF-Apr2016',
+            'flightId': '6ee5e5c42cd34bc23225d2136601a14f',
+            'callers': []
+        },
+        {
+            'name': 'May 2016',
+            'orgName': 'SSHF',
+            'flightName': 'SSHF-May2016',
+            'flightId': '6ee5e5c42cd34bc23225d2136601a9ed',
+            'callers': []
+        }
+    ];
+    for (var i = 0; i < callCenters.length; i++) {
+        CallCenters.insert(callCenters[i]);
     }
   }
 };
