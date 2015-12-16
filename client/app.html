@@ -1,7 +1,9 @@
 <div>
+  <call_centers-form></call_centers-form>
   <ul>
     <li *ngFor="#callCenter of callCenters">
       {{callCenter.name}}
+      <p>{{callCenter.orgName}}</p>
       <p>{{callCenter.flightName}}</p>
       <p>{{callCenter.flightId}}</p>
     </li>

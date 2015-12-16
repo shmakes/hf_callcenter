@@ -4,6 +4,7 @@ import {Component, View, NgZone} from 'angular2/core';
 import {NgFor} from 'angular2/common';
 import {bootstrap} from 'angular2/platform/browser';
 import {CallCenters} from 'collections/call_centers';
+import {CallCentersForm} from 'client/call_centers-form/call_centers-form';
 
 @Component({
     selector: 'app'
@@ -11,7 +12,7 @@ import {CallCenters} from 'collections/call_centers';
 
 @View({
     templateUrl: 'client/app.html',
-    directives: [NgFor]
+    directives: [NgFor, CallCentersForm]
 })
 
 class HFCallCenter {
