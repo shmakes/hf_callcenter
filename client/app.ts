@@ -23,6 +23,11 @@ class HFCallCenter {
       this.callCenters = CallCenters.find().fetch();
     }));
   }
+
+  removeCallCenter(callCenter) {
+    CallCenters.remove(callCenter._id);
+  }
+
 }
 
 bootstrap(HFCallCenter);
