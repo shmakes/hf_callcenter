@@ -2,7 +2,7 @@
 
 import {Component, View} from 'angular2/core';
 import {FORM_DIRECTIVES} from 'angular2/common';
-import {RouterLink, RouteParams} from 'angular2/router';
+import {RouterLink, RouteParams, Router} from 'angular2/router';
 import {CallCenters} from 'collections/call_centers';
 
 @Component({
@@ -15,7 +15,7 @@ import {CallCenters} from 'collections/call_centers';
 export class CallCenterDetails {
   callCenter: Object;
 
-  constructor(params: RouteParams) {
+  constructor(params: RouteParams, private _router: Router) {
     var callCenterId = params.get('callCenterId');
     this.callCenter = CallCenters.findOne(callCenterId);
   }
@@ -24,10 +24,11 @@ export class CallCenterDetails {
     CallCenters.update(callCenter._id, {
       $set: {
         name: callCenter.name,
-        flightName: callCenter.flightName,
-        flightId: callCenter.flightId,
+        startDate: callCenter.startDate,
+        endDate: callCenter.endDate,
         callers: []
       }
     });
+    this._router.navigate(['CallCentersList']);
   }
 }

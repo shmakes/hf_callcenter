@@ -20,14 +20,16 @@ export function loadCallCenters() {
     var callCenters = [
         {
             'name': 'April 2016',
-            'orgName': 'SSHF',
+            'startDate': new Date().toISOString(),
+            'endDate': new Date(new Date().setDate(new Date().getDate() + 14)).toISOString(),
             'flightName': 'SSHF-Apr2016',
             'flightId': '6ee5e5c42cd34bc23225d2136601a14f',
             'callers': []
         },
         {
             'name': 'May 2016',
-            'orgName': 'SSHF',
+            'startDate': '2016-05-14T18:00:00.000Z',
+            'endDate': '2016-05-28T18:00:00.000Z',
             'flightName': 'SSHF-May2016',
             'flightId': '6ee5e5c42cd34bc23225d2136601a9ed',
             'callers': []

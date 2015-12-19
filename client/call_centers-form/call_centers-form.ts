@@ -22,7 +22,8 @@ export class CallCentersForm {
         var fb = new FormBuilder();
         this.callCentersForm = fb.group({
             name: ['', Validators.required],
-            orgName: ['', Validators.required],
+            startDate: ['', Validators.required],
+            endDate: ['', Validators.required],
             flightName: ['', Validators.required]
         });
     }
@@ -31,12 +32,14 @@ export class CallCentersForm {
         if (this.callCentersForm.valid) {
             CallCenters.insert({
                 name: call_center.name,
-                orgName: call_center.orgName,
+                startDate: call_center.startDate,
+                endDate: call_center.endDate,
                 flightName: call_center.flightName
             });
  
             (<Control>this.callCentersForm.controls['name']).updateValue('');
-            (<Control>this.callCentersForm.controls['orgName']).updateValue('');
+            (<Control>this.callCentersForm.controls['startDate']).updateValue('');
+            (<Control>this.callCentersForm.controls['endDate']).updateValue('');
             (<Control>this.callCentersForm.controls['flightName']).updateValue('');
         }
     }
