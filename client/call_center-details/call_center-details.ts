@@ -1,14 +1,16 @@
 /// <reference path="../../typings/angular2-meteor.d.ts" />
- 
+
 import {Component, View} from 'angular2/core';
-import {RouteParams} from 'angular2/router';
+import {FORM_DIRECTIVES} from 'angular2/common';
+import {RouterLink, RouteParams} from 'angular2/router';
 import {CallCenters} from 'collections/call_centers';
- 
+
 @Component({
   selector: 'call_center-details'
 })
 @View({
-  templateUrl: '/client/call_center-details/call_center-details.html'
+  templateUrl: '/client/call_center-details/call_center-details.html',
+  directives: [RouterLink, FORM_DIRECTIVES]
 })
 export class CallCenterDetails {
   callCenter: Object;
@@ -16,5 +18,16 @@ export class CallCenterDetails {
   constructor(params: RouteParams) {
     var callCenterId = params.get('callCenterId');
     this.callCenter = CallCenters.findOne(callCenterId);
+  }
+
+  saveCallCenter(callCenter) {
+    CallCenters.update(callCenter._id, {
+      $set: {
+        name: callCenter.name,
+        flightName: callCenter.flightName,
+        flightId: callCenter.flightId,
+        callers: []
+      }
+    });
   }
 }

@@ -1,5 +1,13 @@
-<header>
-<h2>{{callCenter.name}}</h2>
+<form (submit)="saveCallCenter(callCenter)">
+  <label>Event Name</label>
+  <input type="text" [(ngModel)]="callCenter.name">
  
-<p>{{callCenter.flightName}}</p>
-</header>
+  <label>Flight Name</label>
+  <input type="text" [(ngModel)]="callCenter.flightName">
+
+  <p>{{callCenter.flightName}}</p>
+  <p>{{callCenter.flightId}}</p>
+
+  <button type="submit">Save</button>
+  <button [routerLink]="['/CallCentersList']">Cancel</button>
+</form>
