@@ -1,6 +1,6 @@
 /// <reference path="../../typings/angular2-meteor.d.ts" />
 
-import {Component, View} from 'angular2/core';
+import {Component, View, NgZone} from 'angular2/core';
 import {FORM_DIRECTIVES} from 'angular2/common';
 import {RouterLink, RouteParams, Router} from 'angular2/router';
 import {CallCenters} from 'collections/call_centers';
@@ -15,9 +15,11 @@ import {CallCenters} from 'collections/call_centers';
 export class CallCenterDetails {
   callCenter: Object;
 
-  constructor(params: RouteParams, private _router: Router) {
+  constructor(zone: NgZone, params: RouteParams, private _router: Router) {
     var callCenterId = params.get('callCenterId');
-    this.callCenter = CallCenters.findOne(callCenterId);
+    Tracker.autorun(() => zone.run(() => {
+      this.callCenter = CallCenters.findOne(callCenterId);
+    }));
   }
 
   saveCallCenter(callCenter) {

@@ -3,10 +3,10 @@
   <ul>
     <li *ngFor="#callCenter of callCenters">
       <a [routerLink]="['/CallCenterDetails', {callCenterId: callCenter._id}]">{{callCenter.name}}</a>
+      <button (click)="removeCallCenter(callCenter)">X</button>
       <p>{{callCenter.startDate}} - {{callCenter.endDate}}</p>
       <p>{{callCenter.flightName}}</p>
       <p>{{callCenter.flightId}}</p>
-      <button (click)="removeCallCenter(callCenter)">X</button>
     </li>
   </ul>
 </div>

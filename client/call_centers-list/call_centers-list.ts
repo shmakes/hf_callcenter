@@ -16,7 +16,7 @@ import {RouterLink} from 'angular2/router';
 })
 
 export class CallCentersList {
-  callCenters: Array<Object>;
+  callCenters: Array<CallCenter>;
 
   constructor (zone: NgZone) {
     Tracker.autorun(() => zone.run(() => {
