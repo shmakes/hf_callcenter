@@ -5,5 +5,6 @@ declare type CallCenter = {
   endDate: string,
   flightName: string,
   flightId?: string,
-  callers?: any
+  callers?: any,
+  createdBy?: string
 }

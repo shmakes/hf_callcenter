@@ -1,5 +1,6 @@
 <div>
   <call_centers-form></call_centers-form>
+  <accounts-ui></accounts-ui>
   <ul>
     <li *ngFor="#callCenter of callCenters">
       <a [routerLink]="['/CallCenterDetails', {callCenterId: callCenter._id}]">{{callCenter.name}}</a>
