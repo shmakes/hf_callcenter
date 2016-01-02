@@ -1,11 +1,8 @@
 /// <reference path="../../typings/angular2-meteor.d.ts" />
-/// <reference path="../../typings/meteor-accounts.d.ts" />
-/// <reference path="../../typings/meteor-accounts-ui.d.ts" />
 
 import {Component, View} from 'angular2/core';
 import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
 import {CallCenters} from 'collections/call_centers';
-import {InjectUser} from 'meteor-accounts';
 
 @Component({
   selector: 'call_centers-form'
@@ -13,16 +10,13 @@ import {InjectUser} from 'meteor-accounts';
 
 @View({
   templateUrl: 'client/call_centers-form/call_centers-form.html',
-  directives: [FORM_DIRECTIVES] //, AccountsUI]
+  directives: [FORM_DIRECTIVES]
 })
 
-@InjectUser()
-
-export class CallCentersForm { // extends MeteorComponent {
-callCentersForm: ControlGroup;
+export class CallCentersForm {
+  callCentersForm: ControlGroup;
 
   constructor() {
-    //super();
     var fb = new FormBuilder();
     this.callCentersForm = fb.group({
       name: ['', Validators.required],
@@ -30,7 +24,6 @@ callCentersForm: ControlGroup;
       endDate: ['', Validators.required],
       flightName: ['', Validators.required]
     });
-    //console.log(this.user);
   }
 
   addCallCenter(call_center) {
