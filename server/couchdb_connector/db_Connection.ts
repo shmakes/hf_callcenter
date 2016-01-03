@@ -2,5 +2,5 @@
 declare var process: any;
 
 export function getDbVersion() {
-  console.log(HTTP.get(process.env.HF_COUCH_DB).content);
+  console.log(HTTP.get(process.env.COUCH_URL).content);
 }
