@@ -3,7 +3,7 @@
 
 import {Component, View, NgZone} from 'angular2/core';
 import {FORM_DIRECTIVES, NgIf} from 'angular2/common';
-import {RouterLink, RouteParams, CanActivate, ComponentInstruction} from 'angular2/router';
+import {RouterLink, RouteParams, Router, CanActivate, ComponentInstruction} from 'angular2/router';
 import {CallCenters} from 'collections/call_centers';
 import {RequireUser} from 'meteor-accounts';
 import {MeteorComponent} from 'angular2-meteor';
@@ -28,7 +28,7 @@ export class CallCenterDetails extends MeteorComponent {
   callCenter: CallCenter;
   users: Mongo.Cursor<Object>;
 
-  constructor(zone: NgZone, params: RouteParams) {
+  constructor(zone: NgZone, params: RouteParams, private _router: Router) {
     super();
     var callCenterId = params.get('callCenterId');
     Tracker.autorun(() => zone.run(() => {
@@ -49,6 +49,6 @@ export class CallCenterDetails extends MeteorComponent {
     } else {
       alert('Please log in to make changes.');
     }
-    //this._router.navigate(['CallCentersList']);
+    this._router.navigate(['CallCentersList']);
   }
 }
