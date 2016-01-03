@@ -29,7 +29,7 @@ export class CallCentersForm {
   addCallCenter(call_center) {
     if (this.callCentersForm.valid) {
       if (Meteor.userId()) {
-        Meteor.call('hfDbVersion');
+        Meteor.call('hfDbGetFlightIdByName', call_center.flightName);
         CallCenters.insert({
             name: call_center.name,
             startDate: call_center.startDate,
