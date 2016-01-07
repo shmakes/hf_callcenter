@@ -35,6 +35,7 @@ export class CallCentersForm {
             startDate: call_center.startDate,
             endDate: call_center.endDate,
             flightName: call_center.flightName,
+            flightId: '',
             createdBy: Meteor.userId()
         // TODO: add createdDate: 
         });

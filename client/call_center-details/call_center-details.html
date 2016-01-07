@@ -1,4 +1,4 @@
-<form (submit)="saveCallCenter(callCenter)">
+<form (submit)="saveCallCenter(callCenter)" *ngIf="callCenter">
   <div>
     <label>Event Name</label>
     <input type="text" [(ngModel)]="callCenter.name">

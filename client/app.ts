@@ -2,7 +2,7 @@
 
 import {Component, View, NgZone, provide} from 'angular2/core';
 import {NgFor} from 'angular2/common';
-import {bootstrap} from 'angular2/platform/browser';
+import {bootstrap} from 'angular2-meteor';
 import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, APP_BASE_HREF} from 'angular2/router';
 import {CallCentersList} from 'client/call_centers-list/call_centers-list';
 import {CallCenterDetails} from 'client/call_center-details/call_center-details';
