@@ -4,15 +4,15 @@
 export var CallCenters = new Mongo.Collection<CallCenter>('call_centers');
 
 CallCenters.allow({
-  insert: function(party: Object) {
+  insert: function(callCenter: Object) {
     var user = Meteor.user();
     return !!user;
   },
-  update: function(party: Object, fields, modifier) {
+  update: function(callCenter: Object, fields, modifier) {
     var user = Meteor.user();
     return !!user;
   },
-  remove: function(party: Object) {
+  remove: function(callCenter: Object) {
     var user = Meteor.user();
     return !!user;
   }
