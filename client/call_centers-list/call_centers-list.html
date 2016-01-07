@@ -1,13 +1,20 @@
 <div>
-  <call_centers-form></call_centers-form>
   <accounts-ui></accounts-ui>
+  <call_centers-form [hidden]="!canAddAndRemove()"></call_centers-form> 
+  <h2>Call Centers</h2>
   <ul>
     <li *ngFor="#callCenter of callCenters">
       <a [routerLink]="['/CallCenterDetails', {callCenterId: callCenter._id}]">{{callCenter.name}}</a>
-      <button (click)="removeCallCenter(callCenter)">X</button>
+      <button [hidden]="!canAddAndRemove()" (click)="removeCallCenter(callCenter)">X</button>
       <p>{{callCenter.startDate}} - {{callCenter.endDate}}</p>
       <p>{{callCenter.flightName}}</p>
       <p>{{callCenter.flightId}}</p>
+    </li>
+  </ul>
+  <h2>User Roles</h2>
+  <ul>
+    <li *ngFor="#userRole of roles">
+      <p>{{userRole.name}}</p>
     </li>
   </ul>
 </div>
