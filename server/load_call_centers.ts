@@ -1,7 +1,7 @@
 /// <reference path="../typings/call_center.d.ts" />
 
 import {CallCenters} from 'collections/call_centers';
-import {UserRoles} from 'collections/user_roles';
+import {UserProfiles} from 'collections/user_profiles';
  
 export function loadCallCenters() {
 
@@ -32,8 +32,8 @@ export function loadCallCenters() {
     }
   }
 
-  if (UserRoles.find().count() === 0) {
-    var userRoles = [
+  if (UserProfiles.find().count() === 0) {
+    var userProfiles = [
         {
             'userId':    'generated',
             'isAdmin':   true,
@@ -45,8 +45,8 @@ export function loadCallCenters() {
         }
     ];
 
-    for (var i = 0; i < userRoles.length; i++) {
-        UserRoles.insert(userRoles[i]);
+    for (var i = 0; i < userProfiles.length; i++) {
+        UserProfiles.insert(userProfiles[i]);
     }
   }
 };

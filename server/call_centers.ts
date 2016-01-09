@@ -1,11 +1,11 @@
 /// <reference path="../typings/angular2-meteor.d.ts" />
  
 import {CallCenters} from 'collections/call_centers';
-import {UserRoles} from 'collections/user_roles';
+import {UserProfiles} from 'collections/user_profiles';
  
 Meteor.publish('callCenters', function() {
-  var role = UserRoles.findOne( { userId: this.userId } );
-  var isAdmin = (!!role && role.isAdmin);
+  var profile = UserProfiles.findOne( { userId: this.userId } );
+  var isAdmin = (!!profile && profile.isAdmin);
   console.log(this.userId + ' - Administrator: ' + isAdmin);
   return isAdmin
           ? CallCenters.find() 
@@ -17,11 +17,10 @@ Meteor.publish('callCenters', function() {
           } );
 });
 
-Meteor.publish('userRoles', function() {
-  var role = UserRoles.findOne( { userId: this.userId } );
-  var isAdmin = (!!role && role.isAdmin);
-  console.log("Roles published");
+Meteor.publish('userProfiles', function() {
+  var profile = UserProfiles.findOne( { userId: this.userId } );
+  var isAdmin = (!!profile && profile.isAdmin);
   return isAdmin
-          ? UserRoles.find() 
-          : UserRoles.find( { userId: this.userId } );
+          ? UserProfiles.find() 
+          : UserProfiles.find( { userId: this.userId } );
 });

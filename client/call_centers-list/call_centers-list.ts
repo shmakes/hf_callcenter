@@ -4,7 +4,7 @@
 
 import {Component, View} from 'angular2/core';
 import {NgFor} from 'angular2/common';
-import {UserRoles} from 'collections/user_roles';
+import {UserProfiles} from 'collections/user_profiles';
 import {CallCenters} from 'collections/call_centers';
 import {CallCentersForm} from 'client/call_centers-form/call_centers-form';
 import {RouterLink} from 'angular2/router';
@@ -24,8 +24,8 @@ import {MeteorComponent} from 'angular2-meteor';
 @InjectUser()
 export class CallCentersList extends MeteorComponent {
   callCenters: Mongo.Cursor<CallCenter>;
-  roles: Mongo.Cursor<UserRole>;
-  role: UserRole;
+  profiles: Mongo.Cursor<UserProfile>;
+  profile: UserProfile;
   user: Meteor.User;
   isAdmin: boolean;
 
@@ -35,16 +35,16 @@ export class CallCentersList extends MeteorComponent {
       this.callCenters = CallCenters.find();
     }, true);
 
-    this.subscribe('userRoles', () => {
-      this.roles = UserRoles.find();
+    this.subscribe('userProfiles', () => {
+      this.profiles = UserProfiles.find();
     }, true);
   }
 
   canAddAndRemove() {
-    if (!this.role) {
-      if (this.roles && this.user) {
-        this.role = UserRoles.findOne( { userId: this.user._id } );
-        this.isAdmin = (!!this.role && this.role.isAdmin);
+    if (!this.profile) {
+      if (this.profiles && this.user) {
+        this.profile = UserProfiles.findOne( { userId: this.user._id } );
+        this.isAdmin = (!!this.profile && this.profile.isAdmin);
       } else {
         this.isAdmin = false;
       }

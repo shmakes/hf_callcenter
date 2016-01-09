@@ -1,4 +1,4 @@
-declare type UserRole = {
+declare type UserProfile = {
   _id?: string,
   userId: string,
   isAdmin: boolean,
