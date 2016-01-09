@@ -1,7 +1,6 @@
 /// <reference path="../typings/call_center.d.ts" />
 
 import {CallCenters} from 'collections/call_centers';
-import {UserProfiles} from 'collections/user_profiles';
  
 export function loadCallCenters() {
 
@@ -29,24 +28,6 @@ export function loadCallCenters() {
 
     for (var i = 0; i < callCenters.length; i++) {
         CallCenters.insert(callCenters[i]);
-    }
-  }
-
-  if (UserProfiles.find().count() === 0) {
-    var userProfiles = [
-        {
-            'userId':    'generated',
-            'isAdmin':   true,
-            'name':      'Admin',
-            'phone':     '555-555-5555',
-            'email':     'admin@example.com',
-            'createdAt': new Date().toISOString(),
-            'updatedAt': new Date().toISOString()
-        }
-    ];
-
-    for (var i = 0; i < userProfiles.length; i++) {
-        UserProfiles.insert(userProfiles[i]);
     }
   }
 };
