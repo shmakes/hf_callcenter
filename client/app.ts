@@ -6,7 +6,7 @@ import {bootstrap} from 'angular2-meteor';
 import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, APP_BASE_HREF} from 'angular2/router';
 import {CallCentersList} from 'client/call_centers-list/call_centers-list';
 import {CallCenterDetails} from 'client/call_center-details/call_center-details';
-
+import {UserProfileDetails} from 'client/user_profile-details/user_profile-details';
 
 @Component({
     selector: 'app'
@@ -19,7 +19,8 @@ import {CallCenterDetails} from 'client/call_center-details/call_center-details'
 
 @RouteConfig([
     { path: '/', as: 'CallCentersList', component: CallCentersList },
-    { path: '/call_center/:callCenterId', as: 'CallCenterDetails', component: CallCenterDetails }
+    { path: '/call_center/:callCenterId', as: 'CallCenterDetails', component: CallCenterDetails },
+    { path: '/user_profile/:userProfileId', as: 'UserProfileDetails', component: UserProfileDetails }
 ])
 
 class HFCallCenter {} 

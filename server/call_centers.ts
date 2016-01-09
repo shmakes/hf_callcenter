@@ -6,7 +6,6 @@ import {UserProfiles} from 'collections/user_profiles';
 Meteor.publish('callCenters', function() {
   var profile = UserProfiles.findOne( { userId: this.userId } );
   var isAdmin = (!!profile && profile.isAdmin);
-  console.log(this.userId + ' - Administrator: ' + isAdmin);
   return isAdmin
           ? CallCenters.find() 
           : CallCenters.find( { 

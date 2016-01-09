@@ -1,0 +1,24 @@
+<form (submit)="saveUserProfile(userProfile)" *ngIf="userProfile">
+  <div>
+    <div>
+      <label>Name</label>
+      <input type="text" [(ngModel)]="userProfile.name">
+    </div>
+    <div>
+      <label>Phone</label>
+      <input type="text" [(ngModel)]="userProfile.phone">
+    </div>
+    <div>
+      <label>Email</label>
+      <input type="text" [(ngModel)]="userProfile.email">
+    </div>
+    <div [hidden]="!canAdministrate()">
+      <label>Admin</label>
+      <input type="checkbox" [(ngModel)]="userProfile.isAdmin">
+    </div>
+  </div>
+  <div>
+    <button type="submit">Save</button>
+    <button [routerLink]="['/CallCentersList']">Cancel</button>
+  </div>
+</form>

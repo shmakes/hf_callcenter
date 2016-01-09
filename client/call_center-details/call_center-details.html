@@ -1,22 +1,24 @@
 <form (submit)="saveCallCenter(callCenter)" *ngIf="callCenter">
   <div>
-    <label>Event Name</label>
-    <input type="text" [(ngModel)]="callCenter.name">
-   
-    <p>{{callCenter.flightName}} ({{callCenter.flightId}})</p>
-
-    <label>Start Date</label>
-    <input type="text" [(ngModel)]="callCenter.startDate">
-
-    <label>End Date</label>
-    <input type="text" [(ngModel)]="callCenter.endDate">
+    <div>
+      <label>Event Name</label>
+      <input type="text" [(ngModel)]="callCenter.name">
+    </div>
+    <div>
+      <label>Flight Name</label>
+      {{callCenter.flightName}} ({{callCenter.flightId}})
+    </div>
+    <div>
+      <label>Start Date</label>
+      <input type="text" [(ngModel)]="callCenter.startDate">
+    </div>
+    <div>
+      <label>End Date</label>
+      <input type="text" [(ngModel)]="callCenter.endDate">
+    </div>
   </div>
-
-  <br />
-
   <div>
     <button type="submit">Save</button>
     <button [routerLink]="['/CallCentersList']">Cancel</button>
   </div>
-
 </form>

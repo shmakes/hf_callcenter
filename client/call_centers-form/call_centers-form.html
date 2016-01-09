@@ -1,12 +1,23 @@
+<h2>Add Call Center Event</h2>
 <form [ngFormModel]="callCentersForm" #f="ngForm" (submit)="addCallCenter(f.value)">
-  <label>Name</label>
-  <input type="text" ngControl="name">
-  <label>Flight Name</label>
-  <input type="text" ngControl="flightName">
-  <label>Start Date</label>
-  <input type="text" ngControl="startDate">
-  <label>End Date</label>
-  <input type="text" ngControl="endDate">
-  <button>Add</button>
+  <div>
+    <label>Event Name</label>
+    <input type="text" ngControl="name">
+  </div>
+  <div>
+    <label>Flight Name</label>
+    <input type="text" ngControl="flightName">
+  </div>
+  <div>
+    <label>Start Date</label>
+    <input type="text" ngControl="startDate">
+  </div>
+  <div>
+    <label>End Date</label>
+    <input type="text" ngControl="endDate">
+  </div>
+  <div>
+    <button>Add</button>
+  </div>
 </form>
 
