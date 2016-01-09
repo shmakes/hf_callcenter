@@ -1,4 +1,5 @@
 /// <reference path="../../typings/angular2-meteor.d.ts" />
+/// <reference path="../../typings/call_center.d.ts" />
 
 import {Component, View} from 'angular2/core';
 import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
@@ -28,17 +29,22 @@ export class CallCentersForm {
 
   addCallCenter(call_center) {
     if (this.callCentersForm.valid) {
-      if (Meteor.userId()) {
-        Meteor.call('hfDbGetFlightIdByName', call_center.flightName);
-        CallCenters.insert({
-            name: call_center.name,
-            startDate: call_center.startDate,
-            endDate: call_center.endDate,
-            flightName: call_center.flightName,
-            flightId: '',
-            createdBy: Meteor.userId(),
-            callers: []
-        // TODO: add createdDate: 
+      if (Meteor.userId())  {
+        let callCenter = <CallCenter> {
+          name: call_center.name,
+          startDate: call_center.startDate,
+          endDate: call_center.endDate,
+          flightName: call_center.flightName,
+          flightId: '',
+          createdBy: Meteor.userId(),
+          callers: []
+        };
+
+        Meteor.call('hfAddCallCenter', callCenter, (error) => {
+          if (error) {
+            alert(`Call Center not added. ${error}`);
+            return;
+          }
         });
 
         (<Control>this.callCentersForm.controls['name']).updateValue('');
