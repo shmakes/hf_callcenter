@@ -15,6 +15,7 @@ Meteor.startup(function () {
 Accounts.onCreateUser(function(options, user) {
   let name = '';
   let email = '';
+  let isAdmin = false;
   if (user.emails && user.emails.length > 0 && user.emails[0].address) {
     name = email = user.emails[0].address;
   }
@@ -22,10 +23,13 @@ Accounts.onCreateUser(function(options, user) {
     name = user.services.google.name;
     email = user.services.google.email;
   }
+  if (Meteor.users.find().count() < 1) {
+    isAdmin = true;
+  }
 
   UserProfiles.insert( <UserProfile> {
     'userId':    user._id,
-    'isAdmin':   false,
+    'isAdmin':   isAdmin,
     'name':      name,
     'phone':     '',
     'email':     email,
