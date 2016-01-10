@@ -1,9 +1,11 @@
-<div>
+<div class="container">
   <accounts-ui></accounts-ui>
   <call_centers-form [hidden]="!canAddAndRemove()"></call_centers-form> 
-  <h2>Call Center Events</h2>
-  <ul>
-    <li *ngFor="#callCenter of callCenters">
+  <div class="page-header">
+    <h1>Call Center Events</h1>
+  </div>
+  <ul class="list-group">
+    <li *ngFor="#callCenter of callCenters" class="list-group-item">
       <div>
         <a [routerLink]="['/CallCenterDetails', {callCenterId: callCenter._id}]">{{callCenter.name}}</a>
         <button [hidden]="!canAddAndRemove()" (click)="removeCallCenter(callCenter)">X</button>
@@ -19,9 +21,11 @@
       </div>
     </li>
   </ul>
-  <h2>User Profiles</h2>
-  <ul>
-    <li *ngFor="#userProfile of profiles">
+  <div class="page-header">
+    <h1>User Profiles</h1>
+  </div>
+  <ul class="list-group">
+    <li *ngFor="#userProfile of profiles" class="list-group-item">
       <a [routerLink]="['/UserProfileDetails', {userProfileId: userProfile._id}]">{{userProfile.name}}</a>
       <div>Phone: {{userProfile.phone}}</div>
       <div>Email: {{userProfile.email}}</div>
