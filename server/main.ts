@@ -23,6 +23,10 @@ Accounts.onCreateUser(function(options, user) {
     name = user.services.google.name;
     email = user.services.google.email;
   }
+  if (user.services && user.services.facebook) {
+    name = user.services.facebook.name;
+    email = user.services.facebook.email;
+  }
   if (Meteor.users.find().count() < 1) {
     isAdmin = true;
   }
