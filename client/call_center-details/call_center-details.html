@@ -1,24 +1,34 @@
-<form (submit)="saveCallCenter(callCenter)" *ngIf="callCenter">
-  <div>
-    <div>
-      <label>Event Name</label>
-      <input type="text" [(ngModel)]="callCenter.name">
+<form class="form-horizontal" (submit)="saveCallCenter(callCenter)" *ngIf="callCenter">
+  <div class="container">
+    <div class="form-group row">
+      <label class="col-sm-3 control-label" for="callCenterName">Event Name</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="callCenterName" placeholder="Event Name" [(ngModel)]="callCenter.name">
+      </div>
     </div>
-    <div>
-      <label>Flight Name</label>
-      {{callCenter.flightName}} ({{callCenter.flightId}})
+    <div class="form-group row">
+      <label class="col-sm-3 control-label" for="callCenterFlight">Flight Name</label>
+      <div class="col-sm-9">
+        <div class="form-control disabled"> {{callCenter.flightName}} ({{callCenter.flightId}}) </div>
+      </div>
     </div>
-    <div>
-      <label>Start Date</label>
-      <input type="text" [(ngModel)]="callCenter.startDate">
+    <div class="form-group row">
+      <label class="col-sm-3 control-label" for="callCenterStart">Start Date</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="callCenterStart" placeholder="Start Date" [(ngModel)]="callCenter.startDate">
+      </div>
     </div>
-    <div>
-      <label>End Date</label>
-      <input type="text" [(ngModel)]="callCenter.endDate">
+    <div class="form-group row">
+      <label class="col-sm-3 control-label" for="callCenterEnd">End Date</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="callCenterEnd" placeholder="End Date" [(ngModel)]="callCenter.endDate">
+      </div>
     </div>
   </div>
-  <div>
-    <button type="submit">Save</button>
-    <button [routerLink]="['/CallCentersList']">Cancel</button>
+  <div class="container">
+    <div class="form-group row">
+      <button type="submit" class="btn btn-primary">Save</button>
+      <button class="btn btn-default" [routerLink]="['/CallCentersList']">Cancel</button>
+    </div>
   </div>
 </form>

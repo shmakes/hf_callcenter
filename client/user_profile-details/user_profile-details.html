@@ -1,24 +1,34 @@
-<form (submit)="saveUserProfile(userProfile)" *ngIf="userProfile">
-  <div>
-    <div>
-      <label>Name</label>
-      <input type="text" [(ngModel)]="userProfile.name">
+<form class="form-horizontal" (submit)="saveUserProfile(userProfile)" *ngIf="userProfile">
+  <div class="container">
+    <div class="form-group row">
+      <label class="col-sm-3 control-label" for="userProfileName">Name</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="userProfileName" placeholder="Name" [(ngModel)]="userProfile.name">
+      </div>
     </div>
-    <div>
-      <label>Phone</label>
-      <input type="text" [(ngModel)]="userProfile.phone">
+    <div class="form-group row">
+      <label class="col-sm-3 control-label" for="userProfilePhone">Phone</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" id="userProfilePhone" placeholder="Phone" [(ngModel)]="userProfile.phone">
+      </div>
     </div>
-    <div>
-      <label>Email</label>
-      <input type="text" [(ngModel)]="userProfile.email">
+    <div class="form-group row">
+      <label class="col-sm-3 control-label" for="userProfileEmail">Email</label>
+      <div class="col-sm-9">
+        <input type="email" class="form-control" id="userProfileEmail" placeholder="Email" [(ngModel)]="userProfile.email">
+      </div>
     </div>
-    <div [hidden]="!canAdministrate()">
-      <label>Admin</label>
-      <input type="checkbox" [(ngModel)]="userProfile.isAdmin">
+    <div class="form-group row" [hidden]="!canAdministrate()">
+      <label class="col-sm-3 control-label" for="userProfileIsAdmin">Admin</label>
+      <div class="col-sm-9">
+        <input type="checkbox" class="form-control" id="userProfileIsAdmin" [(ngModel)]="userProfile.isAdmin">
+      </div>
     </div>
   </div>
-  <div>
-    <button type="submit">Save</button>
-    <button [routerLink]="['/CallCentersList']">Cancel</button>
+  <div class="container">
+    <div class="form-group row">
+      <button type="submit" class="btn btn-primary">Save</button>
+      <button class="btn btn-default" [routerLink]="['/CallCentersList']">Cancel</button>
+    </div>
   </div>
 </form>

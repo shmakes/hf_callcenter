@@ -7,8 +7,10 @@
   <ul class="list-group">
     <li *ngFor="#callCenter of callCenters" class="list-group-item">
       <div>
-        <a [routerLink]="['/CallCenterDetails', {callCenterId: callCenter._id}]">{{callCenter.name}}</a>
-        <button [hidden]="!canAddAndRemove()" (click)="removeCallCenter(callCenter)">X</button>
+        <h3>
+          <a [routerLink]="['/CallCenterDetails', {callCenterId: callCenter._id}]">{{callCenter.name}}</a>
+          <button [hidden]="!canAddAndRemove()" (click)="removeCallCenter(callCenter)">X</button>
+        </h3>
       </div>
       <div>
         {{callCenter.startDate}} - {{callCenter.endDate}}
@@ -26,7 +28,9 @@
   </div>
   <ul class="list-group">
     <li *ngFor="#userProfile of profiles" class="list-group-item">
-      <a [routerLink]="['/UserProfileDetails', {userProfileId: userProfile._id}]">{{userProfile.name}}</a>
+      <h3>
+        <a [routerLink]="['/UserProfileDetails', {userProfileId: userProfile._id}]">{{userProfile.name}}</a>
+      </h3>
       <div>Phone: {{userProfile.phone}}</div>
       <div>Email: {{userProfile.email}}</div>
     </li>
