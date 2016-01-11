@@ -10,12 +10,6 @@
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-sm-3 col-xs-12 control-label" for="callCenterFlight">Flight Name</label>
-      <div class="col-sm-9 col-xs-12">
-        <div class="form-control bg-faded"> {{callCenter.flightName}}</div>
-      </div>
-    </div>
-    <div class="form-group row">
       <label class="col-sm-3 col-xs-12 control-label" for="callCenterStart">Start Date</label>
       <div class="col-sm-9 col-xs-12">
         <input type="text" class="form-control" id="callCenterStart" placeholder="Start Date" [(ngModel)]="callCenter.startDate">
@@ -25,6 +19,12 @@
       <label class="col-sm-3 col-xs-12 control-label" for="callCenterEnd">End Date</label>
       <div class="col-sm-9 col-xs-12">
         <input type="text" class="form-control" id="callCenterEnd" placeholder="End Date" [(ngModel)]="callCenter.endDate">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-3 col-xs-12 control-label" for="callCenterFlight">Flight Name</label>
+      <div class="col-sm-9 col-xs-12">
+        <div class="form-control bg-faded"> {{callCenter.flightName}}</div>
       </div>
     </div>
     <div class="form-group row">
