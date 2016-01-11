@@ -1,6 +1,8 @@
 /// <reference path="../typings/angular2-meteor.d.ts" />
 /// <reference path="../typings/call_center.d.ts" />
 /// <reference path="../typings/user_profile.d.ts" />
+/// <reference path="../typings/user_info.d.ts" />
+
 declare var process: any;
  
 import {CallCenters} from './call_centers';
@@ -53,5 +55,28 @@ Meteor.methods({
         updatedAt: new Date().toISOString()
       }
     });
+  },
+  getPublicUserInfoForProfile: function(profileId: string) {
+    var userProfile = UserProfiles.findOne( { _id: profileId } );
+    var user = Meteor.users.findOne( { _id: userProfile.userId } );
+    let name = '';
+    let email = '';
+    if (user.emails && user.emails.length > 0 && user.emails[0].address) {
+      name = email = user.emails[0].address;
+    }
+    if (user.services && user.services.google) {
+      name = user.services.google.name;
+      email = user.services.google.email;
+    }
+    if (user.services && user.services.facebook) {
+      name = user.services.facebook.name;
+      email = user.services.facebook.email;
+    }
+    let userInfo = <UserInfo> {
+      name: name,
+      email: email,
+      createdAt: new Date(user.createdAt).toISOString()
+    }
+    return userInfo;
   }
 });

@@ -6,5 +6,6 @@ declare type UserProfile = {
   phone: string,
   email: string,
   createdAt: string,
-  updatedAt: string
+  updatedAt: string,
+  isRemoved: boolean
 }

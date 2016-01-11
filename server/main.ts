@@ -38,7 +38,8 @@ Accounts.onCreateUser(function(options, user) {
     'phone':     '',
     'email':     email,
     'createdAt': new Date().toISOString(),
-    'updatedAt': new Date().toISOString()
+    'updatedAt': new Date().toISOString(),
+    'isRemoved': false
   });
 
   if (options.profile)
