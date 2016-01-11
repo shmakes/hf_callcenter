@@ -1,32 +1,32 @@
 <form class="form-horizontal" (submit)="saveCallCenter(callCenter)" *ngIf="callCenter">
   <div class="container">
     <div class="form-group row">
-      <label class="col-sm-3 control-label" for="callCenterName">Event Name</label>
-      <div class="col-sm-9">
+      <label class="col-sm-3 col-xs-12 control-label" for="callCenterName">Event Name</label>
+      <div class="col-sm-9 col-xs-12">
         <input type="text" class="form-control" id="callCenterName" placeholder="Event Name" [(ngModel)]="callCenter.name">
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-sm-3 control-label" for="callCenterFlight">Flight Name</label>
-      <div class="col-sm-9">
-        <div class="form-control disabled"> {{callCenter.flightName}} ({{callCenter.flightId}}) </div>
+      <label class="col-sm-3 col-xs-12 control-label" for="callCenterFlight">Flight Name</label>
+      <div class="col-sm-9 col-xs-12">
+        <div class="form-control bg-faded"> {{callCenter.flightName}}</div>
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-sm-3 control-label" for="callCenterStart">Start Date</label>
-      <div class="col-sm-9">
+      <label class="col-sm-3 col-xs-12 control-label" for="callCenterStart">Start Date</label>
+      <div class="col-sm-9 col-xs-12">
         <input type="text" class="form-control" id="callCenterStart" placeholder="Start Date" [(ngModel)]="callCenter.startDate">
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-sm-3 control-label" for="callCenterEnd">End Date</label>
-      <div class="col-sm-9">
+      <label class="col-sm-3 col-xs-12 control-label" for="callCenterEnd">End Date</label>
+      <div class="col-sm-9 col-xs-12">
         <input type="text" class="form-control" id="callCenterEnd" placeholder="End Date" [(ngModel)]="callCenter.endDate">
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-sm-3 control-label" for="callCenterIsRemoved">Deleted (Hide)</label>
-      <div class="col-sm-9">
+      <label class="col-sm-3 col-xs-12 control-label" for="callCenterIsRemoved">Deleted (Hide)</label>
+      <div class="col-sm-9 col-xs-12">
         <input type="checkbox" class="form-control" id="callCenterIsRemoved" [(ngModel)]="callCenter.isRemoved">
       </div>
     </div>

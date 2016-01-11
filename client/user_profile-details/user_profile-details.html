@@ -1,26 +1,26 @@
 <form class="form-horizontal" (submit)="saveUserProfile(userProfile)" *ngIf="userProfile">
   <div class="container">
     <div class="form-group row">
-      <label class="col-sm-3 control-label" for="userProfileName">Name</label>
-      <div class="col-sm-9">
+      <label class="col-sm-3 col-xs-12 control-label" for="userProfileName">Name</label>
+      <div class="col-sm-9 col-xs-12">
         <input type="text" class="form-control" id="userProfileName" placeholder="Name" [(ngModel)]="userProfile.name">
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-sm-3 control-label" for="userProfilePhone">Phone</label>
-      <div class="col-sm-9">
+      <label class="col-sm-3 col-xs-12 control-label" for="userProfilePhone">Phone</label>
+      <div class="col-sm-9 col-xs-12">
         <input type="text" class="form-control" id="userProfilePhone" placeholder="Phone" [(ngModel)]="userProfile.phone">
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-sm-3 control-label" for="userProfileEmail">Email</label>
-      <div class="col-sm-9">
+      <label class="col-sm-3 col-xs-12 control-label" for="userProfileEmail">Email</label>
+      <div class="col-sm-9 col-xs-12">
         <input type="email" class="form-control" id="userProfileEmail" placeholder="Email" [(ngModel)]="userProfile.email">
       </div>
     </div>
     <div class="form-group row" [hidden]="!canAdministrate()">
-      <label class="col-sm-3 control-label" for="userProfileIsAdmin">Admin</label>
-      <div class="col-sm-9">
+      <label class="col-sm-3 col-xs-12 control-label" for="userProfileIsAdmin">Admin</label>
+      <div class="col-sm-9 col-xs-12">
         <input type="checkbox" class="form-control" id="userProfileIsAdmin" [(ngModel)]="userProfile.isAdmin">
       </div>
     </div>
