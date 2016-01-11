@@ -13,6 +13,7 @@ export function loadCallCenters() {
             'flightName': 'SSHF-Apr2016',
             'flightId':   '6ee5e5c42cd34bc23225d2136601a14f',
             'createdBy':  'Sample',
+            'isRemoved':  false,
             'callers':    ['generated']
         },
         {
@@ -22,6 +23,7 @@ export function loadCallCenters() {
             'flightName': 'SSHF-May2016',
             'flightId':   '6ee5e5c42cd34bc23225d2136601a9ed',
             'createdBy':  'Sample',
+            'isRemoved':  false,
             'callers':    []
         }
     ];

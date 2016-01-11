@@ -34,7 +34,8 @@ export class CallCenterDetails extends MeteorComponent {
         $set: {
           name: callCenter.name,
           startDate: callCenter.startDate,
-          endDate: callCenter.endDate
+          endDate: callCenter.endDate,
+          isRemoved: callCenter.isRemoved
         }
       });
     } else {

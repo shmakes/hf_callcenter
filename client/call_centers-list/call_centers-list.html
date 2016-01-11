@@ -1,15 +1,13 @@
 <div class="container">
   <accounts-ui></accounts-ui>
-  <call_centers-form [hidden]="!canAddAndRemove()"></call_centers-form> 
   <div class="page-header">
     <h1>Call Center Events</h1>
   </div>
   <ul class="list-group">
-    <li *ngFor="#callCenter of callCenters" class="list-group-item">
+    <li *ngFor="#callCenter of callCenters" class="list-group-item" [class.bg-inverse]="callCenter.isRemoved">
       <div>
         <h3>
           <a [routerLink]="['/CallCenterDetails', {callCenterId: callCenter._id}]">{{callCenter.name}}</a>
-          <button [hidden]="!canAddAndRemove()" (click)="removeCallCenter(callCenter)">X</button>
         </h3>
       </div>
       <div>
@@ -23,6 +21,7 @@
       </div>
     </li>
   </ul>
+  <call_centers-form [hidden]="!canAddAndRemove()"></call_centers-form> 
   <div class="page-header">
     <h1>User Profiles</h1>
   </div>

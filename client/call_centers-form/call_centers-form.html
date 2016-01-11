@@ -1,35 +1,39 @@
-<h2>Add Call Center Event</h2>
-<form class="form-horizontal" [ngFormModel]="callCentersForm" #f="ngForm" (submit)="addCallCenter(f.value)">
-  <div class="container">
-    <div class="form-group row">
-      <label class="col-sm-3 control-label" for="callCenterName">Event Name</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" id="callCenterName" placeholder="Event Name" ngControl="name">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-3 control-label" for="callCenterFlight">Flight Name</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" id="callCenterFlight" placeholder="Flight Name" ngControl="flightName">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-3 control-label" for="callCenterStart">Start Date</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" id="callCenterStart" placeholder="Start Date" ngControl="startDate">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-3 control-label" for="callCenterEnd">End Date</label>
-      <div class="col-sm-9">
-        <input type="text" class="form-control" id="callCenterEnd" placeholder="End Date" ngControl="endDate">
-      </div>
-    </div>
+<div class="list-group-item bg-faded">
+  <div class="page-header">
+    <h1>Add Call Center Event</h1>
   </div>
-  <div class="container">
-    <div class="form-group row">
-      <button type="submit" class="btn btn-primary">Add</button>
+  <form class="form-horizontal" [ngFormModel]="callCentersForm" #f="ngForm" (submit)="addCallCenter(f.value)">
+    <div class="container">
+      <div class="form-group row">
+        <label class="col-sm-3 control-label" for="callCenterName">Event Name</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="callCenterName" placeholder="Event Name" ngControl="name">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 control-label" for="callCenterFlight">Flight Name</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="callCenterFlight" placeholder="Flight Name" ngControl="flightName">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 control-label" for="callCenterStart">Start Date</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="callCenterStart" placeholder="Start Date" ngControl="startDate">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-3 control-label" for="callCenterEnd">End Date</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="callCenterEnd" placeholder="End Date" ngControl="endDate">
+        </div>
+      </div>
     </div>
-  </div>
-</form>
+    <div class="container">
+      <div class="form-group row">
+        <button type="submit" class="btn btn-primary">Add</button>
+      </div>
+    </div>
+  </form>
+</div>
 

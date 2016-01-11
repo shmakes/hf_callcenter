@@ -10,9 +10,10 @@ Meteor.publish('callCenters', function() {
           ? CallCenters.find() 
           : CallCenters.find( { 
               $and: [ 
-                      { callers: { $exists: true } } , 
-                      { callers: this.userId } 
-                    ] 
+                      { callers: { $exists: true } }, 
+                      { callers: this.userId },
+                      { isRemoved: false }
+                    ]
           } );
 });
 

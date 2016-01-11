@@ -13,7 +13,9 @@ CallCenters.allow({
     return !!user;
   },
   remove: function(callCenter: Object) {
-    var user = Meteor.user();
-    return !!user;
+    // * Do not allow removal - soft delete using isRemoved to hide.
+    //var user = Meteor.user();
+    //return !!user;
+    return false;
   }
 });

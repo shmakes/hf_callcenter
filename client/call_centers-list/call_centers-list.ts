@@ -51,10 +51,4 @@ export class CallCentersList extends MeteorComponent {
     }
     return this.isAdmin;
   }
-
-  removeCallCenter(callCenter) {
-    CallCenters.remove(callCenter._id);
-  }
-
-  
 }
