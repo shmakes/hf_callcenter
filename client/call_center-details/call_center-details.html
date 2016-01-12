@@ -34,6 +34,29 @@
       </div>
     </div>
   </div>
+  <div class="container-fluid">
+    <div class="container">
+      <div class="form-group row">
+        <div class="col-sm-6 col-xs-12">
+          <div class="list-group" id="list1" x-lvl-drop-target="true" x-on-drop="drop(dragEl, dropEl, bToA)">
+            <a href="javascript:;" class="list-group-item active">Callers</a>
+            <span *ngFor="#caller of getCallerInfo()" >
+              <a href="javascript:;" data-id="{{caller.userId}}" class="list-group-item" x-lvl-draggable="true">{{caller.name}}</a>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+          <div class="list-group" id="list2" x-lvl-drop-target="true" x-on-drop="drop(dragEl, dropEl, aToB)">
+            <a href="javascript:;" class="list-group-item active">Available Users</a>
+            <span *ngFor="#user of getAvailableUsers()" >
+              <a href="javascript:;" data-id="{{user.userId}}" class="list-group-item" x-lvl-draggable="true">{{user.name}}</a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
   <div class="container">
     <div class="form-group row">
       <button type="submit" class="btn btn-primary">Save</button>
