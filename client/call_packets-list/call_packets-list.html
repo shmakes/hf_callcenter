@@ -1,0 +1,45 @@
+<div class="container">
+  <accounts-ui></accounts-ui>
+  <div class="page-header">
+    <h1>Your Call Packets</h1>
+  </div>
+  <ul class="list-group">
+    <li *ngFor="#callPacket of assignedCallPackets" class="list-group-item" [class.bg-inverse]="callPacket.isRemoved">
+      <div>
+        <h3>
+          <a>{{callPacket._id}}</a>
+        </h3>
+      </div>
+      <div>
+        Veteran: {{callPacket.veteranName}} - {{callStatus[callPacket.veteranStatus]}}
+      </div>
+      <div>
+        Guardian: {{callPacket.guardianName}} - {{callStatus[callPacket.guardianStatus]}}
+      </div>
+      <div>
+        Mail Call: {{callPacket.mailCallName}} - {{callStatus[callPacket.mailCallStatus]}}
+      </div>
+      <div>
+        Caller: {{callPacket.callerName}} - {{callPacket.updatedAt}}
+      </div>
+    </li>
+  </ul>
+  <div class="page-header">
+    <h1>Available Call Packets</h1>
+  </div>
+  <ul class="list-group">
+    <li *ngFor="#callPacket of availableCallPackets" class="list-group-item" [class.bg-inverse]="callPacket.isRemoved">
+      <div>
+        <h3>
+          <a>{{callPacket._id}}</a>
+        </h3>
+      </div>
+      <div>
+        Veteran: {{callPacket.veteranName}} - {{callPacket.veteranStatus}}
+      </div>
+      <div>
+        Guardian: {{callPacket.guardianName}} - {{callPacket.guardianStatus}}
+      </div>
+    </li>
+  </ul>
+</div>

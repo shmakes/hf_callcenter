@@ -6,6 +6,7 @@ import {bootstrap} from 'angular2-meteor';
 import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, APP_BASE_HREF} from 'angular2/router';
 import {CallCentersList} from 'client/call_centers-list/call_centers-list';
 import {CallCenterDetails} from 'client/call_center-details/call_center-details';
+import {CallPacketsList} from 'client/call_packets-list/call_packets-list';
 import {UserProfileDetails} from 'client/user_profile-details/user_profile-details';
 
 @Component({
@@ -19,7 +20,8 @@ import {UserProfileDetails} from 'client/user_profile-details/user_profile-detai
 
 @RouteConfig([
     { path: '/', as: 'CallCentersList', component: CallCentersList },
-    { path: '/call_center/:callCenterId', as: 'CallCenterDetails', component: CallCenterDetails },
+    { path: '/call_center/:callCenterId', as: 'CallPacketsList', component: CallPacketsList },
+    { path: '/call_center/edit/:callCenterId', as: 'CallCenterDetails', component: CallCenterDetails },
     { path: '/user_profile/:userProfileId', as: 'UserProfileDetails', component: UserProfileDetails }
 ])
 

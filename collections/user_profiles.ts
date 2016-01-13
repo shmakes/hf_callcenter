@@ -5,12 +5,14 @@ export var UserProfiles = new Mongo.Collection<UserProfile>('user_profiles');
 
 UserProfiles.allow({
   insert: function(userProfile: Object) {
-    var user = Meteor.user();
-    return !!user;
+    //var user = Meteor.user();
+    //return !!user;
+    return false;
   },
   update: function(userProfile: Object, fields, modifier) {
-    var user = Meteor.user();
-    return !!user;
+    //var user = Meteor.user();
+    //return !!user;
+    return false;
   },
   remove: function(userProfile: Object) {
     // * Do not allow removal - soft delete using isRemoved to hide.

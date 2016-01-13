@@ -7,7 +7,10 @@
     <li *ngFor="#callCenter of callCenters" class="list-group-item" [class.bg-inverse]="callCenter.isRemoved">
       <div>
         <h3>
-          <a [routerLink]="['/CallCenterDetails', {callCenterId: callCenter._id}]">{{callCenter.name}}</a>
+          <a [routerLink]="['/CallPacketsList', {callCenterId: callCenter._id}]">{{callCenter.name}}</a>
+          <font size="2">
+            <a [hidden]="!canAddAndRemove()" [routerLink]="['/CallCenterDetails', {callCenterId: callCenter._id}]">(edit)</a>
+          </font>
         </h3>
       </div>
       <div>
