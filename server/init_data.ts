@@ -1,8 +1,8 @@
 /// <reference path="../typings/call_center.d.ts" />
 
 import {CallCenters} from 'collections/call_centers';
- 
-export function loadCallCenters() {
+
+export function initData() {
 
   if (CallCenters.find().count() === 0) {
     var callCenters = [

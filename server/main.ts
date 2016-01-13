@@ -2,14 +2,15 @@
 
 import 'collections/call_centers';
 import {UserProfiles} from 'collections/user_profiles';
-import {loadCallCenters} from './load_call_centers';
-import './call_centers';
-import {getDbVersion} from './couchdb_connector/db_Connection';
+import {initData} from './init_data';
+import './publishing';
 import 'collections/methods';
 
+declare var process: any;
+
 Meteor.startup(function () {
-  loadCallCenters();
-  getDbVersion();
+  initData();
+  console.log(HTTP.get(process.env.COUCH_URL).content);
 });
 
 Accounts.onCreateUser(function(options, user) {

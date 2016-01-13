@@ -9,10 +9,7 @@ import {CallCenters} from './call_centers';
 import {UserProfiles} from './user_profiles';
  
 Meteor.methods({
-  hfDbVersion: function() {
-    console.log(HTTP.get(process.env.COUCH_URL).content);
-  },
-  hfAddCallCenter: function(callCenter: CallCenter) {
+  AddCallCenter: function(callCenter: CallCenter) {
     var callerProfile = UserProfiles.findOne( { userId: this.userId } );
     var callerIsAdmin = (!!callerProfile && callerProfile.isAdmin);
     if (!callerIsAdmin) {
