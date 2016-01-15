@@ -10,54 +10,64 @@ var isAdmin = function(userId: string) {
 }
 
 Meteor.publish('userProfiles', function() {
-  return isAdmin(this.userId)
-          ? UserProfiles.find()
-          : UserProfiles.find( { userId: this.userId } );
+  if(this.userId){
+    return isAdmin(this.userId)
+            ? UserProfiles.find()
+            : UserProfiles.find( { userId: this.userId } );
+  }
 });
 
 Meteor.publish('callCenters', function() {
-  return isAdmin(this.userId)
-          ? CallCenters.find()
-          : CallCenters.find( {
-              $and: [
-                      { callers: { $exists: true } },
-                      { callers: this.userId },
-                      { isRemoved: false }
-                    ]
-          } );
+  if(this.userId){
+    return isAdmin(this.userId)
+            ? CallCenters.find()
+            : CallCenters.find( {
+                $and: [
+                        { callers: { $exists: true } },
+                        { callers: this.userId },
+                        { isRemoved: false }
+                      ]
+            } );
+  }
 });
 
 Meteor.publish('assignedCallPackets', function(callCenterId) {
-  return isAdmin(this.userId)
-          ? CallPackets.find( {
-              $and: [
-                      { callCenterId: callCenterId },
-                      { callerId: {'$ne' : ''}}
-                    ]
-          } )
-          : CallPackets.find( {
-              $and: [
-                      { callCenterId: callCenterId },
-                      { callerId: this.userId },
-                      { isRemoved: false }
-                    ]
-          } );
+  check(callCenterId, String);
+  if(this.userId){
+    return isAdmin(this.userId)
+            ? CallPackets.find( {
+                $and: [
+                        { callCenterId: callCenterId },
+                        { callerId: {'$ne' : ''}}
+                      ]
+            } )
+            : CallPackets.find( {
+                $and: [
+                        { callCenterId: callCenterId },
+                        { callerId: this.userId },
+                        { isRemoved: false }
+                      ]
+            } );
+  }
 });
 
 Meteor.publish('availableCallPackets', function(callCenterId) {
-  return isAdmin(this.userId)
-          ? CallPackets.find( {
-              $and: [
-                      { callCenterId: callCenterId },
-                      { callerId: '' }
-                    ]
-          } )
-          : CallPackets.find( {
-              $and: [
-                      { callCenterId: callCenterId },
-                      { callerId: '' },
-                      { isRemoved: false }
-                    ]
-          } );
+  check(callCenterId, String);
+  if(this.userId){
+    return isAdmin(this.userId)
+            ? CallPackets.find( {
+                $and: [
+                        { callCenterId: callCenterId },
+                        { callerId: '' }
+                      ]
+            } )
+            : CallPackets.find( {
+                $and: [
+                        { callCenterId: callCenterId },
+                        { callerId: '' },
+                        { isRemoved: false }
+                      ]
+            } );
+  }
 });
 

@@ -27,6 +27,7 @@ declare type CallPacket = {
   mailCallName: string,
   mailCallRelationship: string,
   mailCallPhone: string,
+  mailCallEmail: string,
   mailCallStatus: number,
   callStatusHistory: Array<CallStatusHistory>,
   createdAt: string,

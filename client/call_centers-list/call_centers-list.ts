@@ -1,6 +1,7 @@
 /// <reference path="../../typings/angular2-meteor.d.ts" />
 /// <reference path="../../typings/meteor-accounts-ui.d.ts" />
 /// <reference path="../../typings/meteor-accounts.d.ts" />
+/// <reference path="../../typings/moment.d.ts" />
 
 import {Component, View} from 'angular2/core';
 import {NgFor} from 'angular2/common';
@@ -51,4 +52,11 @@ export class CallCentersList extends MeteorComponent {
     }
     return this.isAdmin;
   }
+  
+  formatDate(date: string) {
+    var day = moment(date);
+    var result = day.calendar();
+    return result;
+  }
+
 }

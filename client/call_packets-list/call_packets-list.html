@@ -5,22 +5,34 @@
   </div>
   <ul class="list-group">
     <li *ngFor="#callPacket of assignedCallPackets" class="list-group-item" [class.bg-inverse]="callPacket.isRemoved">
-      <div>
-        <h3>
-          <a>{{callPacket._id}}</a>
-        </h3>
-      </div>
-      <div>
-        Veteran: {{callPacket.veteranName}} - {{callStatus[callPacket.veteranStatus]}}
-      </div>
-      <div>
-        Guardian: {{callPacket.guardianName}} - {{callStatus[callPacket.guardianStatus]}}
-      </div>
-      <div>
-        Mail Call: {{callPacket.mailCallName}} - {{callStatus[callPacket.mailCallStatus]}}
-      </div>
-      <div>
-        Caller: {{callPacket.callerName}} - {{callPacket.updatedAt}}
+      <div class="container">
+        <div class="row">
+          <div class="label label-primary col-md-6 col-sm-12 col-xs-12">
+            <h4>{{callPacket.veteranName}}</h4>
+          </div>
+          <div class="label label-danger col-md-6 col-sm-12 col-xs-12">
+            <h4>{{callPacket.guardianName}}</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-12 col-xs-12">
+            Veteran: {{callStatusName(callPacket.veteranStatus)}}
+          </div>
+          <div class="col-md-4 col-sm-12 col-xs-12">
+            Guardian: {{callStatusName(callPacket.guardianStatus)}}
+          </div>
+          <div class="col-md-4 col-sm-12 col-xs-12">
+            Mail Call: {{callStatusName(callPacket.mailCallStatus)}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-12 col-xs-12">
+            Caller: {{callPacket.callerName}}
+          </div>
+          <div class="col-md-6 col-sm-12 col-xs-12">
+            Updated: {{formatDate(callPacket.updatedAt)}}
+          </div>
+        </div>
       </div>
     </li>
   </ul>
@@ -29,16 +41,26 @@
   </div>
   <ul class="list-group">
     <li *ngFor="#callPacket of availableCallPackets" class="list-group-item" [class.bg-inverse]="callPacket.isRemoved">
-      <div>
-        <h3>
-          <a>{{callPacket._id}}</a>
-        </h3>
-      </div>
-      <div>
-        Veteran: {{callPacket.veteranName}} - {{callPacket.veteranStatus}}
-      </div>
-      <div>
-        Guardian: {{callPacket.guardianName}} - {{callPacket.guardianStatus}}
+      <div class="container">
+        <div class="row">
+          <div class="label label-primary col-md-6 col-sm-12 col-xs-12">
+            <h4>{{callPacket.veteranName}}</h4>
+          </div>
+          <div class="label label-danger col-md-6 col-sm-12 col-xs-12">
+            <h4>{{callPacket.guardianName}}</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-12 col-xs-12">
+            Veteran: {{callStatusName(callPacket.veteranStatus)}}
+          </div>
+          <div class="col-md-4 col-sm-12 col-xs-12">
+            Guardian: {{callStatusName(callPacket.guardianStatus)}}
+          </div>
+          <div class="col-md-4 col-sm-12 col-xs-12">
+            Mail Call: {{callStatusName(callPacket.mailCallStatus)}}
+          </div>
+        </div>
       </div>
     </li>
   </ul>
