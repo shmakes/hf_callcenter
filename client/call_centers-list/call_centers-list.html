@@ -30,8 +30,8 @@
       <h3>
         <a [routerLink]="['/UserProfileDetails', {userProfileId: userProfile._id}]">{{userProfile.name}}</a>
       </h3>
-      <div>Phone: {{userProfile.phone}}</div>
-      <div>Email: {{userProfile.email}}</div>
+      <div>Phone: <a href="tel:{{userProfile.phone}}">{{userProfile.phone}}</a></div>
+      <div>Email: <a href="mailto:{{userProfile.email}}">{{userProfile.email}}</a></div>
     </li>
   </ul>
 </div>
