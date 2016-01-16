@@ -1,7 +1,7 @@
-/// <reference path="../../typings/angular2-meteor.d.ts" />
-/// <reference path="../../typings/meteor-accounts-ui.d.ts" />
-/// <reference path="../../typings/meteor-accounts.d.ts" />
-/// <reference path="../../typings/moment.d.ts" />
+/// <reference path='../../typings/angular2-meteor.d.ts' />
+/// <reference path='../../typings/meteor-accounts-ui.d.ts' />
+/// <reference path='../../typings/meteor-accounts.d.ts' />
+/// <reference path='../../typings/moment.d.ts' />
 
 import {Component, View} from 'angular2/core';
 import {NgFor} from 'angular2/common';
@@ -12,6 +12,7 @@ import {RouterLink} from 'angular2/router';
 import {AccountsUI} from 'meteor-accounts-ui';
 import {InjectUser} from 'meteor-accounts';
 import {MeteorComponent} from 'angular2-meteor';
+import {Utils} from 'client/utils';
 
 @Component({
     selector: 'call_centers-list'
@@ -29,9 +30,11 @@ export class CallCentersList extends MeteorComponent {
   profile: UserProfile;
   user: Meteor.User;
   isAdmin: boolean;
+  utils: Utils;
 
   constructor () {
     super();
+    this.utils = new Utils();
     this.subscribe('callCenters', () => {
       this.callCenters = CallCenters.find();
     }, true);
@@ -53,10 +56,4 @@ export class CallCentersList extends MeteorComponent {
     return this.isAdmin;
   }
   
-  formatDate(date: string) {
-    var day = moment(date);
-    var result = day.calendar();
-    return result;
-  }
-
 }

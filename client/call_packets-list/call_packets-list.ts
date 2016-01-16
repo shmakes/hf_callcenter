@@ -12,6 +12,7 @@ import {AccountsUI} from 'meteor-accounts-ui';
 import {InjectUser} from 'meteor-accounts';
 import {MeteorComponent} from 'angular2-meteor';
 import {CallStatus} from 'collections/enums';
+import {Utils} from 'client/utils';
 
 @Component({
     selector: 'call_packets-list'
@@ -28,9 +29,11 @@ export class CallPacketsList extends MeteorComponent {
   availableCallPackets: Mongo.Cursor<CallPacket>;
   user: Meteor.User;
   callCenterId: string;
+  utils: Utils;
 
   constructor (params: RouteParams) {
     super();
+    this.utils = new Utils();
     this.callCenterId = params.get('callCenterId');
     this.subscribe('assignedCallPackets', this.callCenterId, () => {
       this.assignedCallPackets = CallPackets.find( { callerId: {'$ne' : ''}} );
@@ -45,9 +48,4 @@ export class CallPacketsList extends MeteorComponent {
     return CallStatus[callStat];
   }
 
-  formatDate(date: string) {
-    var day = moment(date);
-    var result = day.calendar();
-    return result;
-  }
 }
