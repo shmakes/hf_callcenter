@@ -1,6 +1,6 @@
 /// <reference path="../typings/angular2-meteor.d.ts" />
 
-import {Component, View, NgZone, provide} from 'angular2/core';
+import {Component, View, NgZone, provide, enableProdMode} from 'angular2/core';
 import {NgFor} from 'angular2/common';
 import {bootstrap} from 'angular2-meteor';
 import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, APP_BASE_HREF} from 'angular2/router';
@@ -26,5 +26,6 @@ import {UserProfileDetails} from 'client/user_profile-details/user_profile-detai
 ])
 
 class HFCallCenter {} 
- 
+
+//enableProdMode();
 bootstrap(HFCallCenter, [ROUTER_PROVIDERS, provide(APP_BASE_HREF, { useValue: '/' })]);
