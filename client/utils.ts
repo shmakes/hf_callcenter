@@ -1,4 +1,4 @@
-/// <reference path="../typings/moment.d.ts" />
+/// <reference path="../typings/moment/moment.d.ts" />
 
 export class Utils {
   formatDate(date: string): string {
