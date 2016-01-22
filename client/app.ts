@@ -7,6 +7,7 @@ import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, APP_BASE_HREF} from 'a
 import {CallCentersList} from 'client/call_centers-list/call_centers-list';
 import {CallCenterDetails} from 'client/call_center-details/call_center-details';
 import {CallPacketsList} from 'client/call_packets-list/call_packets-list';
+import {CallPacketDetails} from 'client/call_packet-details/call_packet-details';
 import {UserProfileDetails} from 'client/user_profile-details/user_profile-details';
 
 @Component({
@@ -22,6 +23,7 @@ import {UserProfileDetails} from 'client/user_profile-details/user_profile-detai
     { path: '/', as: 'CallCentersList', component: CallCentersList },
     { path: '/call_center/:callCenterId', as: 'CallPacketsList', component: CallPacketsList },
     { path: '/call_center/edit/:callCenterId', as: 'CallCenterDetails', component: CallCenterDetails },
+    { path: '/call_packet/:callPacketId', as: 'CallPacket', component: CallPacketDetails },
     { path: '/user_profile/:userProfileId', as: 'UserProfileDetails', component: UserProfileDetails }
 ])
 

@@ -71,3 +71,18 @@ Meteor.publish('availableCallPackets', function(callCenterId) {
   }
 });
 
+Meteor.publish('callPacket', function(callPacketId) {
+  check(callPacketId, String);
+  if(this.userId){
+    return isAdmin(this.userId)
+            ? CallPackets.find( { _id: callPacketId } )
+            : CallPackets.find( {
+                $and: [
+                        { _id: callPacketId },
+                        { callerId: this.userId },
+                        { isRemoved: false }
+                      ]
+            } );
+  }
+});
+
