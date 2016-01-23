@@ -29,12 +29,18 @@ export class CallPacketsList extends MeteorComponent {
   availableCallPackets: Mongo.Cursor<CallPacket>;
   user: Meteor.User;
   callCenterId: string;
+  callCenterName: string;
   utils: Utils;
 
   constructor (params: RouteParams) {
     super();
     this.utils = new Utils();
     this.callCenterId = params.get('callCenterId');
+
+    Meteor.call('getCallCenterName', this.callCenterId, (error, response) => {
+      this.callCenterName = response;
+    });
+
     this.subscribe('assignedCallPackets', this.callCenterId, () => {
       this.assignedCallPackets = CallPackets.find( { callerId: {'$ne' : ''}} );
     }, true);
@@ -48,4 +54,7 @@ export class CallPacketsList extends MeteorComponent {
     return CallStatus[callStat];
   }
 
+  getCallCenterName() {
+    return this.callCenterName;
+  }
 }

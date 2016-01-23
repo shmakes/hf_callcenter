@@ -80,5 +80,8 @@ Meteor.methods({
       createdAt: new Date(user.createdAt).toISOString()
     }
     return userInfo;
+  },
+  getCallCenterName: function(callCenterId: string) {
+    return CallCenters.findOne( { _id: callCenterId } ).name;
   }
 });
