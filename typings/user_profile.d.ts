@@ -1,11 +1,13 @@
 declare type UserProfile = {
   _id?: string,
   userId: string,
-  isAdmin: boolean,
+  isSystemAdmin: boolean,
+  isCenterAdmin: boolean,
   name: string,
   phone: string,
   email: string,
   createdAt: string,
   updatedAt: string,
+  updatedBy: string,
   isRemoved: boolean
 }

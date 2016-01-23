@@ -22,7 +22,7 @@ export class UserProfileDetails extends MeteorComponent {
   userProfile: UserProfile;
   profile: UserProfile;
   user: Meteor.User;
-  isAdmin: boolean;
+  isSystemAdmin: boolean;
   userInfo: UserInfo;
 
   constructor(params: RouteParams, private _router: Router) {
@@ -57,9 +57,9 @@ export class UserProfileDetails extends MeteorComponent {
   canAdministrate() {
     if (!this.profile) {
       this.profile = UserProfiles.findOne( { userId: Meteor.userId() } );
-      this.isAdmin = (!!this.profile && this.profile.isAdmin);
+      this.isSystemAdmin = (!!this.profile && this.profile.isSystemAdmin);
     }
-    return this.isAdmin;
+    return this.isSystemAdmin;
   }
 
   getUserInfo() {

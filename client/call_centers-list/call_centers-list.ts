@@ -29,7 +29,7 @@ export class CallCentersList extends MeteorComponent {
   profiles: Mongo.Cursor<UserProfile>;
   profile: UserProfile;
   user: Meteor.User;
-  isAdmin: boolean;
+  isSystemAdmin: boolean;
   utils: Utils;
 
   constructor () {
@@ -48,12 +48,12 @@ export class CallCentersList extends MeteorComponent {
     if (!this.profile) {
       if (this.profiles && this.user) {
         this.profile = UserProfiles.findOne( { userId: this.user._id } );
-        this.isAdmin = (!!this.profile && this.profile.isAdmin);
+        this.isSystemAdmin = (!!this.profile && this.profile.isSystemAdmin);
       } else {
-        this.isAdmin = false;
+        this.isSystemAdmin = false;
       }
     }
-    return this.isAdmin;
+    return this.isSystemAdmin;
   }
   
 }

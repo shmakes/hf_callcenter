@@ -16,7 +16,8 @@ Meteor.startup(function () {
 Accounts.onCreateUser(function(options, user) {
   let name = '';
   let email = '';
-  let isAdmin = false;
+  let isSystemAdmin = false;
+  let isCenterAdmin = false;
   if (user.emails && user.emails.length > 0 && user.emails[0].address) {
     name = email = user.emails[0].address;
   }
@@ -29,18 +30,20 @@ Accounts.onCreateUser(function(options, user) {
     email = user.services.facebook.email;
   }
   if (Meteor.users.find().count() < 1) {
-    isAdmin = true;
+    isSystemAdmin = true;
   }
 
   UserProfiles.insert( <UserProfile> {
-    'userId':    user._id,
-    'isAdmin':   isAdmin,
-    'name':      name,
-    'phone':     '',
-    'email':     email,
-    'createdAt': new Date().toISOString(),
-    'updatedAt': new Date().toISOString(),
-    'isRemoved': false
+    'userId':          user._id,
+    'isSystemAdmin':   isSystemAdmin,
+    'isCenterAdmin':   isCenterAdmin,
+    'name':            name,
+    'phone':           '',
+    'email':           email,
+    'createdAt':       new Date().toISOString(),
+    'updatedAt':       new Date().toISOString(),
+    'updatedBy':       'System Initialization',
+    'isRemoved':       false
   });
 
   if (options.profile)

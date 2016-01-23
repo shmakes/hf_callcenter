@@ -9,11 +9,12 @@ import {CallCenters} from './call_centers';
 import {UserProfiles} from './user_profiles';
  
 Meteor.methods({
-  AddCallCenter: function(callCenter: CallCenter) {
-    var callerProfile = UserProfiles.findOne( { userId: this.userId } );
-    var callerIsAdmin = (!!callerProfile && callerProfile.isAdmin);
-    if (!callerIsAdmin) {
-      throw new Meteor.Error('401', 'Only administrators can add new call centers.');
+  addCallCenter: function(callCenter: CallCenter) {
+    var currentUserProfile = UserProfiles.findOne( { userId: this.userId } );
+    var currentUserIsSystemAdmin = (!!currentUserProfile && currentUserProfile.isSystemAdmin);
+
+    if (!currentUserIsSystemAdmin) {
+      throw new Meteor.Error('401', 'Only system administrators can add new call centers.');
     }
 
     let options = { auth: process.env.COUCH_AUTH };
@@ -32,15 +33,17 @@ Meteor.methods({
     }
     callCenter.flightId = flightId;
     CallCenters.insert(callCenter);
+    console.log('*** Call Center created by: ' + currentUserProfile.name + '\n' + JSON.stringify(callCenter, null, '\t') );
   },
   updateProfile: function(userProfile: UserProfile) {
-    var callerProfile = UserProfiles.findOne( { userId: this.userId } );
-    var callerIsAdmin = (!!callerProfile && callerProfile.isAdmin);
+    var currentUserProfile = UserProfiles.findOne( { userId: this.userId } );
+    var currentUserIsSystemAdmin = (!!currentUserProfile && currentUserProfile.isSystemAdmin);
 
-    if (callerIsAdmin) {
+    if (currentUserIsSystemAdmin) {
       UserProfiles.update(userProfile._id, {
         $set: {
-          isAdmin: userProfile.isAdmin
+          isSystemAdmin: userProfile.isSystemAdmin,
+          isCenterAdmin: userProfile.isCenterAdmin
         }
       });
     }
@@ -49,9 +52,11 @@ Meteor.methods({
         name: userProfile.name,
         phone: userProfile.phone,
         email: userProfile.email,
+        updatedBy: currentUserProfile.name + ' (' + this.userId + ')',
         updatedAt: new Date().toISOString()
       }
     });
+    console.log('*** User profile updated by: ' + currentUserProfile.name + '\n' + JSON.stringify(UserProfiles.findOne(userProfile._id), null, '\t') );
   },
   getPublicUserInfoForProfile: function(profileId: string) {
     var userProfile = UserProfiles.findOne( { _id: profileId } );

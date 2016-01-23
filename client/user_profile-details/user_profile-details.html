@@ -22,9 +22,15 @@
       </div>
     </div>
     <div class="form-group row" [hidden]="!canAdministrate()">
-      <label class="col-sm-3 col-xs-12 control-label" for="userProfileIsAdmin">Admin</label>
+      <label class="col-sm-3 col-xs-12 control-label" for="userProfileIsSystemAdmin">System Admin</label>
       <div class="col-sm-9 col-xs-12">
-        <input type="checkbox" class="form-control" id="userProfileIsAdmin" [(ngModel)]="userProfile.isAdmin">
+        <input type="checkbox" class="form-control" id="userProfileIsSystemAdmin" [(ngModel)]="userProfile.isSystemAdmin">
+      </div>
+    </div>
+    <div class="form-group row" [hidden]="!canAdministrate()">
+      <label class="col-sm-3 col-xs-12 control-label" for="userProfileIsCenterAdmin">Center Admin</label>
+      <div class="col-sm-9 col-xs-12">
+        <input type="checkbox" class="form-control" id="userProfileIsCenterAdmin" [(ngModel)]="userProfile.isCenterAdmin">
       </div>
     </div>
     <div class="page-header">
@@ -45,7 +51,7 @@
   </div>
   <div class="container">
     <div class="form-group row">
-      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="submit" class="btn btn-primary" [hidden]="!canAdministrate()">Save</button>
       <button class="btn btn-default" [routerLink]="['/CallCentersList']">Cancel</button>
     </div>
   </div>

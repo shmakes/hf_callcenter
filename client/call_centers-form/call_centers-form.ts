@@ -40,7 +40,7 @@ export class CallCentersForm {
           callers: []
         };
 
-        Meteor.call('AddCallCenter', callCenter, (error) => {
+        Meteor.call('addCallCenter', callCenter, (error) => {
           if (error) {
             alert(`Call Center not added. ${error}`);
             return;
