@@ -8,11 +8,11 @@ accounts-ui-unstyled@1.1.8
 autoupdate@1.2.4
 babel-compiler@5.8.24_1
 babel-runtime@0.1.4
-barbatus:angular2@0.7.5_1
+barbatus:angular2@0.8.0
 barbatus:ng2-compilers@0.1.1
-barbatus:ng2-meteor-accounts@0.1.4_1
+barbatus:ng2-meteor-accounts@0.1.5
 barbatus:ng2-meteor-accounts-ui@0.1.2_4
-barbatus:ts-compilers@0.2.5_1
+barbatus:ts-compilers@0.2.6
 barbatus:typescript@0.1.5
 base64@1.0.4
 binary-heap@1.0.4
@@ -45,8 +45,8 @@ hot-code-push@1.0.0
 html-tools@1.0.5
 htmljs@1.0.5
 http@1.1.1
-huttonr:bootstrap4@4.0.0_11
-huttonr:bootstrap4-assets@4.0.0_8
+huttonr:bootstrap4@4.0.0_13
+huttonr:bootstrap4-assets@4.0.0_9
 id-map@1.0.4
 jquery@1.11.4
 launch-screen@1.0.4
@@ -91,7 +91,7 @@ templating-tools@1.0.0
 tracker@1.0.9
 ui@1.0.8
 underscore@1.0.4
-urigo:angular2-meteor@0.3.7
+urigo:angular2-meteor@0.3.8
 url@1.0.5
 webapp@1.2.3
 webapp-hashing@1.0.5
