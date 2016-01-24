@@ -83,6 +83,19 @@ export class CallCenterDetails extends MeteorComponent {
     }
   }
 
+  addCaller(userId: string) {
+    this.callCenter.callers.push(userId);
+    delete this.callers;
+    delete this.available;
+  }
+
+  removeCaller(userId: string) {
+    var n = this.callCenter.callers.indexOf(userId);
+    this.callCenter.callers.splice(n, 1);
+    delete this.callers;
+    delete this.available;
+  }
+
   saveCallCenter(callCenter) {
     if (this.userIsSystemAdmin()) {
       CallCenters.update(callCenter._id, {
@@ -90,6 +103,7 @@ export class CallCenterDetails extends MeteorComponent {
           name: callCenter.name,
           startDate: callCenter.startDate,
           endDate: callCenter.endDate,
+          callers: callCenter.callers,
           isRemoved: callCenter.isRemoved
         }
       });
