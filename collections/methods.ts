@@ -4,10 +4,10 @@
 /// <reference path="../typings/user_info.d.ts" />
 
 declare var process: any;
- 
+
 import {CallCenters} from './call_centers';
 import {UserProfiles} from './user_profiles';
- 
+
 Meteor.methods({
   addCallCenter: function(callCenter: CallCenter) {
     var currentUserProfile = UserProfiles.findOne( { userId: this.userId } );
@@ -47,16 +47,24 @@ Meteor.methods({
         }
       });
     }
-    UserProfiles.update(userProfile._id, {
-      $set: {
-        name: userProfile.name,
-        phone: userProfile.phone,
-        email: userProfile.email,
-        updatedBy: currentUserProfile.name + ' (' + this.userId + ')',
-        updatedAt: new Date().toISOString()
-      }
-    });
-    console.log('*** User profile updated by: ' + currentUserProfile.name + '\n' + JSON.stringify(UserProfiles.findOne(userProfile._id), null, '\t') );
+    if (currentUserIsSystemAdmin || userProfile.userId == this.userId) {
+      UserProfiles.update(userProfile._id, {
+        $set: {
+          name: userProfile.name,
+          phone: userProfile.phone,
+          email: userProfile.email,
+          updatedBy: currentUserProfile.name + ' (' + this.userId + ')',
+          updatedAt: new Date().toISOString()
+        }
+      });
+      console.log('*** User profile updated by: '
+        + currentUserProfile.name + ' (' + currentUserProfile.userId + ')' + '\n'
+        + JSON.stringify(UserProfiles.findOne(userProfile._id), null, '\t') );
+    } else {
+      console.log('*** Unauthorized attempt to update profile by: '
+        + currentUserProfile.name + ' (' + currentUserProfile.userId + ')' + '\n'
+        + JSON.stringify(UserProfiles.findOne(userProfile._id), null, '\t') );
+    }
   },
   getPublicUserInfoForProfile: function(profileId: string) {
     var userProfile = UserProfiles.findOne( { _id: profileId } );
@@ -83,5 +91,8 @@ Meteor.methods({
   },
   getCallCenterName: function(callCenterId: string) {
     return CallCenters.findOne( { _id: callCenterId } ).name;
+  },
+  currentUserProfile: function() {
+    return UserProfiles.findOne( { userId: this.userId } );
   }
 });

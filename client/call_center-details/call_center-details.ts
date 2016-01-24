@@ -23,6 +23,8 @@ export class CallCenterDetails extends MeteorComponent {
   users: Array<UserProfile>;
   available: Array<UserProfile>;
   callers: Array<UserProfile>;
+  currentUserProfile: UserProfile;
+  isSystemAdmin: boolean;
 
   constructor(params: RouteParams, private _router: Router) {
     super();
@@ -82,7 +84,7 @@ export class CallCenterDetails extends MeteorComponent {
   }
 
   saveCallCenter(callCenter) {
-    if (Meteor.userId()) {
+    if (this.userIsSystemAdmin()) {
       CallCenters.update(callCenter._id, {
         $set: {
           name: callCenter.name,
@@ -92,8 +94,17 @@ export class CallCenterDetails extends MeteorComponent {
         }
       });
     } else {
-      alert('Please log in to make changes.');
+      alert('Please log in as a system administrator to make changes.');
     }
     this._router.navigate(['CallCentersList']);
   }
+
+  userIsSystemAdmin() {
+    if (!this.currentUserProfile) {
+      this.currentUserProfile = UserProfiles.findOne( { userId: Meteor.userId() } );
+      this.isSystemAdmin = (!!this.currentUserProfile && this.currentUserProfile.isSystemAdmin);
+    }
+    return this.isSystemAdmin;
+  }
+
 }

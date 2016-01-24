@@ -21,37 +21,39 @@
         <input type="email" class="form-control" id="userProfileEmail" placeholder="Email" [(ngModel)]="userProfile.email">
       </div>
     </div>
-    <div class="form-group row" [hidden]="!canAdministrate()">
+    <div class="form-group row" [hidden]="!userIsSystemAdmin()">
       <label class="col-sm-3 col-xs-12 control-label" for="userProfileIsSystemAdmin">System Admin</label>
       <div class="col-sm-9 col-xs-12">
         <input type="checkbox" class="form-control" id="userProfileIsSystemAdmin" [(ngModel)]="userProfile.isSystemAdmin">
       </div>
     </div>
-    <div class="form-group row" [hidden]="!canAdministrate()">
+    <div class="form-group row" [hidden]="!userIsSystemAdmin()">
       <label class="col-sm-3 col-xs-12 control-label" for="userProfileIsCenterAdmin">Center Admin</label>
       <div class="col-sm-9 col-xs-12">
         <input type="checkbox" class="form-control" id="userProfileIsCenterAdmin" [(ngModel)]="userProfile.isCenterAdmin">
       </div>
     </div>
-    <div class="page-header">
-      <h3>Login Account Info (Read-Only)</h3>
-    </div>
-    <div class="form-group row bg-faded">
-      <label class="col-sm-3 col-xs-12 control-label" for="userName">User Name</label>
-      <div class="col-sm-9 col-xs-12"> {{ getUserInfo().name }} </div>
-    </div>
-    <div class="form-group row bg-faded">
-      <label class="col-sm-3 col-xs-12 control-label" for="userEmail">User Email</label>
-      <div class="col-sm-9 col-xs-12"> {{ getUserInfo().email }} </div>
-    </div>
-    <div class="form-group row bg-faded">
-      <label class="col-sm-3 col-xs-12 control-label" for="userCreatedAt">Created At</label>
-      <div class="col-sm-9 col-xs-12"> {{ getUserInfo().createdAt }} </div>
+    <div *ngIf="userIsSystemAdmin()">
+      <div class="page-header">
+        <h3>Login Account Info (Read-Only)</h3>
+      </div>
+      <div class="form-group row bg-faded">
+        <label class="col-sm-3 col-xs-12 control-label" for="userName">User Name</label>
+        <div class="col-sm-9 col-xs-12"> {{ getUserInfo().name }} </div>
+      </div>
+      <div class="form-group row bg-faded">
+        <label class="col-sm-3 col-xs-12 control-label" for="userEmail">User Email</label>
+        <div class="col-sm-9 col-xs-12"> {{ getUserInfo().email }} </div>
+      </div>
+      <div class="form-group row bg-faded">
+        <label class="col-sm-3 col-xs-12 control-label" for="userCreatedAt">Created At</label>
+        <div class="col-sm-9 col-xs-12"> {{ getUserInfo().createdAt }} </div>
+      </div>
     </div>
   </div>
   <div class="container">
     <div class="form-group row">
-      <button type="submit" class="btn btn-primary" [hidden]="!canAdministrate()">Save</button>
+      <button type="submit" class="btn btn-primary" [hidden]="!userCanEdit()">Save</button>
       <button class="btn btn-default" [routerLink]="['/CallCentersList']">Cancel</button>
     </div>
   </div>

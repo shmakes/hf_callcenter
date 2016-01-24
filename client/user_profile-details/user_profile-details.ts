@@ -20,7 +20,7 @@ import {MeteorComponent} from 'angular2-meteor';
 @RequireUser()
 export class UserProfileDetails extends MeteorComponent {
   userProfile: UserProfile;
-  profile: UserProfile;
+  currentUserProfile: UserProfile;
   user: Meteor.User;
   isSystemAdmin: boolean;
   userInfo: UserInfo;
@@ -41,7 +41,7 @@ export class UserProfileDetails extends MeteorComponent {
   }
 
   saveUserProfile(userProfile) {
-    if (Meteor.userId()) {
+    if (this.userCanEdit()) {
       Meteor.call('updateProfile', userProfile, (error) => {
         if (error) {
           alert(`User profile could not be updated. ${error}`);
@@ -49,17 +49,21 @@ export class UserProfileDetails extends MeteorComponent {
         }
       });
     } else {
-      alert('Please log in to make changes.');
+      alert('Please log in as a system administrator to make changes to profiles other than your own.');
     }
     this._router.navigate(['CallCentersList']);
   }
 
-  canAdministrate() {
-    if (!this.profile) {
-      this.profile = UserProfiles.findOne( { userId: Meteor.userId() } );
-      this.isSystemAdmin = (!!this.profile && this.profile.isSystemAdmin);
+  userIsSystemAdmin() {
+    if (!this.currentUserProfile) {
+      this.currentUserProfile = UserProfiles.findOne( { userId: Meteor.userId() } );
+      this.isSystemAdmin = (!!this.currentUserProfile && this.currentUserProfile.isSystemAdmin);
     }
     return this.isSystemAdmin;
+  }
+
+  userCanEdit() {
+    return this.userIsSystemAdmin() || this.userProfile.userId == Meteor.userId();
   }
 
   getUserInfo() {
