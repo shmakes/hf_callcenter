@@ -63,16 +63,28 @@ export class CallPacketsList extends MeteorComponent {
     return CallStatus[callStat];
   }
 
+  userIsCenterAdmin() {
+    if (this.currentUserProfile) {
+      return this.currentUserProfile.isCenterAdmin;
+    }
+  }
+
   getCallCenterName() {
-    if (this.callCenter && this.callCenter.name) {
+    if (this.callCenter) {
       return this.callCenter.name;
+    }
+  }
+
+  getCallCenterIsRemoved() {
+    if (this.callCenter) {
+      return this.callCenter.isRemoved;
     }
   }
 
   addVeteransFromFlight() {
     var fltName = this.callCenter.flightName;
 
-    if (this.currentUserProfile.isCenterAdmin) {
+    if (this.userIsCenterAdmin()) {
       Meteor.call('getVeteranListForFlight', fltName, (error) => {
         if (error) {
           alert(`Packets could not be added from flights. ${error}`);

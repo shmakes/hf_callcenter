@@ -103,16 +103,20 @@ Meteor.methods({
     }
 
     let options = { auth: process.env.COUCH_AUTH };
-    let response = HTTP.get(process.env.COUCH_URL + '/' + process.env.COUCH_DB + '/_design/basic/_view/flight_assignment?descending=false&startKey=[' + flightName + ']&endKey=[' + flightName + '\ufff0]', options);
+    let url = process.env.COUCH_URL + '/' + process.env.COUCH_DB 
+        + '/_design/basic/_view/flight_assignment?descending=false&startkey=["'
+        + flightName + '"]&endkey=["' + flightName + '",{}]';
+    console.log(url);
+    let response = HTTP.get(url, options);
 
     let flightList = JSON.parse(response.content);
     let people = flightList.rows;
     let qtyAdded = 0;
     for (var i in people) {
       let person = people[i];
-      console.log(person.key[1] + ' - ' + person.value.type + ' - ' + person.value.name_last);
+      console.log(person.key[0] + ' - ' + person.value.type + ' - ' + person.value.name_last);
       qtyAdded++;
     }
-    console.log('*** Added new call sheets to flight: ' + flightName);
+    console.log('*** Added ' + qtyAdded + ' new call sheets to flight: ' + flightName);
   }
 });
