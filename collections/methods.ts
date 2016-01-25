@@ -1,12 +1,14 @@
 /// <reference path="../typings/angular2-meteor.d.ts" />
-/// <reference path="../typings/call_center.d.ts" />
 /// <reference path="../typings/user_profile.d.ts" />
 /// <reference path="../typings/user_info.d.ts" />
+/// <reference path="../typings/call_center.d.ts" />
+/// <reference path="../typings/call_packet.d.ts" />
 
 declare var process: any;
 
-import {CallCenters} from './call_centers';
 import {UserProfiles} from './user_profiles';
+import {CallCenters} from './call_centers';
+import {CallPackets} from './call_packets';
 
 Meteor.methods({
   addCallCenter: function(callCenter: CallCenter) {
@@ -89,10 +91,28 @@ Meteor.methods({
     }
     return userInfo;
   },
-  getCallCenterName: function(callCenterId: string) {
-    return CallCenters.findOne( { _id: callCenterId } ).name;
-  },
   currentUserProfile: function() {
     return UserProfiles.findOne( { userId: this.userId } );
+  },
+  getVeteranListForFlight: function(flightName: string) {
+    var currentUserProfile = UserProfiles.findOne( { userId: this.userId } );
+    var currentUserIsCenterAdmin = (!!currentUserProfile && currentUserProfile.isCenterAdmin);
+
+    if (!currentUserIsCenterAdmin) {
+      throw new Meteor.Error('401', 'Only call center administrators can add new veteran packets.');
+    }
+
+    let options = { auth: process.env.COUCH_AUTH };
+    let response = HTTP.get(process.env.COUCH_URL + '/' + process.env.COUCH_DB + '/_design/basic/_view/flight_assignment?descending=false&startKey=[' + flightName + ']&endKey=[' + flightName + '\ufff0]', options);
+
+    let flightList = JSON.parse(response.content);
+    let people = flightList.rows;
+    let qtyAdded = 0;
+    for (var i in people) {
+      let person = people[i];
+      console.log(person.key[1] + ' - ' + person.value.type + ' - ' + person.value.name_last);
+      qtyAdded++;
+    }
+    console.log('*** Added new call sheets to flight: ' + flightName);
   }
 });

@@ -4,11 +4,12 @@
       <accounts-ui></accounts-ui>
     </div>
     <div class="col-xs-4">
-      <button type="button" class="btn btn-sm btn-default" [routerLink]="['/CallCentersList']">Call List</button>
+      <button type="button" class="btn btn-sm btn-info" [routerLink]="['/CallCentersList']">Call Centers</button>
+      <button type="button" class="btn btn-sm btn-warning" (click)="addVeteransFromFlight()">Add from Flight</button>
     </div>
   </div>
   <div class="page-header">
-    <h1>{{callCenterName}}</h1>
+    <h1>{{getCallCenterName()}}</h1>
   </div>
   <div class="page-header">
     <h2>Your Call Packets</h2>
