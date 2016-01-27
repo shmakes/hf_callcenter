@@ -5,82 +5,155 @@
     </div>
     <div class="col-xs-6">
       <button type="button" class="btn btn-sm btn-info" [routerLink]="['/CallCentersList']">Back to Events</button>
-      <button type="button" class="btn btn-sm btn-warning" (click)="addVeteransFromFlight()" [hidden]="!userIsCenterAdmin() || getCallCenterIsRemoved()">Add from Flight</button>
     </div>
   </div>
-  <div class="page-header">
-    <h1>{{getCallCenterName()}}</h1>
+  <br />
+  <div class="row page-header">
+    <div class="col-xs-8">
+      <h1>{{getCallCenterName()}}</h1>
+    </div>
+    <div class="col-xs-4">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="packetsVisible"  (click)="showPackets()">Packets</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="commentsVisible" (click)="showComments()">Comments</a>
+        </li>
+      </ul>
+    </div>
   </div>
-  <div class="page-header">
-    <h2>Your Call Packets</h2>
-  </div>
-  <ul class="list-group">
-    <li *ngFor="#callPacket of assignedCallPackets" class="list-group-item" [class.bg-inverse]="callPacket.isRemoved">
-      <div class="container">
-        <div class="row">
-          <div class="label label-primary col-md-6 col-sm-12 col-xs-12">
-            <a [routerLink]="['/CallPacket', {callPacketId: callPacket._id}]">
-              <h4>{{callPacket.veteranName}}</h4>
-            </a>
+  <br />
+  <div [hidden]="!packetsVisible" >
+    <div class="page-header">
+      <h2>Your Call Packets</h2>
+    </div>
+    <ul class="list-group">
+      <li *ngFor="#callPacket of assignedCallPackets" class="list-group-item" [class.bg-inverse]="callPacket.isRemoved">
+        <div class="container">
+          <div class="row">
+            <div class="label label-primary col-md-6 col-sm-12 col-xs-12">
+              <a [routerLink]="['/CallPacket', {callPacketId: callPacket._id}]">
+                <h4>{{callPacket.veteranName}}</h4>
+              </a>
+            </div>
+            <div class="label label-danger col-md-6 col-sm-12 col-xs-12">
+              <a [routerLink]="['/CallPacket', {callPacketId: callPacket._id}]">
+                <h4>{{callPacket.guardianName}}</h4>
+              </a>
+            </div>
           </div>
-          <div class="label label-danger col-md-6 col-sm-12 col-xs-12">
-            <a [routerLink]="['/CallPacket', {callPacketId: callPacket._id}]">
-              <h4>{{callPacket.guardianName}}</h4>
-            </a>
+          <div class="row">
+            <div class="col-md-4 col-sm-12 col-xs-12">
+              Veteran: {{callStatusName(callPacket.veteranStatus)}}
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+              Guardian: {{callStatusName(callPacket.guardianStatus)}}
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+              Mail Call: {{callStatusName(callPacket.mailCallStatus)}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-12 col-xs-12">
+              Caller: {{callPacket.callerName}}
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+              Updated: {{utils.formatDate(callPacket.updatedAt)}}
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-4 col-sm-12 col-xs-12">
-            Veteran: {{callStatusName(callPacket.veteranStatus)}}
-          </div>
-          <div class="col-md-4 col-sm-12 col-xs-12">
-            Guardian: {{callStatusName(callPacket.guardianStatus)}}
-          </div>
-          <div class="col-md-4 col-sm-12 col-xs-12">
-            Mail Call: {{callStatusName(callPacket.mailCallStatus)}}
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 col-sm-12 col-xs-12">
-            Caller: {{callPacket.callerName}}
-          </div>
-          <div class="col-md-6 col-sm-12 col-xs-12">
-            Updated: {{utils.formatDate(callPacket.updatedAt)}}
-          </div>
-        </div>
+      </li>
+    </ul>
+    <br />
+    <div class="row page-header">
+      <div class="col-xs-6">
+        <h2>Available Call Packets</h2>
       </div>
-    </li>
-  </ul>
-  <div class="page-header">
-    <h2>Available Call Packets</h2>
-  </div>
-  <ul class="list-group">
-    <li *ngFor="#callPacket of availableCallPackets" class="list-group-item" [class.bg-inverse]="callPacket.isRemoved">
-      <div class="container">
-        <div class="row">
-          <div class="label label-primary col-md-6 col-sm-12 col-xs-12">
-            <a [routerLink]="['/CallPacket', {callPacketId: callPacket._id}]">
-              <h4>{{callPacket.veteranName}}</h4>
-            </a>
-          </div>
-          <div class="label label-danger col-md-6 col-sm-12 col-xs-12">
-            <a [routerLink]="['/CallPacket', {callPacketId: callPacket._id}]">
-              <h4>{{callPacket.guardianName}}</h4>
-            </a>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 col-sm-12 col-xs-12">
-            Veteran: {{callStatusName(callPacket.veteranStatus)}}
-          </div>
-          <div class="col-md-4 col-sm-12 col-xs-12">
-            Guardian: {{callStatusName(callPacket.guardianStatus)}}
-          </div>
-          <div class="col-md-4 col-sm-12 col-xs-12">
-            Mail Call: {{callStatusName(callPacket.mailCallStatus)}}
-          </div>
-        </div>
+      <div class="col-xs-6">
+        <button type="button" class="btn btn-sm btn-warning" (click)="addVeteransFromFlight()" [hidden]="!userIsCenterAdmin() || getCallCenterIsRemoved()">Add from Flight</button>
       </div>
-    </li>
-  </ul>
+    </div>
+    <ul class="list-group">
+      <li *ngFor="#callPacket of availableCallPackets" class="list-group-item" [class.bg-inverse]="callPacket.isRemoved">
+        <div class="container">
+          <div class="row">
+            <div class="label label-primary col-md-6 col-sm-12 col-xs-12">
+              <a [routerLink]="['/CallPacket', {callPacketId: callPacket._id}]">
+                <h4>{{callPacket.veteranName}}</h4>
+              </a>
+            </div>
+            <div class="label label-danger col-md-6 col-sm-12 col-xs-12">
+              <a [routerLink]="['/CallPacket', {callPacketId: callPacket._id}]">
+                <h4>{{callPacket.guardianName}}</h4>
+              </a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-sm-12 col-xs-12">
+              Veteran: {{callStatusName(callPacket.veteranStatus)}}
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+              Guardian: {{callStatusName(callPacket.guardianStatus)}}
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+              Mail Call: {{callStatusName(callPacket.mailCallStatus)}}
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div [hidden]="!commentsVisible" >
+    <div class="row page-header">
+      <div class="col-xs-6">
+        <h2>Comments</h2>
+      </div>
+      <div class="col-xs-6">
+        <button type="button" class="btn btn-sm btn-default">Add Comment</button>
+      </div>
+    </div>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <b>Some nice comment about the call center in general.</b>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-sm-12 col-xs-12">
+              Jane Smith
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+              on 1/25/2005 at 4:45pm
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+              Ref: General
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <b>Some specific comment about a veteran on this list.</b>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-sm-12 col-xs-12">
+              John Miller
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+              on 1/24/2005 at 7:17pm
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+              Ref: <a href="#">Frank Salimeri</a>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>

@@ -34,10 +34,12 @@ export class CallPacketsList extends MeteorComponent {
   utils: Utils;
   currentUserProfile: UserProfile;
   isCenterAdmin: boolean;
-  
+  packetsVisible: boolean;
+  commentsVisible: boolean;
 
   constructor (params: RouteParams) {
     super();
+    this.showPackets();
     this.utils = new Utils();
     var callCenterId = params.get('callCenterId');
 
@@ -95,4 +97,15 @@ export class CallPacketsList extends MeteorComponent {
       alert('Please log in as a call center administrator to add new packets from a flight.');
     }
   }
+
+  showPackets() {
+    this.packetsVisible  = true;
+    this.commentsVisible = false;
+  }
+
+  showComments() {
+    this.packetsVisible  = false;
+    this.commentsVisible = true;
+  }
+
 }
