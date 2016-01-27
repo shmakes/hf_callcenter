@@ -9,10 +9,10 @@
   </div>
   <br />
   <div class="row page-header">
-    <div class="col-xs-8">
+    <div class="col-sm-6 col-xs-12">
       <h1>{{getCallCenterName()}}</h1>
     </div>
-    <div class="col-xs-4">
+    <div class="col-sm-6 col-xs-12">
       <ul class="nav nav-pills">
         <li class="nav-item">
           <a class="nav-link" [class.active]="packetsVisible"  (click)="showPackets()">Packets</a>
@@ -45,13 +45,22 @@
           </div>
           <div class="row">
             <div class="col-md-4 col-sm-12 col-xs-12">
-              Veteran: {{callStatusName(callPacket.veteranStatus)}}
+              Veteran:
+              <span class="label {{callStatusColorClass(callPacket.veteranStatus)}}">
+                {{callStatusName(callPacket.veteranStatus)}}
+              </span>
             </div>
             <div class="col-md-4 col-sm-12 col-xs-12">
-              Guardian: {{callStatusName(callPacket.guardianStatus)}}
+              Guardian:
+              <span class="label {{callStatusColorClass(callPacket.guardianStatus)}}">
+                {{callStatusName(callPacket.guardianStatus)}}
+              </span>
             </div>
             <div class="col-md-4 col-sm-12 col-xs-12">
-              Mail Call: {{callStatusName(callPacket.mailCallStatus)}}
+              Mail Call:
+              <span class="label {{callStatusColorClass(callPacket.mailCallStatus)}}">
+                {{callStatusName(callPacket.mailCallStatus)}}
+              </span>
             </div>
           </div>
           <div class="row">
@@ -71,7 +80,7 @@
         <h2>Available Call Packets</h2>
       </div>
       <div class="col-xs-6">
-        <button type="button" class="btn btn-sm btn-warning" (click)="addVeteransFromFlight()" [hidden]="!userIsCenterAdmin() || getCallCenterIsRemoved()">Add from Flight</button>
+        <button type="button" class="btn btn-sm btn-default" (click)="addVeteransFromFlight()" [hidden]="!userIsCenterAdmin() || getCallCenterIsRemoved()">Add from Flight</button>
       </div>
     </div>
     <ul class="list-group">
@@ -91,13 +100,22 @@
           </div>
           <div class="row">
             <div class="col-md-4 col-sm-12 col-xs-12">
-              Veteran: {{callStatusName(callPacket.veteranStatus)}}
+              Veteran:
+              <span class="label {{callStatusColorClass(callPacket.veteranStatus)}}">
+                {{callStatusName(callPacket.veteranStatus)}}
+              </span>
             </div>
             <div class="col-md-4 col-sm-12 col-xs-12">
-              Guardian: {{callStatusName(callPacket.guardianStatus)}}
+              Guardian:
+              <span class="label {{callStatusColorClass(callPacket.guardianStatus)}}">
+                {{callStatusName(callPacket.guardianStatus)}}
+              </span>
             </div>
             <div class="col-md-4 col-sm-12 col-xs-12">
-              Mail Call: {{callStatusName(callPacket.mailCallStatus)}}
+              Mail Call:
+              <span class="label {{callStatusColorClass(callPacket.mailCallStatus)}}">
+                {{callStatusName(callPacket.mailCallStatus)}}
+              </span>
             </div>
           </div>
         </div>
@@ -123,13 +141,13 @@
           </div>
           <div class="row">
             <div class="col-md-4 col-sm-12 col-xs-12">
-              Jane Smith
+              Jane Smith wrote on 1/25/2005 at 4:45pm
             </div>
             <div class="col-md-4 col-sm-12 col-xs-12">
-              on 1/25/2005 at 4:45pm
+              Ref:
             </div>
             <div class="col-md-4 col-sm-12 col-xs-12">
-              Ref: General
+              Tags: Announcement
             </div>
           </div>
         </div>
@@ -143,13 +161,13 @@
           </div>
           <div class="row">
             <div class="col-md-4 col-sm-12 col-xs-12">
-              John Miller
-            </div>
-            <div class="col-md-4 col-sm-12 col-xs-12">
-              on 1/24/2005 at 7:17pm
+              John Miller wrote on 1/25/2005 at 4:45pm
             </div>
             <div class="col-md-4 col-sm-12 col-xs-12">
               Ref: <a href="#">Frank Salimeri</a>
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+              Tags: Veteran, Medical
             </div>
           </div>
         </div>
