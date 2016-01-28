@@ -94,8 +94,8 @@ Meteor.methods({
   currentUserProfile: function() {
     return UserProfiles.findOne( { userId: this.userId } );
   },
-  getVeteranListForFlight: function(flightName: string) {
+  getVeteranListForFlight: function(callCenterId: string) {
     console.log('importCallSheets method on client');
-    Meteor.call('importCallSheetsFromFlight',flightName);
+    Meteor.call('importCallSheetsFromFlight',callCenterId);
   }
 });

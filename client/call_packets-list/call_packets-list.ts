@@ -117,10 +117,10 @@ export class CallPacketsList extends MeteorComponent {
   }
 
   addVeteransFromFlight() {
-    var fltName = this.callCenter.flightName;
+    var centerId = this.callCenter._id;
 
     if (this.userIsCenterAdmin()) {
-      Meteor.call('getVeteranListForFlight', fltName, (error) => {
+      Meteor.call('getVeteranListForFlight', centerId, (error) => {
         if (error) {
           alert(`Packets could not be added from flights. ${error}`);
           return;
