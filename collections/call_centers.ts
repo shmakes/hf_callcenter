@@ -5,8 +5,8 @@ export var CallCenters = new Mongo.Collection<CallCenter>('call_centers');
 
 CallCenters.allow({
   insert: function(callCenter: Object) {
-    var userIsSysAdmin = Meteor.call('currentUserIsSystemAdmin');
-    return !!userIsSysAdmin;
+    var userProfile = Meteor.call('currentUserProfile');
+    return (userProfile && userProfile.isSystemAdmin);
   },
   update: function(callCenter: Object, fields, modifier) {
     var userProfile = Meteor.call('currentUserProfile');
@@ -15,12 +15,10 @@ CallCenters.allow({
     } else {
       console.log('*** Unauthorized attempt to update Call Center by: ' + userProfile.name + ' (' + userProfile.userId + ')');
     }
-    return userProfile.isSystemAdmin;
+    return (userProfile && userProfile.isSystemAdmin);
   },
   remove: function(callCenter: Object) {
     // * Do not allow removal - soft delete using isRemoved to hide.
-    //var user = Meteor.user();
-    //return !!user;
     return false;
   }
 });
