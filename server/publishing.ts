@@ -16,9 +16,17 @@ var isCenterAdmin = function(userId: string) {
 
 Meteor.publish('userProfiles', function() {
   if(this.userId){
-    return isCenterAdmin(this.userId)
-            ? UserProfiles.find()
-            : UserProfiles.find( { userId: this.userId } );
+    var filter: any;
+
+    if (isSystemAdmin(this.userId)) {
+      filter = {};
+    } else if (isCenterAdmin) {
+      filter = { isValidated: true };
+    } else {
+      filter = { userId: this.userId };
+    }
+
+    return UserProfiles.find( filter );
   }
 });
 

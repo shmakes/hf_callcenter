@@ -19,7 +19,7 @@ import {CallStatus} from 'collections/enums';
 
 var initCallPacket = function(callCenter: CallCenter) : CallPacket {
 
-return <CallPacket> 
+return <CallPacket>
         {
           'callCenterId':         callCenter._id,
           'callCenterName':       callCenter.name,
@@ -79,7 +79,7 @@ Meteor.methods({
     console.log('Adding call packets for flight: ' + callCenter.flightName + ' to call center: ' + callCenter.name);
 
     let options = { auth: process.env.COUCH_AUTH };
-    let url = process.env.COUCH_URL + '/' + process.env.COUCH_DB 
+    let url = process.env.COUCH_URL + '/' + process.env.COUCH_DB
         + '/_design/basic/_view/flight_assignment?descending=false&startkey=["'
         + callCenter.flightName + '"]&endkey=["' + callCenter.flightName + '",{}]&include_docs=true';
     console.log(url);

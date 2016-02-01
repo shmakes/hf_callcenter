@@ -3,6 +3,7 @@ declare type UserProfile = {
   userId: string,
   isSystemAdmin: boolean,
   isCenterAdmin: boolean,
+  isValidated: boolean,
   name: string,
   phone: string,
   email: string,

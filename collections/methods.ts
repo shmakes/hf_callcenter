@@ -34,6 +34,13 @@ Meteor.methods({
       throw new Meteor.Error('404', 'Flight name does not exist in the flight database.');
     }
     callCenter.flightId = flightId;
+    callCenter.callers = [];
+    callCenter.history = [];
+    callCenter.createdBy = currentUserProfile.name;
+    callCenter.createdAt = new Date().toISOString();
+    callCenter.updatedAt = new Date().toISOString();
+    callCenter.isRemoved = false;
+
     CallCenters.insert(callCenter);
     console.log('*** Call Center created by: ' + currentUserProfile.name + '\n' + JSON.stringify(callCenter, null, '\t') );
   },

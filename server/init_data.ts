@@ -15,9 +15,13 @@ export function initData() {
           'endDate':     new Date(new Date().setDate(new Date().getDate() + 14)).toISOString(),
           'flightName': 'SSHF-Apr2016',
           'flightId':   '6ee5e5c42cd34bc23225d2136601a14f',
+          'callers':    [],
+          'history':    [],
           'createdBy':  'Sample',
-          'isRemoved':  false,
-          'callers':    []
+          'createdAt':   new Date().toISOString(),
+          'updatedAt':   new Date().toISOString(),
+          'isRemoved':  false
+
         },
         {
           'name':       'May 2016',
@@ -25,9 +29,12 @@ export function initData() {
           'endDate':    '2016-05-28T18:00:00.000Z',
           'flightName': 'SSHF-May2016',
           'flightId':   '6ee5e5c42cd34bc23225d2136601a9ed',
+          'callers':    [],
+          'history':    [],
           'createdBy':  'Sample',
-          'isRemoved':  false,
-          'callers':    []
+          'createdAt':   new Date().toISOString(),
+          'updatedAt':   new Date().toISOString(),
+          'isRemoved':  false
         }
     ];
 

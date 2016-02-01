@@ -23,6 +23,14 @@ declare type HistoryLog = {
   change: string
 }
 
+declare type Call = {
+  assigned_to: string,
+  fm_number: string,
+  mail_sent: boolean,
+  email_sent: boolean,
+  history: HistoryLog[]
+}
+
 declare type Flight = {
   id: string,
   status: string,
@@ -136,6 +144,7 @@ declare type General = {
   gender: string,
   alt_contact: Contact,
   emerg_contact: Contact,
+  call: Call,
   apparel: Apparel,
   metadata: Metadata
 }

@@ -1,25 +1,28 @@
 /// <reference path="../typings/angular2-meteor.d.ts" />
 /// <reference path="../typings/call_packet.d.ts" />
 /// <reference path="../typings/hf_db_types.d.ts" />
- 
+
 export var GuardianDbDocs = new Mongo.Collection<GuardianDbDoc>('guardian_db_docs');
 
 GuardianDbDocs.allow({
-  insert: function(callCenter: Object) {
-    var userProfile = Meteor.call('currentUserProfile');
-    return (userProfile && userProfile.isCenterAdmin);
+  insert: function() {
+    // * Do not allow addition - guardian DB docs are only added via a server method.
+    return false;
   },
-  update: function(callCenter: Object, fields, modifier) {
+  update: function(userId: string, doc: GuardianDbDoc, fields, modifier) {
     var userProfile = Meteor.call('currentUserProfile');
-    var assignedPacket = true; //TODO: Perform check here.
-    if (userProfile && (userProfile.isCenterAdmin || assignedPacket)) {
-      console.log('*** Updating guardian DB doc by: ' + userProfile.name + ' (' + userProfile.userId + ')');
+    var allowed = (userProfile
+      && (userProfile.isSystemAdmin
+        || userProfile.isCenterAdmin));
+
+    if (allowed) {
+      console.log('*** Updating Guardian DB Doc by: ' + userProfile.name + ' (' + userProfile.userId + ')');
     } else {
-      console.log('*** Unauthorized attempt to update guardian DB doc by: ' + userProfile.name + ' (' + userProfile.userId + ')');
+      console.log('*** Unauthorized attempt to update Guardian DB Doc by: ' + userProfile.name + ' (' + userProfile.userId + ')');
     }
-    return (userProfile && userProfile.isCenterAdmin);
+    return (allowed);
   },
-  remove: function(callPacket: Object) {
+  remove: function() {
     // * Do not allow removal - soft delete using isRemoved to hide.
     return false;
   }

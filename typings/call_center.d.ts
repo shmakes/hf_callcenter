@@ -1,3 +1,11 @@
+declare type CallCenterHistory = {
+  field: string,
+  change: string,
+  updatedBy: string,
+  updatedAt: string
+}
+
+
 declare type CallCenter = {
   _id?: string,
   name: string,
@@ -5,7 +13,10 @@ declare type CallCenter = {
   endDate: string,
   flightName: string,
   flightId: string,
+  callers: string[],
+  history: Array<CallCenterHistory>,
   createdBy: string,
-  isRemoved: boolean,
-  callers: string[]
+  createdAt: string,
+  updatedAt: string,
+  isRemoved: boolean  
 }

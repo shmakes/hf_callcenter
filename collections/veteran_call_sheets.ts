@@ -1,25 +1,30 @@
 /// <reference path="../typings/angular2-meteor.d.ts" />
 /// <reference path="../typings/call_packet.d.ts" />
 /// <reference path="../typings/hf_db_types.d.ts" />
- 
+
 export var VeteranCallSheets = new Mongo.Collection<VeteranCallSheet>('veteran_call_sheets');
 
 VeteranCallSheets.allow({
-  insert: function(callCenter: Object) {
-    var userProfile = Meteor.call('currentUserProfile');
-    return (userProfile && userProfile.isCenterAdmin);
+  insert: function() {
+    // * Do not allow addition - veteran call sheets are only added via a server method.
+    return false;
   },
-  update: function(callCenter: Object, fields, modifier) {
+  update: function(userId: string, doc: VeteranCallSheet, fields, modifier) {
     var userProfile = Meteor.call('currentUserProfile');
-    var assignedPacket = true; //TODO: Perform check here.
-    if (userProfile && (userProfile.isCenterAdmin || assignedPacket)) {
-      console.log('*** Updating veteran call sheet by: ' + userProfile.name + ' (' + userProfile.userId + ')');
+    //TODO: Find the call packet for this sheet and see if the current user is the assigned caller.    
+    var allowed = (userProfile
+      && (userProfile.isSystemAdmin
+        || userProfile.isCenterAdmin));
+//        || doc.callerId == userId));
+
+    if (allowed) {
+      console.log('*** Updating Veteran Call Sheet by: ' + userProfile.name + ' (' + userProfile.userId + ')');
     } else {
-      console.log('*** Unauthorized attempt to update veteran call sheet by: ' + userProfile.name + ' (' + userProfile.userId + ')');
+      console.log('*** Unauthorized attempt to update Veteran Call Sheet by: ' + userProfile.name + ' (' + userProfile.userId + ')');
     }
-    return (userProfile && userProfile.isCenterAdmin);
+    return (allowed);
   },
-  remove: function(callPacket: Object) {
+  remove: function() {
     // * Do not allow removal - soft delete using isRemoved to hide.
     return false;
   }
