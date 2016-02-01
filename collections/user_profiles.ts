@@ -1,6 +1,3 @@
-/// <reference path="../typings/angular2-meteor.d.ts" />
-/// <reference path="../typings/user_profile.d.ts" />
-
 export var UserProfiles = new Mongo.Collection<UserProfile>('user_profiles');
 
 UserProfiles.allow({

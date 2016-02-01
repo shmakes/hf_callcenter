@@ -1,0 +1,13 @@
+{
+  "files": [
+    "typings/angular2-meteor/angular2-meteor.d.ts",
+    "typings/ng2-meteor-accounts/ng2-meteor-accounts.d.ts",
+    "typings/ng2-meteor-accounts-ui/ng2-meteor-accounts-ui.d.ts",
+    "typings/moment/moment.d.ts",
+    "typings/call_center/call_center.d.ts",
+    "typings/call_center/call_packet.d.ts",
+    "typings/call_center/hf_db_types.d.ts",
+    "typings/call_center/user_info.d.ts",
+    "typings/call_center/user_profile.d.ts"
+  ]
+}

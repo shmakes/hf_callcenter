@@ -1,5 +1,3 @@
-/// <reference path="../typings/angular2-meteor.d.ts" />
-
 import {UserProfiles} from 'collections/user_profiles';
 import {CallCenters} from 'collections/call_centers';
 import {CallPackets} from 'collections/call_packets';

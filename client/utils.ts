@@ -1,5 +1,3 @@
-/// <reference path="../typings/moment/moment.d.ts" />
-
 export class Utils {
   formatDate(date: string): string {
     if (!date) {

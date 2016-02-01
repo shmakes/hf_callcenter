@@ -1,7 +1,3 @@
-/// <reference path="../typings/angular2-meteor.d.ts" />
-/// <reference path="../typings/call_packet.d.ts" />
-/// <reference path="../typings/hf_db_types.d.ts" />
-
 export var VeteranDbDocs = new Mongo.Collection<VeteranDbDoc>('veteran_db_docs');
 
 VeteranDbDocs.allow({

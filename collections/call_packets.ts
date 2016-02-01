@@ -1,6 +1,3 @@
-/// <reference path="../typings/angular2-meteor.d.ts" />
-/// <reference path="../typings/call_packet.d.ts" />
-
 export var CallPackets = new Mongo.Collection<CallPacket>('call_packets');
 
 CallPackets.allow({

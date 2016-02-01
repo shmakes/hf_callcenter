@@ -1,5 +1,3 @@
-/// <reference path="../typings/user_profile.d.ts" />
-
 import 'collections/call_centers';
 import {UserProfiles} from 'collections/user_profiles';
 import {initData} from './init_data';

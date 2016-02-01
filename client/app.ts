@@ -1,5 +1,3 @@
-/// <reference path="../typings/angular2-meteor.d.ts" />
-
 import {Component, View, NgZone, provide, enableProdMode} from 'angular2/core';
 import {NgFor} from 'angular2/common';
 import {bootstrap} from 'angular2-meteor';

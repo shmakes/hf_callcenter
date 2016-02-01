@@ -1,6 +1,3 @@
-/// <reference path="../../typings/angular2-meteor.d.ts" />
-/// <reference path="../../typings/call_center.d.ts" />
-
 import {Component, View} from 'angular2/core';
 import {FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
 import {CallCenters} from 'collections/call_centers';

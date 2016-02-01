@@ -1,6 +1,3 @@
-/// <reference path="../typings/call_center.d.ts" />
-/// <reference path="../typings/call_packet.d.ts" />
-
 import {CallCenters} from 'collections/call_centers';
 import {CallPackets} from 'collections/call_packets';
 import {CallStatus} from 'collections/enums';

@@ -1,9 +1,3 @@
-/// <reference path="../../typings/angular2-meteor.d.ts" />
-/// <reference path="../../typings/meteor-accounts-ui.d.ts" />
-/// <reference path="../../typings/meteor-accounts.d.ts" />
-/// <reference path="../../typings/call_packet.d.ts" />
-/// <reference path="../../typings/moment/moment.d.ts" />
-
 import {Component, View} from 'angular2/core';
 import {NgFor} from 'angular2/common';
 import {CallCenters} from 'collections/call_centers';

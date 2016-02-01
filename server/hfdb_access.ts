@@ -1,9 +1,3 @@
-/// <reference path="../typings/angular2-meteor.d.ts" />
-/// <reference path="../typings/user_profile.d.ts" />
-/// <reference path="../typings/user_info.d.ts" />
-/// <reference path="../typings/call_center.d.ts" />
-/// <reference path="../typings/call_packet.d.ts" />
-
 declare var process: any;
 
 import 'collections/methods';
