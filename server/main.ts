@@ -11,7 +11,9 @@ declare var process: any;
 
 Meteor.startup(function () {
   initData();
-  console.log(HTTP.get(process.env.COUCH_URL).content);
+  if (process.env.COUCH_URL) {
+    console.log(HTTP.get(process.env.COUCH_URL).content);
+  }
 });
 
 Accounts.onCreateUser(function(options, user) {
