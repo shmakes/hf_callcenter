@@ -26,9 +26,9 @@
     <h1>User Profiles</h1>
   </div>
   <ul class="list-group">
-    <li *ngFor="#userProfile of profiles" class="list-group-item">
+    <li *ngFor="#userProfile of profiles" class="list-group-item" [class.bg-inverse]="userProfile.isRemoved">
       <h3>
-        <a [routerLink]="['/UserProfileDetails', {userProfileId: userProfile._id}]">{{userProfile.name}}</a>
+        <a [routerLink]="['/UserProfileDetails', {userProfileId: userProfile._id}]" [class.label-warning]="!userProfile.isValidated" >{{userProfile.name}}</a>
       </h3>
       <div>Phone: <a href="tel:{{userProfile.phone}}">{{userProfile.phone}}</a></div>
       <div>Email: <a href="mailto:{{userProfile.email}}">{{userProfile.email}}</a></div>

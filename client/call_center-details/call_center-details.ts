@@ -31,7 +31,7 @@ export class CallCenterDetails extends MeteorComponent {
     }, true);
 
     this.subscribe('userProfiles', () => {
-      this.users = UserProfiles.find( { isRemoved: false } ).fetch();
+      this.users = UserProfiles.find( { $and: [ { isRemoved: false }, { isValidated: true } ] } ).fetch();
     }, true);
   }
 

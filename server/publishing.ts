@@ -18,8 +18,8 @@ Meteor.publish('userProfiles', function() {
 
     if (isSystemAdmin(this.userId)) {
       filter = {};
-    } else if (isCenterAdmin) {
-      filter = { isValidated: true };
+    } else if (isCenterAdmin(this.userId)) {
+      filter = { $and: [ { isValidated: true } , { isRemoved: false } ] };
     } else {
       filter = { userId: this.userId };
     }

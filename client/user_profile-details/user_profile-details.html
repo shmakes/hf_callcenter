@@ -33,6 +33,18 @@
         <input type="checkbox" class="form-control" id="userProfileIsCenterAdmin" [(ngModel)]="userProfile.isCenterAdmin">
       </div>
     </div>
+    <div class="form-group row" [hidden]="!userIsSystemAdmin()">
+      <label class="col-sm-3 col-xs-12 control-label" for="userProfileIsValidated">Validated</label>
+      <div class="col-sm-9 col-xs-12">
+        <input type="checkbox" class="form-control" id="userProfileIsValidated" [(ngModel)]="userProfile.isValidated">
+      </div>
+    </div>
+    <div class="form-group row" [hidden]="!userIsSystemAdmin()">
+      <label class="col-sm-3 col-xs-12 control-label" for="userProfileIsRemoved">Deleted (Hide)</label>
+      <div class="col-sm-9 col-xs-12">
+        <input type="checkbox" class="form-control" id="userProfileIsRemoved" [(ngModel)]="userProfile.isRemoved">
+      </div>
+    </div>
     <div *ngIf="userIsSystemAdmin()">
       <div class="page-header">
         <h3>Login Account Info (Read-Only)</h3>

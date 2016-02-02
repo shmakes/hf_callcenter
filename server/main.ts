@@ -38,6 +38,7 @@ Accounts.onCreateUser(function(options, user) {
     'userId':          user._id,
     'isSystemAdmin':   isSystemAdmin,
     'isCenterAdmin':   isCenterAdmin,
+    'isValidated':     false,
     'name':            name,
     'phone':           '',
     'email':           email,

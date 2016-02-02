@@ -46,7 +46,9 @@ Meteor.methods({
       UserProfiles.update(userProfile._id, {
         $set: {
           isSystemAdmin: userProfile.isSystemAdmin,
-          isCenterAdmin: userProfile.isCenterAdmin
+          isCenterAdmin: userProfile.isCenterAdmin,
+          isValidated: userProfile.isValidated,
+          isRemoved: userProfile.isRemoved
         }
       });
     }
