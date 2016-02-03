@@ -19,7 +19,7 @@ declare type Address = {
 }
 
 declare type HistoryLog = {
-  id: Date,
+  id: string,
   change: string
 }
 
@@ -80,7 +80,7 @@ declare type Notes = {
 declare type VeteranMedical = {
   limitations: string,
   examRequired: boolean,
-  level: number,
+  level: string,
   review: string,
   usesWheelchair: boolean,
   usesCane: boolean,
@@ -98,9 +98,9 @@ declare type GuardianMedical = {
 }
 
 declare type Metadata = {
-  created_at: Date,
+  created_at: string,
   created_by: string,
-  updated_at: Date,
+  updated_at: string,
   updated_by: string
 }
 
@@ -110,7 +110,7 @@ declare type Contact = {
   address: Address
 }
 
-declare type Service = {
+declare type MilService = {
   service_number: string,
   dates: string,
   rank: string,
@@ -156,7 +156,7 @@ declare type VeteranDbDoc = {
   guardian: PairedGuardian,
   vet_type: string,
   medical: VeteranMedical,
-  service: Service,
+  service: MilService,
   media_ok: boolean,
   flight: VeteranFlight
 }

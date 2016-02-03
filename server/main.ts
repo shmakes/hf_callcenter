@@ -2,7 +2,7 @@ import 'collections/call_centers';
 import {UserProfiles} from 'collections/user_profiles';
 import {initData} from './init_data';
 import './publishing';
-import './hfdb_access';
+import './hfdb_access/hfdb_access';
 import 'collections/methods';
 
 declare var process: any;

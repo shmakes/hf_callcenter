@@ -9,54 +9,8 @@ import {VeteranCallSheets} from 'collections/veteran_call_sheets';
 import {GuardianDbDocs} from 'collections/guardian_db_docs';
 import {GuardianCallSheets} from 'collections/guardian_call_sheets';
 import {CallStatus} from 'collections/enums';
-
-
-var initCallPacket = function(callCenter: CallCenter) : CallPacket {
-
-return <CallPacket>
-        {
-          'callCenterId':         callCenter._id,
-          'callCenterName':       callCenter.name,
-          'callerId':             '',
-          'callerName':           '',
-          'callerHistory':        new Array<CallerHistory>(),
-          'veteranCallSheetId':   '',
-          'veteranDbId':          '',
-          'veteranName':          '',
-          'veteranStatus':        CallStatus.New,
-          'guardianCallSheetId':  '',
-          'guardianDbId':         '',
-          'guardianName':         '',
-          'guardianStatus':       CallStatus.New,
-          'mailCallName':         '',
-          'mailCallRelationship': '',
-          'mailCallPhone':        '',
-          'mailCallEmail':        '',
-          'mailCallStatus':       CallStatus.New,
-          'callStatusHistory':    new Array<CallStatusHistory>(),
-          'createdAt':            new Date().toISOString(),
-          'updatedAt':            new Date().toISOString(),
-          'isRemoved':            false
-        };
-};
-
-var fillVetPacketData = function(packet: CallPacket, vetData: any) : CallPacket {
-  packet.veteranCallSheetId = vetData._id;
-  packet.veteranDbId = vetData._id;
-  packet.veteranName = vetData.name.first + ' ' + vetData.name.last;
-  packet.veteranStatus = CallStatus.New;
-
-  return packet;
-};
-
-var fillGrdPacketData = function(packet: CallPacket, grdData: any) : CallPacket {
-  packet.guardianCallSheetId = grdData._id;
-  packet.guardianDbId = grdData._id;
-  packet.guardianName = grdData.name.first + ' ' + grdData.name.last;
-  packet.guardianStatus = CallStatus.New;
-
-  return packet;
-};
+import {HFDataAdapters} from 'server/hfdb_access/hfdb_data_adapters';
+import {DataUtils} from 'server/hfdb_access/data_utils';
 
 Meteor.methods({
   importCallSheetsFromFlight: function(callCenterId: string) {
@@ -85,7 +39,7 @@ Meteor.methods({
     let vetsAdded = 0;
     let grdsAdded = 0;
     let personPairingId = '';
-    let packet = initCallPacket(callCenter);
+    let packet = DataUtils.initCallPacket(callCenter);
 
     for (var i in people) {
       if (people[i].key[1] == personPairingId) {
@@ -95,11 +49,11 @@ Meteor.methods({
         let existingVet = CallPackets.findOne( {guardianDbId: grdData._id} );
         if (!existingVet) {
           console.log('Adding guardian: ' + grdData.name.first + ' ' + grdData.name.last);
-          packet = fillGrdPacketData(packet, grdData);
+          packet = HFDataAdapters.fillGrdPacketData(packet, grdData);
           grdsAdded++;
 
           CallPackets.insert(packet);
-          packet = initCallPacket(callCenter);
+          packet = DataUtils.initCallPacket(callCenter);
           qtyAdded++;
         }
       } else {
@@ -116,10 +70,16 @@ Meteor.methods({
           // Check for Veteran
           let existingVet = CallPackets.findOne( {veteranDbId: person.id} );
           if (!existingVet) {
-            packet = initCallPacket(callCenter);
+            packet = DataUtils.initCallPacket(callCenter);
             let vetData = person.doc;
             console.log('Adding veteran: ' + vetData.name.first + ' ' + vetData.name.last);
-            packet = fillVetPacketData(packet, vetData);
+            let vetDbDoc = HFDataAdapters.fillVeteranDbDoc(vetData);
+            VeteranDbDocs.insert(vetDbDoc);
+
+            let vetCallSheet = HFDataAdapters.fillVeteranCallSheet(vetDbDoc, vetData);
+            VeteranCallSheets.insert(vetCallSheet);
+
+            packet = HFDataAdapters.fillVetPacketData(packet, vetData);
             vetsAdded++;
 
           } //TODO: else find the vet and see if we can add a guardian.

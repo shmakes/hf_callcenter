@@ -4,6 +4,6 @@ export class Utils {
       return '';
     }
     let m = moment(date, [moment.ISO_8601, 'YYYY-MM-DD', 'MM/DD/YYYY', 'MM-DD-YYYY', 'M/D/YYYY', 'M/D/YY'], true);
-    return m.calendar()
+    return m.calendar();
   }
 }
