@@ -7,6 +7,7 @@ import {UserProfiles} from 'collections/user_profiles';
 import {AccountsUI} from 'meteor-accounts-ui';
 import {RequireUser} from 'meteor-accounts';
 import {MeteorComponent} from 'angular2-meteor';
+import {Utils} from 'client/utils';
 
 @Component({
   selector: 'call_packet-details'
@@ -20,6 +21,7 @@ import {MeteorComponent} from 'angular2-meteor';
 export class CallPacketDetails extends MeteorComponent {
   callPacket: CallPacket;
   callCenter: CallCenter;
+  utils: Utils;
   users: Array<UserProfile>;
   user: UserProfile;
   callers: Array<UserProfile>;
@@ -27,6 +29,7 @@ export class CallPacketDetails extends MeteorComponent {
 
   constructor(params: RouteParams, private _router: Router) {
     super();
+    this.utils = new Utils();
     var callPacketId = params.get('callPacketId');
     this.subscribe('callPacket', callPacketId, () => {
       this.callPacket = CallPackets.findOne(callPacketId);
@@ -117,4 +120,12 @@ export class CallPacketDetails extends MeteorComponent {
       }
     }
   }
+
+  callStatusName(callStat: number) {
+    return this.utils.callStatusName(callStat);
+  }
+  callStatusColorClass(callStat: number) {
+    return this.utils.callStatusColorClass(callStat);
+  }
+
 }

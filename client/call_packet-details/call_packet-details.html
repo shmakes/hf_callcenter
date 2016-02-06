@@ -11,53 +11,51 @@
   <div class="page-header">
     <h1>Edit Call Packet</h1>
   </div>
-  <form class="form-horizontal" *ngIf="callPacket">
-    <div class="container">
-      <div class="form-group row">
-        <label class="col-sm-3 col-xs-12 control-label" for="callCenterName">Event Name</label>
-        <div class="col-sm-9 col-xs-12">
-          <input type="text" class="form-control" id="callCenterName" placeholder="Event Name" [(ngModel)]="callPacket.callCenterName">
-        </div>
+
+  <div class="container" *ngIf="callPacket">
+    <div class="row">
+      <div class="label label-primary col-md-6 col-sm-12 col-xs-12">
+        <a [routerLink]="['/CallPacket', {callPacketId: callPacket._id}]">
+          <h4>{{callPacket.veteranName}}</h4>
+        </a>
       </div>
-      <div class="form-group row">
-        <label class="col-sm-3 col-xs-12 control-label" for="callerName">Caller Name</label>
-        <div class="col-sm-9 col-xs-12">
-          <select class="form-control" (change)="changeCaller($event)" [(ngModel)]="callPacket.callerId">
-            <option value="">---</option>
-            <option *ngFor="#caller of getCallers()" value="{{caller.userId}}">{{caller.name}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-3 col-xs-12 control-label" for="veteranName">Veteran Name</label>
-        <div class="col-sm-9 col-xs-12">
-          <input type="text" class="form-control" id="veteranName" placeholder="Veteran Name" [(ngModel)]="callPacket.veteranName">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-3 col-xs-12 control-label" for="veteranStatus">Veteran Status</label>
-        <div class="col-sm-9 col-xs-12">
-          <input type="text" class="form-control" id="veteranStatus" placeholder="Veteran Status" [(ngModel)]="callPacket.veteranStatus">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-3 col-xs-12 control-label" for="guardianName">Guardian Name</label>
-        <div class="col-sm-9 col-xs-12">
-          <input type="text" class="form-control" id="guardianName" placeholder="Guardian Name" [(ngModel)]="callPacket.guardianName">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-3 col-xs-12 control-label" for="guardianStatus">Guardian Status</label>
-        <div class="col-sm-9 col-xs-12">
-          <input type="text" class="form-control" id="guardianStatus" placeholder="Guardian Status" [(ngModel)]="callPacket.guardianStatus">
-        </div>
+      <div class="label label-danger col-md-6 col-sm-12 col-xs-12">
+        <a [routerLink]="['/CallPacket', {callPacketId: callPacket._id}]">
+          <h4>{{callPacket.guardianName}}</h4>
+        </a>
       </div>
     </div>
-    <br />
-    <div class="container">
-      <div class="form-group row">
-        <button class="btn btn-default" [routerLink]="['/CallPacketsList', { callCenterId: callPacket.callCenterId }]">Cancel</button>
+    <div class="row">
+      <div class="col-md-4 col-sm-12 col-xs-12">
+        Veteran:
+        <span class="label {{callStatusColorClass(callPacket.veteranStatus)}}">
+          {{callStatusName(callPacket.veteranStatus)}}
+        </span>
+      </div>
+      <div class="col-md-4 col-sm-12 col-xs-12">
+        Guardian:
+        <span class="label {{callStatusColorClass(callPacket.guardianStatus)}}">
+          {{callStatusName(callPacket.guardianStatus)}}
+        </span>
+      </div>
+      <div class="col-md-4 col-sm-12 col-xs-12">
+        Mail Call:
+        <span class="label {{callStatusColorClass(callPacket.mailCallStatus)}}">
+          {{callStatusName(callPacket.mailCallStatus)}}
+        </span>
       </div>
     </div>
-  </form>
+    <div class="row">
+      <div class="col-md-6 col-sm-12 col-xs-12">
+        Caller:
+        <select class="form-control" (change)="changeCaller($event)" [(ngModel)]="callPacket.callerId">
+          <option value="">---</option>
+          <option *ngFor="#caller of getCallers()" value="{{caller.userId}}">{{caller.name}}</option>
+        </select>
+      </div>
+      <div class="col-md-6 col-sm-12 col-xs-12">
+        Updated: {{utils.formatDate(callPacket.updatedAt)}}
+      </div>
+    </div>
+  </div>
 </div>
