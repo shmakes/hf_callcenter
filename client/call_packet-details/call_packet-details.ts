@@ -22,6 +22,7 @@ export class CallPacketDetails extends MeteorComponent {
   users: Array<UserProfile>;
   user: UserProfile;
   callers: Array<UserProfile>;
+  isCenterAdmin: boolean;
 
   constructor(params: RouteParams, private _router: Router) {
     super();
@@ -40,7 +41,7 @@ export class CallPacketDetails extends MeteorComponent {
   }
 
   changeCaller(e) {
-    if (Meteor.userId()) {
+    if (this.user.isCenterAdmin) {
       var callerId = e.target.value;
       var caller = this.callers.filter(function (caller) { return caller.userId === callerId; });
       var callerName = (caller && caller.length == 1) ? caller[0].name : "Unknown";
@@ -61,12 +62,12 @@ export class CallPacketDetails extends MeteorComponent {
         }
       });
     } else {
-      alert('Please log in to make changes.');
+      alert('You must be a call center admin to assign packets.');
     }
   }
 
   changeVeteranStatus(callPacket) {
-    if (Meteor.userId()) {
+    if (this.user.isCenterAdmin) {
       var callStatusHist = callPacket.callStatusHistory || new Array<CallStatusHistory>();
       var callStatusHistEntry = <CallStatusHistory> {
         callType: 0,
@@ -86,7 +87,7 @@ export class CallPacketDetails extends MeteorComponent {
         }
       });
     } else {
-      alert('Please log in to make changes.');
+      alert('You must be a call center admin to assign packets.');
     }
   }
 
