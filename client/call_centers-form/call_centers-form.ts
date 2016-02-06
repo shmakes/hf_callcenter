@@ -42,6 +42,7 @@ export class CallCentersForm {
           }
         });
 
+        // TODO: Is there a way to simply reset the form observable?
         (<Control>this.callCentersForm.controls['name']).updateValue('');
         (<Control>this.callCentersForm.controls['startDate']).updateValue('');
         (<Control>this.callCentersForm.controls['endDate']).updateValue('');

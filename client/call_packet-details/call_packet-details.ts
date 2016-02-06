@@ -4,6 +4,7 @@ import {RouterLink, RouteParams, Router} from 'angular2/router';
 import {CallPackets} from 'collections/call_packets';
 import {CallCenters} from 'collections/call_centers';
 import {UserProfiles} from 'collections/user_profiles';
+import {AccountsUI} from 'meteor-accounts-ui';
 import {RequireUser} from 'meteor-accounts';
 import {MeteorComponent} from 'angular2-meteor';
 
@@ -12,7 +13,7 @@ import {MeteorComponent} from 'angular2-meteor';
 })
 @View({
   templateUrl: '/client/call_packet-details/call_packet-details.html',
-  directives: [NgFor, RouterLink, FORM_DIRECTIVES, NgIf]
+  directives: [NgFor, RouterLink, FORM_DIRECTIVES, NgIf, AccountsUI]
 })
 
 @RequireUser()
@@ -89,6 +90,12 @@ export class CallPacketDetails extends MeteorComponent {
     } else {
       alert('You must be a call center admin to assign packets.');
     }
+  }
+
+  getCallCenterId() {
+    if (this.callCenter) {
+      return this.callCenter._id;
+    } 
   }
 
   getCallers() {
