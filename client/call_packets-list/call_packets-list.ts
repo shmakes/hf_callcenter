@@ -21,8 +21,9 @@ import {Utils} from 'client/utils';
 
 @InjectUser()
 export class CallPacketsList extends MeteorComponent {
-  assignedCallPackets: Mongo.Cursor<CallPacket>;
-  availableCallPackets: Mongo.Cursor<CallPacket>;
+  myCallPackets: Mongo.Cursor<CallPacket>;
+  otherCallPackets: Mongo.Cursor<CallPacket>;
+  unassignedCallPackets: Mongo.Cursor<CallPacket>;
   user: Meteor.User;
   callCenter: CallCenter;
   utils: Utils;
@@ -41,16 +42,17 @@ export class CallPacketsList extends MeteorComponent {
         this.callCenter = CallCenters.findOne(callCenterId);
     }, true);
 
-    this.subscribe('assignedCallPackets', callCenterId, () => {
-      this.assignedCallPackets = CallPackets.find( { callerId: {'$ne' : ''}} );
-    }, true);
-
-    this.subscribe('availableCallPackets', callCenterId, () => {
-      this.availableCallPackets = CallPackets.find( { callerId: '' } );
+    this.subscribe('callPackets', callCenterId, () => {
+      this.myCallPackets = CallPackets.find( { callerId: this.user._id } );
+      this.otherCallPackets = CallPackets.find( { 
+        $and: [ { callerId: { '$ne' : '' } }, 
+               { callerId: { '$ne' : this.user._id } } ] 
+      } );
+      this.unassignedCallPackets = CallPackets.find( { callerId: '' } );
     }, true);
 
     this.subscribe('userProfiles', () => {
-      this.currentUserProfile = UserProfiles.findOne( { userId: Meteor.userId() } );
+      this.currentUserProfile = UserProfiles.findOne( { userId: this.user._id } );
     }, true);
     
   }

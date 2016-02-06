@@ -29,7 +29,7 @@
       <h2>Your Call Packets</h2>
     </div>
     <ul class="list-group">
-      <li *ngFor="#callPacket of assignedCallPackets" class="list-group-item" [class.bg-inverse]="callPacket.isRemoved">
+      <li *ngFor="#callPacket of myCallPackets" class="list-group-item" [class.bg-inverse]="callPacket.isRemoved">
         <div class="container">
           <div class="row">
             <div class="label label-primary col-md-6 col-sm-12 col-xs-12">
@@ -75,16 +75,66 @@
       </li>
     </ul>
     <br />
-    <div class="row page-header">
+    <div class="page-header" [hidden]="!userIsCenterAdmin() || getCallCenterIsRemoved()">
+      <h2>Other Call Packets</h2>
+    </div>
+    <ul class="list-group">
+      <li *ngFor="#callPacket of otherCallPackets" class="list-group-item" [class.bg-inverse]="callPacket.isRemoved">
+        <div class="container">
+          <div class="row">
+            <div class="label label-primary col-md-6 col-sm-12 col-xs-12">
+              <a [routerLink]="['/CallPacket', {callPacketId: callPacket._id}]">
+                <h4>{{callPacket.veteranName}}</h4>
+              </a>
+            </div>
+            <div class="label label-danger col-md-6 col-sm-12 col-xs-12">
+              <a [routerLink]="['/CallPacket', {callPacketId: callPacket._id}]">
+                <h4>{{callPacket.guardianName}}</h4>
+              </a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-sm-12 col-xs-12">
+              Veteran:
+              <span class="label {{callStatusColorClass(callPacket.veteranStatus)}}">
+                {{callStatusName(callPacket.veteranStatus)}}
+              </span>
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+              Guardian:
+              <span class="label {{callStatusColorClass(callPacket.guardianStatus)}}">
+                {{callStatusName(callPacket.guardianStatus)}}
+              </span>
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+              Mail Call:
+              <span class="label {{callStatusColorClass(callPacket.mailCallStatus)}}">
+                {{callStatusName(callPacket.mailCallStatus)}}
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-12 col-xs-12">
+              Caller: {{callPacket.callerName}}
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+              Updated: {{utils.formatDate(callPacket.updatedAt)}}
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <br />
+    <div class="row page-header" [hidden]="!userIsCenterAdmin() || getCallCenterIsRemoved()">
       <div class="col-xs-6">
-        <h2>Available Call Packets</h2>
+        <h2>Unassigned Call Packets</h2>
       </div>
       <div class="col-xs-6">
-        <button type="button" class="btn btn-sm btn-default" (click)="addVeteransFromFlight()" [hidden]="!userIsCenterAdmin() || getCallCenterIsRemoved()">Add from Flight</button>
+        <button type="button" class="btn btn-sm btn-default" (click)="addVeteransFromFlight()">Add from Flight</button>
       </div>
     </div>
     <ul class="list-group">
-      <li *ngFor="#callPacket of availableCallPackets" class="list-group-item" [class.bg-inverse]="callPacket.isRemoved">
+      <li *ngFor="#callPacket of unassignedCallPackets" class="list-group-item" [class.bg-inverse]="callPacket.isRemoved">
         <div class="container">
           <div class="row">
             <div class="label label-primary col-md-6 col-sm-12 col-xs-12">

@@ -42,14 +42,13 @@ Meteor.publish('callCenters', function() {
   }
 });
 
-Meteor.publish('assignedCallPackets', function(callCenterId) {
+Meteor.publish('callPackets', function(callCenterId) {
   check(callCenterId, String);
   if(this.userId){
     return isCenterAdmin(this.userId)
             ? CallPackets.find( {
                 $and: [
-                        { callCenterId: callCenterId },
-                        { callerId: {'$ne' : ''}}
+                        { callCenterId: callCenterId }
                       ]
             } )
             : CallPackets.find( {
@@ -62,25 +61,6 @@ Meteor.publish('assignedCallPackets', function(callCenterId) {
   }
 });
 
-Meteor.publish('availableCallPackets', function(callCenterId) {
-  check(callCenterId, String);
-  if(this.userId){
-    return isCenterAdmin(this.userId)
-            ? CallPackets.find( {
-                $and: [
-                        { callCenterId: callCenterId },
-                        { callerId: '' }
-                      ]
-            } )
-            : CallPackets.find( {
-                $and: [
-                        { callCenterId: callCenterId },
-                        { callerId: '' },
-                        { isRemoved: false }
-                      ]
-            } );
-  }
-});
 
 Meteor.publish('callPacket', function(callPacketId) {
   check(callPacketId, String);
