@@ -1,7 +1,7 @@
 <div class="page-header">
   <h1>Edit Call Packet</h1>
 </div>
-<form class="form-horizontal" (submit)="saveCallPacket(callPacket)" *ngIf="callPacket">
+<form class="form-horizontal" *ngIf="callPacket">
   <div class="container">
     <div class="form-group row">
       <label class="col-sm-3 col-xs-12 control-label" for="callCenterName">Event Name</label>
@@ -12,7 +12,10 @@
     <div class="form-group row">
       <label class="col-sm-3 col-xs-12 control-label" for="callerName">Caller Name</label>
       <div class="col-sm-9 col-xs-12">
-        <input type="text" class="form-control" id="callerName" placeholder="Caller Name" [(ngModel)]="callPacket.callerName">
+        <select name="callerSelect" id="callerSelect" (change)="changeCaller($event)" [(ngModel)]="callPacket.callerId">
+          <option value="">---</option>
+          <option *ngFor="#caller of getCallers()" value="{{caller.userId}}">{{caller.name}}</option>
+        </select>
       </div>
     </div>
     <div class="form-group row">
@@ -43,7 +46,6 @@
   <br />
   <div class="container">
     <div class="form-group row">
-      <button type="submit" class="btn btn-primary">Save</button>
       <button class="btn btn-default" [routerLink]="['/CallPacketsList', { callCenterId: callPacket.callCenterId }]">Cancel</button>
     </div>
   </div>

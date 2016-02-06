@@ -1,5 +1,6 @@
 declare type CallerHistory = {
-  caller: string,
+  callerId: string,
+  callerName: string,
   updatedBy: string,
   updatedAt: string
 }
