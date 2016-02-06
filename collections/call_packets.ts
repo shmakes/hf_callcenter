@@ -14,7 +14,6 @@ CallPackets.allow({
 
     if (allowed) {
       console.log('*** Updating Call Packet by: ' + userProfile.name + ' (' + userProfile.userId + ')');
-      console.log(modifier);
     } else {
       console.log('*** Unauthorized attempt to update Call Packet by: ' + userProfile.name + ' (' + userProfile.userId + ')');
     }

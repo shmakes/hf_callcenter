@@ -29,29 +29,37 @@
       <div class="col-md-4 col-sm-12 col-xs-12">
         Veteran:
         <span class="label {{callStatusColorClass(callPacket.veteranStatus)}}">
-          {{callStatusName(callPacket.veteranStatus)}}
+          <select class="form-control" (change)="changeVeteranStatus($event)" [(ngModel)]="callPacket.veteranStatus">
+            <option *ngFor="#callStat of callStatusList()" value="{{callStat.key}}">{{callStat.val}}</option>
+          </select>
         </span>
       </div>
       <div class="col-md-4 col-sm-12 col-xs-12">
         Guardian:
         <span class="label {{callStatusColorClass(callPacket.guardianStatus)}}">
-          {{callStatusName(callPacket.guardianStatus)}}
+          <select class="form-control" (change)="changeGuardianStatus($event)" [(ngModel)]="callPacket.guardianStatus">
+            <option *ngFor="#callStat of callStatusList()" value="{{callStat.key}}">{{callStat.val}}</option>
+          </select>
         </span>
       </div>
       <div class="col-md-4 col-sm-12 col-xs-12">
         Mail Call:
         <span class="label {{callStatusColorClass(callPacket.mailCallStatus)}}">
-          {{callStatusName(callPacket.mailCallStatus)}}
+          <select class="form-control" (change)="changeMailCallStatus($event)" [(ngModel)]="callPacket.mailCallStatus">
+            <option *ngFor="#callStat of callStatusList()" value="{{callStat.key}}">{{callStat.val}}</option>
+          </select>
         </span>
       </div>
     </div>
     <div class="row">
       <div class="col-md-6 col-sm-12 col-xs-12">
         Caller:
-        <select class="form-control" (change)="changeCaller($event)" [(ngModel)]="callPacket.callerId">
-          <option value="">---</option>
-          <option *ngFor="#caller of getCallers()" value="{{caller.userId}}">{{caller.name}}</option>
-        </select>
+        <span class="label">
+          <select class="form-control" (change)="changeCaller($event)" [(ngModel)]="callPacket.callerId">
+            <option value="">---</option>
+            <option *ngFor="#caller of getCallers()" value="{{caller.userId}}">{{caller.name}}</option>
+          </select>
+        </span>
       </div>
       <div class="col-md-6 col-sm-12 col-xs-12">
         Updated: {{utils.formatDate(callPacket.updatedAt)}}
