@@ -4,7 +4,7 @@
 <div *ngIf="callCenter && !userIsSystemAdmin()">
   <h2>You must be a system administrator to modify call centers.</h2>
 </div>
-<form class="form-horizontal" (submit)="saveCallCenter(callCenter)" *ngIf="callCenter && userIsSystemAdmin()">
+<form class="form-horizontal" *ngIf="callCenter && userIsSystemAdmin()">
   <div class="container">
     <div class="form-group row">
       <label class="col-sm-3 col-xs-12 control-label" for="callCenterName">Event Name</label>
@@ -62,7 +62,7 @@
   <br />
   <div class="container">
     <div class="form-group row">
-      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="submit" class="btn btn-primary" (click)="saveCallCenter(callCenter)">Save</button>
       <button class="btn btn-default" [routerLink]="['/CallCentersList']">Cancel</button>
     </div>
   </div>

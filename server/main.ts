@@ -8,9 +8,10 @@ import 'collections/methods';
 declare var process: any;
 
 Meteor.startup(function () {
-  initData();
   if (process.env.COUCH_URL) {
     console.log(HTTP.get(process.env.COUCH_URL).content);
+  } else {
+    initData();
   }
 });
 

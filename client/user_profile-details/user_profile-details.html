@@ -1,7 +1,7 @@
 <div class="page-header">
   <h1>Edit User Profile</h1>
 </div>
-<form class="form-horizontal" (submit)="saveUserProfile(userProfile)" *ngIf="userProfile">
+<form class="form-horizontal" *ngIf="userProfile">
   <div class="container">
     <div class="form-group row">
       <label class="col-sm-3 col-xs-12 control-label" for="userProfileName">Name</label>
@@ -65,7 +65,7 @@
   </div>
   <div class="container">
     <div class="form-group row">
-      <button type="submit" class="btn btn-primary" [hidden]="!userCanEdit()">Save</button>
+      <button type="submit" class="btn btn-primary" (click)="saveUserProfile(userProfile)" [hidden]="!userCanEdit()">Save</button>
       <button class="btn btn-default" [routerLink]="['/CallCentersList']">Cancel</button>
     </div>
   </div>

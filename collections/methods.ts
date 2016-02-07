@@ -13,6 +13,7 @@ Meteor.methods({
       throw new Meteor.Error('401', 'Only system administrators can add new call centers.');
     }
 
+    callCenter.flightName = callCenter.flightName.trim();
     let options = { auth: process.env.COUCH_AUTH };
     let response = HTTP.get(process.env.COUCH_URL + '/' + process.env.COUCH_DB + '/_design/basic/_view/flights?descending=true&limit=5', options);
     let flightList = JSON.parse(response.content);
@@ -27,9 +28,13 @@ Meteor.methods({
     if (!flightId) {
       throw new Meteor.Error('404', 'Flight name does not exist in the flight database.');
     }
-    callCenter.flightId = flightId;
-    callCenter.callers = [];
-    callCenter.history = [];
+    var startDate = new Date(callCenter.startDate).toISOString();
+    var endDate = new Date(callCenter.endDate).toISOString();
+    callCenter.flightId  = flightId;
+    callCenter.startDate = startDate.substring(0, startDate.indexOf('T'));
+    callCenter.endDate   = endDate.substring(0, endDate.indexOf('T'));
+    callCenter.callers   = [];
+    callCenter.history   = [];
     callCenter.createdBy = currentUserProfile.name;
     callCenter.createdAt = new Date().toISOString();
     callCenter.updatedAt = new Date().toISOString();
