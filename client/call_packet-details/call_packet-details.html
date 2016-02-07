@@ -9,9 +9,8 @@
   </div>
   <br />
   <div class="page-header">
-    <h1>Edit Call Packet</h1>
+    <h1>Call Packet</h1>
   </div>
-
   <div class="container" *ngIf="callPacket">
     <div class="row">
       <div class="label label-primary col-md-6 col-sm-12 col-xs-12">
@@ -65,5 +64,36 @@
         Updated: {{utils.formatDate(callPacket.updatedAt)}}
       </div>
     </div>
+    <br />
+    <div class="page-header">
+      <h2>Recent Status Changes</h2>
+    </div>
+    <ul class="list-group">
+      <li *ngFor="#statusEntry of callPacket.callStatusHistory.reverse()" class="list-group-item">
+        <div class="container">
+          <div class="row">
+              {{callTypeName(statusEntry.callType)}} changed to 
+              {{callStatusName(statusEntry.callStatus)}} by
+              {{statusEntry.updatedBy.substring(0, statusEntry.updatedBy.indexOf('('))}}
+              {{utils.formatDate(statusEntry.updatedAt)}}
+          </div>
+        </div>
+      </li>
+    </ul>
+    <br />
+    <div class="page-header">
+      <h2>Recent Caller Changes</h2>
+    </div>
+    <ul class="list-group">
+      <li *ngFor="#statusEntry of callPacket.callerHistory.reverse()" class="list-group-item">
+        <div class="container">
+          <div class="row">
+            Assigned to {{statusEntry.callerName}}
+            by  {{statusEntry.updatedBy.substring(0, statusEntry.updatedBy.indexOf('('))}}
+            {{utils.formatDate(statusEntry.updatedAt)}}
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
 </div>

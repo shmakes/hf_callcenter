@@ -61,6 +61,7 @@ export class CallPacketDetails extends MeteorComponent {
         updatedAt: new Date().toISOString()
       };
       callerHist.push(callerHistEntry);
+      this.callPacket.updatedAt = new Date().toISOString();
 
       CallPackets.update(this.callPacket._id, {
         $set: {
@@ -85,6 +86,7 @@ export class CallPacketDetails extends MeteorComponent {
         updatedAt: new Date().toISOString()
       };
       callStatusHist.push(callStatusHistEntry);
+      this.callPacket.updatedAt = new Date().toISOString();
 
       CallPackets.update(this.callPacket._id, {
         $set: {
@@ -108,6 +110,7 @@ export class CallPacketDetails extends MeteorComponent {
         updatedAt: new Date().toISOString()
       };
       callStatusHist.push(callStatusHistEntry);
+      this.callPacket.updatedAt = new Date().toISOString();
 
       CallPackets.update(this.callPacket._id, {
         $set: {
@@ -131,6 +134,7 @@ export class CallPacketDetails extends MeteorComponent {
         updatedAt: new Date().toISOString()
       };
       callStatusHist.push(callStatusHistEntry);
+      this.callPacket.updatedAt = new Date().toISOString();
 
       CallPackets.update(this.callPacket._id, {
         $set: {
@@ -167,6 +171,10 @@ export class CallPacketDetails extends MeteorComponent {
         return callers;
       }
     }
+  }
+
+  callTypeName(callType: number) :string {
+    return this.utils.callTypeName(callType);
   }
 
   callStatusName(callStat: number) {

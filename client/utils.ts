@@ -1,3 +1,4 @@
+import {CallType} from 'collections/enums';
 import {CallStatus} from 'collections/enums';
 
 export class Utils {
@@ -9,11 +10,15 @@ export class Utils {
     return m.calendar();
   }
 
-  callStatusName(callStat: number) {
+  callTypeName(callType: number): string {
+    return CallType[callType].split(/(?=[A-Z])/).join(' ');
+  }
+
+  callStatusName(callStat: number): string {
     return CallStatus[callStat].split(/(?=[A-Z])/).join(' ');
   }
 
-  callStatusColorClass(callStat: number) {
+  callStatusColorClass(callStat: number): string {
     switch (this.callStatusName(callStat)) {
       case 'New':
         return 'label-default';

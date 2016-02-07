@@ -12,8 +12,10 @@ CallPackets.allow({
         || userProfile.isCenterAdmin
         || doc.callerId == userId));
 
+
     if (allowed) {
       console.log('*** Updating Call Packet by: ' + userProfile.name + ' (' + userProfile.userId + ')');
+      modifier.$set.updatedAt = new Date().toISOString();
     } else {
       console.log('*** Unauthorized attempt to update Call Packet by: ' + userProfile.name + ' (' + userProfile.userId + ')');
     }
