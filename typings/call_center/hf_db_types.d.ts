@@ -104,14 +104,24 @@ declare type Metadata = {
   updated_by: string
 }
 
+declare type ContactAddress = {
+  street: string,
+  city: string,
+  state: string,
+  zip: string,
+  phone: string,
+  phone_eve: string,
+  phone_mbl: string,
+  email: string
+}
+
 declare type Contact = {
   relation: string,
   name: string,
-  address: Address
+  address: ContactAddress
 }
 
 declare type MilService = {
-  service_number: string,
   dates: string,
   rank: string,
   branch: string,
@@ -157,6 +167,7 @@ declare type VeteranDbDoc = {
   vet_type: string,
   medical: VeteranMedical,
   service: MilService,
+  mail_call: Contact,
   media_ok: boolean,
   flight: VeteranFlight
 }

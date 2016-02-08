@@ -25,12 +25,25 @@ export class HFDataAdapters {
     }
   }
 
+  static fillContactAddress(address: any) : ContactAddress {
+    return {
+      street:    address.street    || '',
+      city:      address.city      || '',
+      state:     address.state     || '',
+      zip:       address.zip       || '',
+      phone:     address.phone     || '',
+      phone_eve: address.phone_eve || '',
+      phone_mbl: address.phone_mbl || '',
+      email:     address.email     || ''
+    }
+  }
+
   static fillContact(contact: any) : Contact {
 
     return {
-      relation: contact.relation  || '',
-      name:     contact.name      || '',
-      address:  this.fillAddress(contact.address || {})
+      relation: contact.relation          || '',
+      name:     contact.name              || '',
+      address:  this.fillContactAddress(contact.address || {})
     }
   }
 
@@ -59,7 +72,7 @@ export class HFDataAdapters {
       created_at: metadata.created_at || '',
       created_by: metadata.created_by || '',
       updated_at: metadata.updated_at || '',
-      updated_by: metadata.update_by  || ''
+      updated_by: metadata.updated_by || ''
     }
   }
 
@@ -107,7 +120,6 @@ export class HFDataAdapters {
 
   static fillMilService(milService: any) : MilService {
     return {
-      service_number: milService.service_number || '',
       dates:          milService.dates          || '',
       rank:           milService.rank           || '',
       branch:         milService.branch         || '',
@@ -138,15 +150,16 @@ export class HFDataAdapters {
 
   static fillVeteranDbDoc(data: any) : VeteranDbDoc {
     return {
-      _id:      data._id,
-      _rev:     data._rev,
-      general:  this.fillGeneral(data),
-      guardian: this.fillPairedGuardian(data.guardian || {}),
-      vet_type: data.vet_type,
-      medical:  this.fillVeteranMedical(data.medical || {}),
-      service:  this.fillMilService(data.service || {}),
-      media_ok: data.media_ok,
-      flight:   this.fillVeteranFlight(data.flight || {})
+      _id:       data._id,
+      _rev:      data._rev,
+      general:   this.fillGeneral(data),
+      guardian:  this.fillPairedGuardian(data.guardian || {}),
+      vet_type:  data.vet_type,
+      medical:   this.fillVeteranMedical(data.medical || {}),
+      service:   this.fillMilService(data.service || {}),
+      mail_call: this.fillContact(data.mail_call || {}),
+      media_ok:  data.media_ok,
+      flight:    this.fillVeteranFlight(data.flight || {})
     }
   }
 
