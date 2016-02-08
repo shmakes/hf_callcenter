@@ -72,7 +72,7 @@ declare type Shirt = {
   size: string
 }
 
-declare type Notes = {
+declare type GuardianNotes = {
   other: string,
   service: string
 }
@@ -152,7 +152,6 @@ declare type General = {
   birth_date: string,
   weight: string,
   gender: string,
-  alt_contact: Contact,
   emerg_contact: Contact,
   call: Call,
   apparel: Apparel,
@@ -167,6 +166,7 @@ declare type VeteranDbDoc = {
   vet_type: string,
   medical: VeteranMedical,
   service: MilService,
+  alt_contact: Contact,
   mail_call: Contact,
   media_ok: boolean,
   flight: VeteranFlight
@@ -179,14 +179,14 @@ declare type GuardianDbDoc = {
   veteran: PairedVeterans,
   occupation: string,
   medical: GuardianMedical,
-  notes: Notes,
+  notes: GuardianNotes,
   flight: GuardianFlight
 }
 
 declare type VeteranCallSheet = {
   _id?: string,
   data: VeteranDbDoc,
-  requestedGuradian: Contact,
+  requestedGuardian: Contact,
   isRemoved: boolean
 
 }

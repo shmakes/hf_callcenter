@@ -12,6 +12,7 @@ import {CallStatus} from 'collections/enums';
 import {HFDataAdapters} from 'server/hfdb_access/hfdb_data_adapters';
 import {DataUtils} from 'server/hfdb_access/data_utils';
 
+
 Meteor.methods({
   importCallSheetsFromFlight: function(callCenterId: string) {
     let currentUserProfile = UserProfiles.findOne( { userId: this.userId } );
@@ -49,6 +50,11 @@ Meteor.methods({
         let existingVet = CallPackets.findOne( {guardianDbId: grdData._id} );
         if (!existingVet) {
           console.log('Adding guardian: ' + grdData.name.first + ' ' + grdData.name.last);
+          let grdDbDoc = HFDataAdapters.fillGuardianDbDoc(grdData);
+          GuardianDbDocs.insert(grdDbDoc);
+          let grdCallSheet = HFDataAdapters.fillGuardianCallSheet(grdDbDoc, grdData);
+          GuardianCallSheets.insert(grdCallSheet);
+
           packet = HFDataAdapters.fillGrdPacketData(packet, grdData);
           grdsAdded++;
 
@@ -58,6 +64,8 @@ Meteor.methods({
         }
       } else {
 
+        // Complete the packet after the veteran was added,
+        // and we had a chance to add the paired guardian.
         if (packet.veteranDbId) {
           CallPackets.insert(packet);
           qtyAdded++;
@@ -72,10 +80,10 @@ Meteor.methods({
           if (!existingVet) {
             packet = DataUtils.initCallPacket(callCenter);
             let vetData = person.doc;
+
             console.log('Adding veteran: ' + vetData.name.first + ' ' + vetData.name.last);
             let vetDbDoc = HFDataAdapters.fillVeteranDbDoc(vetData);
             VeteranDbDocs.insert(vetDbDoc);
-
             let vetCallSheet = HFDataAdapters.fillVeteranCallSheet(vetDbDoc, vetData);
             VeteranCallSheets.insert(vetCallSheet);
 

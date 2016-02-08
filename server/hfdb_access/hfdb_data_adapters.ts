@@ -41,19 +41,19 @@ export class HFDataAdapters {
   static fillContact(contact: any) : Contact {
 
     return {
-      relation: contact.relation          || '',
-      name:     contact.name              || '',
+      relation: contact.relation || '',
+      name:     contact.name     || '',
       address:  this.fillContactAddress(contact.address || {})
     }
   }
 
   static fillCall(call: any) : Call {
     return {
-      assigned_to: call.assigned_to  || '',
-      fm_number:   call.fm_number    || '',
-      mail_sent:   call.mail_sent    || false,
-      email_sent:  call.email_sent   || false,
-      history:     call.history      || []
+      assigned_to: call.assigned_to || '',
+      fm_number:   call.fm_number   || '',
+      mail_sent:   call.mail_sent   || false,
+      email_sent:  call.email_sent  || false,
+      history:     call.history     || []
     }
   }
 
@@ -85,7 +85,6 @@ export class HFDataAdapters {
       birth_date:    data.birth_date,
       weight:        data.weight,
       gender:        data.gender,
-      alt_contact:   this.fillContact(data.alt_contact || {}),
       emerg_contact: this.fillContact(data.emerg_contact || {}),
       call:          this.fillCall(data.call || {}),
       apparel:       this.fillApparel(data.apparel || {}),
@@ -120,10 +119,10 @@ export class HFDataAdapters {
 
   static fillMilService(milService: any) : MilService {
     return {
-      dates:          milService.dates          || '',
-      rank:           milService.rank           || '',
-      branch:         milService.branch         || '',
-      activity:       milService.activity       || ''
+      dates:    milService.dates    || '',
+      rank:     milService.rank     || '',
+      branch:   milService.branch   || '',
+      activity: milService.activity || ''
     }
   }
 
@@ -150,24 +149,81 @@ export class HFDataAdapters {
 
   static fillVeteranDbDoc(data: any) : VeteranDbDoc {
     return {
-      _id:       data._id,
-      _rev:      data._rev,
-      general:   this.fillGeneral(data),
-      guardian:  this.fillPairedGuardian(data.guardian || {}),
-      vet_type:  data.vet_type,
-      medical:   this.fillVeteranMedical(data.medical || {}),
-      service:   this.fillMilService(data.service || {}),
-      mail_call: this.fillContact(data.mail_call || {}),
-      media_ok:  data.media_ok,
-      flight:    this.fillVeteranFlight(data.flight || {})
+      _id:         data._id,
+      _rev:        data._rev,
+      general:     this.fillGeneral(data),
+      guardian:    this.fillPairedGuardian(data.guardian || {}),
+      vet_type:    data.vet_type,
+      medical:     this.fillVeteranMedical(data.medical || {}),
+      service:     this.fillMilService(data.service || {}),
+      alt_contact: this.fillContact(data.alt_contact || {}),
+      mail_call:   this.fillContact(data.mail_call || {}),
+      media_ok:    data.media_ok,
+      flight:      this.fillVeteranFlight(data.flight || {})
     }
   }
 
   static fillVeteranCallSheet(veteranDbDoc: VeteranDbDoc, data: any) : VeteranCallSheet {
     return {
       data:              veteranDbDoc,
-      requestedGuradian: this.fillContact({}),
+      requestedGuardian: this.fillContact({}),
       isRemoved:         false
+    }
+  }
+
+  static fillGuardianFlight(flight: any) : GuardianFlight {
+    return {
+      flight:            this.fillFlight(flight),
+      training:          flight.training          || '',
+      training_notes:    flight.training_notes    || '',
+      training_complete: flight.training_complete || false,
+      paid:              flight.paid              || false,
+      booksOrdered:      flight.booksOrdered      || 0
+    }
+  }
+
+  static fillPairedVeterans(pairedVeterans: any) : PairedVeterans {
+    return {
+      pref_notes: pairedVeterans.pref_notes || '',
+      pairings:   pairedVeterans.pairings   || [],
+      history:    pairedVeterans.history    || []
+    }
+  }
+
+  static fillGuardianMedical(guardianMedical: any) : GuardianMedical {
+    return {
+      limitations: guardianMedical.limitations || '',
+      experience:  guardianMedical.experience  || '',
+      release:     guardianMedical.release     || false
+    }
+  }
+
+  static fillGuardianNotes(guardianNotes: any) : GuardianNotes {
+    return {
+      other:   guardianNotes.other   || '',
+      service: guardianNotes.service || ''
+    }
+  }
+
+  static fillGuardianDbDoc(data: any) : GuardianDbDoc {
+    return {
+      _id:        data._id,
+      _rev:       data._rev,
+      general:    this.fillGeneral(data),
+      veteran:   this.fillPairedVeterans(data.veteran || {}),
+      occupation: data.occupation || '',
+      medical:    this.fillGuardianMedical(data.medical || {}),
+      notes:      this.fillGuardianNotes(data.notes || {}),
+      flight:     this.fillGuardianFlight(data.flight || {})
+    }
+  }
+
+  static fillGuardianCallSheet(guardianDbDoc: GuardianDbDoc, data: any) : GuardianCallSheet {
+    return {
+      data:            guardianDbDoc,
+      understandsFee:  false,
+      acceptsMailCall: false,
+      isRemoved:       false
     }
   }
 
