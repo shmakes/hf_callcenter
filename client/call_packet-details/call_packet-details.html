@@ -8,13 +8,26 @@
     </div>
   </div>
   <br />
-  <div class="page-header">
-    <h1>Call Packet</h1>
+  <div class="row page-header">
+    <div class="col-sm-6 col-xs-12">
+      <h1>Call Packet</h1>
+    </div>
+    <div class="col-sm-6 col-xs-12">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="historyVisible"  (click)="showHistory()">History</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="infoVisible" (click)="showInfo()">Info</a>
+        </li>
+      </ul>
+    </div>
   </div>
+  <br />
   <div class="container" *ngIf="callPacket">
     <div class="row">
       <div class="label label-primary col-md-6 col-sm-12 col-xs-12">
-        <a [routerLink]="['/VeteranCallSheet', {veteranCallSheetId: callPacket.veteranCallSheetId}]">
+        <a [routerLink]="['/CallSheetVeteran', {veteranCallSheetId: callPacket.veteranCallSheetId}]">
           <h4>{{callPacket.veteranName}}</h4>
         </a>
       </div>
@@ -65,35 +78,128 @@
       </div>
     </div>
     <br />
-    <div class="page-header">
-      <h2>Recent Status Changes</h2>
-    </div>
-    <ul class="list-group">
-      <li *ngFor="#statusEntry of callPacket.callStatusHistory.reverse()" class="list-group-item">
-        <div class="container">
-          <div class="row">
-              {{callTypeName(statusEntry.callType)}} changed to 
-              {{callStatusName(statusEntry.callStatus)}} by
-              {{statusEntry.updatedBy.substring(0, statusEntry.updatedBy.indexOf('('))}}
+    <div [hidden]="!historyVisible" >
+      <div class="page-header">
+        <h2>Recent Status Changes</h2>
+      </div>
+      <ul class="list-group">
+        <li *ngFor="#statusEntry of callPacket.callStatusHistory.reverse()" class="list-group-item">
+          <div class="container">
+            <div class="row">
+                {{callTypeName(statusEntry.callType)}} changed to 
+                {{callStatusName(statusEntry.callStatus)}} by
+                {{statusEntry.updatedBy.substring(0, statusEntry.updatedBy.indexOf('('))}}
+                {{utils.formatDate(statusEntry.updatedAt)}}
+            </div>
+          </div>
+        </li>
+      </ul>
+      <br />
+      <div class="page-header">
+        <h2>Recent Caller Changes</h2>
+      </div>
+      <ul class="list-group">
+        <li *ngFor="#statusEntry of callPacket.callerHistory.reverse()" class="list-group-item">
+          <div class="container">
+            <div class="row">
+              Assigned to {{statusEntry.callerName}}
+              by  {{statusEntry.updatedBy.substring(0, statusEntry.updatedBy.indexOf('('))}}
               {{utils.formatDate(statusEntry.updatedAt)}}
+            </div>
           </div>
-        </div>
-      </li>
-    </ul>
-    <br />
-    <div class="page-header">
-      <h2>Recent Caller Changes</h2>
+        </li>
+      </ul>
     </div>
-    <ul class="list-group">
-      <li *ngFor="#statusEntry of callPacket.callerHistory.reverse()" class="list-group-item">
-        <div class="container">
-          <div class="row">
-            Assigned to {{statusEntry.callerName}}
-            by  {{statusEntry.updatedBy.substring(0, statusEntry.updatedBy.indexOf('('))}}
-            {{utils.formatDate(statusEntry.updatedAt)}}
-          </div>
-        </div>
-      </li>
-    </ul>
+    <div [hidden]="!infoVisible" >
+      <div class="page-header">
+        <h2>Veteran Contact Info</h2>
+      </div>
+      <h3>Personal</h3>
+      <dl *ngIf="veteranCallSheet">
+        <dt>Phone</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.general.address.phone_day}}">{{veteranCallSheet.data.general.address.phone_day}}</a></dd>
+        <dt>Phone Evening</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.general.address.phone_eve}}">{{veteranCallSheet.data.general.address.phone_eve}}</a></dd>
+        <dt>Phone Mobile</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.general.address.phone_mbl}}">{{veteranCallSheet.data.general.address.phone_mbl}}</a></dd>
+        <dt>Email</dt>
+        <dd><a href="mailto:{{veteranCallSheet.data.general.address.email}}">{{veteranCallSheet.data.general.address.email}}</a></dd>
+      </dl>
+      <h3>Emergency Contact</h3>
+      <dl *ngIf="veteranCallSheet">
+        <dt>Name</dt>
+        <dd>{{veteranCallSheet.data.general.emerg_contact.name}}</dd>
+        <dt>Relationship</dt>
+        <dd>{{veteranCallSheet.data.general.emerg_contact.relation}}</dd>
+        <dt>Phone</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.general.emerg_contact.address.phone}}">{{veteranCallSheet.data.general.emerg_contact.address.phone}}</a></dd>
+        <dt>Phone Evening</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.general.emerg_contact.address.phone_eve}}">{{veteranCallSheet.data.general.emerg_contact.address.phone_eve}}</a></dd>
+        <dt>Phone Mobile</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.general.emerg_contact.address.phone_mbl}}">{{veteranCallSheet.data.general.emerg_contact.address.phone_mbl}}</a></dd>
+        <dt>Email</dt>
+        <dd><a href="mailto:{{veteranCallSheet.data.general.emerg_contact.address.email}}">{{veteranCallSheet.data.general.emerg_contact.address.email}}</a></dd>
+      </dl>
+      <h3>Alternate Contact</h3>
+      <dl *ngIf="veteranCallSheet">
+        <dt>Name</dt>
+        <dd>{{veteranCallSheet.data.alt_contact.name}}</dd>
+        <dt>Relationship</dt>
+        <dd>{{veteranCallSheet.data.alt_contact.relation}}</dd>
+        <dt>Phone</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.alt_contact.address.phone}}">{{veteranCallSheet.data.alt_contact.address.phone}}</a></dd>
+        <dt>Phone Evening</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.alt_contact.address.phone_eve}}">{{veteranCallSheet.data.alt_contact.address.phone_eve}}</a></dd>
+        <dt>Phone Mobile</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.alt_contact.address.phone_mbl}}">{{veteranCallSheet.data.alt_contact.address.phone_mbl}}</a></dd>
+        <dt>Email</dt>
+        <dd><a href="mailto:{{veteranCallSheet.data.alt_contact.address.email}}">{{veteranCallSheet.data.alt_contact.address.email}}</a></dd>
+      </dl>
+      <h3>Mail Call Contact</h3>
+      <dl *ngIf="veteranCallSheet">
+        <dt>Name</dt>
+        <dd>{{veteranCallSheet.data.mail_call.name}}</dd>
+        <dt>Relationship</dt>
+        <dd>{{veteranCallSheet.data.mail_call.relation}}</dd>
+        <dt>Phone</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.mail_call.address.phone}}">{{veteranCallSheet.data.mail_call.address.phone}}</a></dd>
+        <dt>Phone Evening</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.mail_call.address.phone_eve}}">{{veteranCallSheet.data.mail_call.address.phone_eve}}</a></dd>
+        <dt>Phone Mobile</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.mail_call.address.phone_mbl}}">{{veteranCallSheet.data.mail_call.address.phone_mbl}}</a></dd>
+        <dt>Email</dt>
+        <dd><a href="mailto:{{veteranCallSheet.data.mail_call.address.email}}">{{veteranCallSheet.data.mail_call.address.email}}</a></dd>
+      </dl>
+      <br />
+      <div class="page-header">
+        <h2>Guardian Contact Info</h2>
+      </div>
+      <h3>Personal</h3>
+      <dl *ngIf="guardianCallSheet">
+        <dt>Phone</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.general.address.phone_day}}">{{veteranCallSheet.data.general.address.phone_day}}</a></dd>
+        <dt>Phone Evening</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.general.address.phone_eve}}">{{veteranCallSheet.data.general.address.phone_eve}}</a></dd>
+        <dt>Phone Mobile</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.general.address.phone_mbl}}">{{veteranCallSheet.data.general.address.phone_mbl}}</a></dd>
+        <dt>Email</dt>
+        <dd><a href="mailto:{{veteranCallSheet.data.general.address.email}}">{{veteranCallSheet.data.general.address.email}}</a></dd>
+      </dl>
+      <h3>Emergency Contact</h3>
+      <dl *ngIf="guardianCallSheet">
+        <dt>Name</dt>
+        <dd>{{veteranCallSheet.data.general.emerg_contact.name}}</dd>
+        <dt>Relationship</dt>
+        <dd>{{veteranCallSheet.data.general.emerg_contact.relation}}</dd>
+        <dt>Phone</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.general.emerg_contact.address.phone}}">{{veteranCallSheet.data.general.emerg_contact.address.phone}}</a></dd>
+        <dt>Phone Evening</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.general.emerg_contact.address.phone_eve}}">{{veteranCallSheet.data.general.emerg_contact.address.phone_eve}}</a></dd>
+        <dt>Phone Mobile</dt>
+        <dd><a href="tel:{{veteranCallSheet.data.general.emerg_contact.address.phone_mbl}}">{{veteranCallSheet.data.general.emerg_contact.address.phone_mbl}}</a></dd>
+        <dt>Email</dt>
+        <dd><a href="mailto:{{veteranCallSheet.data.general.emerg_contact.address.email}}">{{veteranCallSheet.data.general.emerg_contact.address.email}}</a></dd>
+      </dl>
+    </div>
   </div>
 </div>

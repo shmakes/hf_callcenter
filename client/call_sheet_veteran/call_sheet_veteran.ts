@@ -15,14 +15,14 @@ import {MeteorComponent} from 'angular2-meteor';
 })
 
 @RequireUser()
-export class VeteranCallSheet extends MeteorComponent {
+export class CallSheetVeteran extends MeteorComponent {
   veteranCallSheetForm: ControlGroup;
   veteranCallSheet: VeteranCallSheet;
 
   constructor(params: RouteParams, private _router: Router) {
     super();
 
-    var callSheetId = params.get('callSheetId');
+    var callSheetId = params.get('veteranCallSheetId');
     this.subscribe('veteranCallSheet', callSheetId, () => {
       this.veteranCallSheet = VeteranCallSheets.findOne(callSheetId);
     }, true);

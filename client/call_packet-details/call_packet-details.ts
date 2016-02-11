@@ -3,6 +3,7 @@ import {FORM_DIRECTIVES, NgIf, NgFor} from 'angular2/common';
 import {RouterLink, RouteParams, Router} from 'angular2/router';
 import {CallPackets} from 'collections/call_packets';
 import {CallCenters} from 'collections/call_centers';
+import {VeteranCallSheets} from 'collections/veteran_call_sheets';
 import {UserProfiles} from 'collections/user_profiles';
 import {AccountsUI} from 'meteor-accounts-ui';
 import {RequireUser} from 'meteor-accounts';
@@ -23,15 +24,19 @@ import {CallType} from 'collections/enums';
 export class CallPacketDetails extends MeteorComponent {
   callPacket: CallPacket;
   callCenter: CallCenter;
+  veteranCallSheet: VeteranCallSheet;
   utils: Utils;
   users: Array<UserProfile>;
   user: UserProfile;
   callers: Array<UserProfile>;
   isCenterAdmin: boolean;
   callStatuses: { key: number, val: string }[];
+  historyVisible: boolean;
+  infoVisible: boolean;
 
   constructor(params: RouteParams, private _router: Router) {
     super();
+    this.showHistory();
     this.utils = new Utils();
     this.callStatusList();
     var callPacketId = params.get('callPacketId');
@@ -39,6 +44,9 @@ export class CallPacketDetails extends MeteorComponent {
       this.callPacket = CallPackets.findOne(callPacketId);
       this.subscribe('callCenters', this.callPacket.callCenterId, () => {
           this.callCenter = CallCenters.findOne(this.callPacket.callCenterId);
+      }, true);
+      this.subscribe('veteranCallSheet', this.callPacket.veteranCallSheetId, () => {
+          this.veteranCallSheet = VeteranCallSheets.findOne(this.callPacket.veteranCallSheetId);
       }, true);
     }, true);
 
@@ -199,4 +207,13 @@ export class CallPacketDetails extends MeteorComponent {
     }
   }
 
+  showHistory() {
+    this.historyVisible  = true;
+    this.infoVisible = false;
+  }
+
+  showInfo() {
+    this.historyVisible  = false;
+    this.infoVisible = true;
+  }
 }
