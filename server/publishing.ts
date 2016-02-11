@@ -1,6 +1,7 @@
 import {UserProfiles} from 'collections/user_profiles';
 import {CallCenters} from 'collections/call_centers';
 import {CallPackets} from 'collections/call_packets';
+import {VeteranCallSheets} from 'collections/veteran_call_sheets';
 
 var isSystemAdmin = function(userId: string) {
   var profile = UserProfiles.findOne( { userId: userId } );
@@ -71,6 +72,21 @@ Meteor.publish('callPacket', function(callPacketId) {
                 $and: [
                         { _id: callPacketId },
                         { callerId: this.userId },
+                        { isRemoved: false }
+                      ]
+            } );
+  }
+});
+
+Meteor.publish('veteranCallSheet', function(veteranCallSheetId) {
+  check(veteranCallSheetId, String);
+  if(this.userId){
+    return isCenterAdmin(this.userId)
+            ? VeteranCallSheets.find( { _id: veteranCallSheetId } )
+            : VeteranCallSheets.find( {
+                $and: [
+                        { _id: veteranCallSheetId },
+                   //     { callerId: this.userId },
                         { isRemoved: false }
                       ]
             } );

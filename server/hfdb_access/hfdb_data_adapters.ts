@@ -227,19 +227,19 @@ export class HFDataAdapters {
     }
   }
 
-  static fillVetPacketData(packet: CallPacket, vetData: any) : CallPacket {
-    packet.veteranCallSheetId = vetData._id;
-    packet.veteranDbId = vetData._id;
-    packet.veteranName = vetData.name.first + ' ' + vetData.name.last;
+  static fillVetPacketData(packet: CallPacket, callSheet: VeteranCallSheet) : CallPacket {
+    packet.veteranCallSheetId = callSheet._id;
+    packet.veteranDbId = callSheet.data._id;
+    packet.veteranName = callSheet.data.general.name.first + ' ' + callSheet.data.general.name.last;
     packet.veteranStatus = CallStatus.New;
 
     return packet;
   }
 
-  static fillGrdPacketData(packet: CallPacket, grdData: any) : CallPacket {
-    packet.guardianCallSheetId = grdData._id;
-    packet.guardianDbId = grdData._id;
-    packet.guardianName = grdData.name.first + ' ' + grdData.name.last;
+  static fillGrdPacketData(packet: CallPacket, callSheet: GuardianCallSheet) : CallPacket {
+    packet.guardianCallSheetId = callSheet._id;
+    packet.guardianDbId = callSheet.data._id;
+    packet.guardianName = callSheet.data.general.name.first + ' ' + callSheet.data.general.name.last;
     packet.guardianStatus = CallStatus.New;
 
     return packet;

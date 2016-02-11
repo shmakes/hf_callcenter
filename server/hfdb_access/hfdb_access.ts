@@ -53,9 +53,10 @@ Meteor.methods({
           let grdDbDoc = HFDataAdapters.fillGuardianDbDoc(grdData);
           GuardianDbDocs.insert(grdDbDoc);
           let grdCallSheet = HFDataAdapters.fillGuardianCallSheet(grdDbDoc, grdData);
-          GuardianCallSheets.insert(grdCallSheet);
+          let grdCallSheetId = GuardianCallSheets.insert(grdCallSheet);
+          grdCallSheet._id = grdCallSheetId;
 
-          packet = HFDataAdapters.fillGrdPacketData(packet, grdData);
+          packet = HFDataAdapters.fillGrdPacketData(packet, grdCallSheet);
           grdsAdded++;
 
           CallPackets.insert(packet);
@@ -85,9 +86,10 @@ Meteor.methods({
             let vetDbDoc = HFDataAdapters.fillVeteranDbDoc(vetData);
             VeteranDbDocs.insert(vetDbDoc);
             let vetCallSheet = HFDataAdapters.fillVeteranCallSheet(vetDbDoc, vetData);
-            VeteranCallSheets.insert(vetCallSheet);
+            let vetCallSheetId = VeteranCallSheets.insert(vetCallSheet);
+            vetCallSheet._id = vetCallSheetId;
 
-            packet = HFDataAdapters.fillVetPacketData(packet, vetData);
+            packet = HFDataAdapters.fillVetPacketData(packet, vetCallSheet);
             vetsAdded++;
 
           } //TODO: else find the vet and see if we can add a guardian.
