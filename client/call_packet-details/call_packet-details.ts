@@ -4,6 +4,7 @@ import {RouterLink, RouteParams, Router} from 'angular2/router';
 import {CallPackets} from 'collections/call_packets';
 import {CallCenters} from 'collections/call_centers';
 import {VeteranCallSheets} from 'collections/veteran_call_sheets';
+import {GuardianCallSheets} from 'collections/guardian_call_sheets';
 import {UserProfiles} from 'collections/user_profiles';
 import {AccountsUI} from 'meteor-accounts-ui';
 import {RequireUser} from 'meteor-accounts';
@@ -25,6 +26,7 @@ export class CallPacketDetails extends MeteorComponent {
   callPacket: CallPacket;
   callCenter: CallCenter;
   veteranCallSheet: VeteranCallSheet;
+  guardianCallSheet: GuardianCallSheet;
   utils: Utils;
   users: Array<UserProfile>;
   user: UserProfile;
@@ -47,6 +49,9 @@ export class CallPacketDetails extends MeteorComponent {
       }, true);
       this.subscribe('veteranCallSheet', this.callPacket.veteranCallSheetId, () => {
           this.veteranCallSheet = VeteranCallSheets.findOne(this.callPacket.veteranCallSheetId);
+      }, true);
+      this.subscribe('guardianCallSheet', this.callPacket.guardianCallSheetId, () => {
+          this.guardianCallSheet = GuardianCallSheets.findOne(this.callPacket.guardianCallSheetId);
       }, true);
     }, true);
 

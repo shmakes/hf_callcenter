@@ -112,10 +112,27 @@
     </div>
     <div [hidden]="!infoVisible" >
       <div class="page-header">
-        <h2>Veteran Contact Info</h2>
+        <h2>Veteran Info</h2>
       </div>
+      <h3>Flight Status</h3>
+      <dl class="inline" *ngIf="veteranCallSheet">
+        <dt>App Date</dt>
+        <dd>{{utils.formatDate(veteranCallSheet.data.general.app_date)}}</dd>
+        <dt>Conflict</dt>
+        <dd>{{veteranCallSheet.data.vet_type}}</dd>
+        <dt>Status</dt>
+        <dd>{{veteranCallSheet.data.flight.flight.status}}</dd>
+        <dt>Group</dt>
+        <dd>{{veteranCallSheet.data.flight.group}}</dd>
+        <dt>Confirmed Date</dt>
+        <dd>{{utils.formatDate(veteranCallSheet.data.flight.flight.confirmed_date)}}</dd>
+        <dt>Confirmed By</dt>
+        <dd>{{veteranCallSheet.data.flight.flight.confirmed_by}}</dd>
+        <dt>Caller</dt>
+        <dd>{{veteranCallSheet.data.general.call.assigned_to}}</dd>
+      </dl>
       <h3>Personal</h3>
-      <dl *ngIf="veteranCallSheet">
+      <dl class="inline" *ngIf="veteranCallSheet">
         <dt>Phone</dt>
         <dd><a href="tel:{{veteranCallSheet.data.general.address.phone_day}}">{{veteranCallSheet.data.general.address.phone_day}}</a></dd>
         <dt>Phone Evening</dt>
@@ -126,7 +143,7 @@
         <dd><a href="mailto:{{veteranCallSheet.data.general.address.email}}">{{veteranCallSheet.data.general.address.email}}</a></dd>
       </dl>
       <h3>Emergency Contact</h3>
-      <dl *ngIf="veteranCallSheet">
+      <dl class="inline" *ngIf="veteranCallSheet">
         <dt>Name</dt>
         <dd>{{veteranCallSheet.data.general.emerg_contact.name}}</dd>
         <dt>Relationship</dt>
@@ -141,7 +158,7 @@
         <dd><a href="mailto:{{veteranCallSheet.data.general.emerg_contact.address.email}}">{{veteranCallSheet.data.general.emerg_contact.address.email}}</a></dd>
       </dl>
       <h3>Alternate Contact</h3>
-      <dl *ngIf="veteranCallSheet">
+      <dl class="inline" *ngIf="veteranCallSheet">
         <dt>Name</dt>
         <dd>{{veteranCallSheet.data.alt_contact.name}}</dd>
         <dt>Relationship</dt>
@@ -156,7 +173,7 @@
         <dd><a href="mailto:{{veteranCallSheet.data.alt_contact.address.email}}">{{veteranCallSheet.data.alt_contact.address.email}}</a></dd>
       </dl>
       <h3>Mail Call Contact</h3>
-      <dl *ngIf="veteranCallSheet">
+      <dl class="inline" *ngIf="veteranCallSheet">
         <dt>Name</dt>
         <dd>{{veteranCallSheet.data.mail_call.name}}</dd>
         <dt>Relationship</dt>
@@ -172,33 +189,46 @@
       </dl>
       <br />
       <div class="page-header">
-        <h2>Guardian Contact Info</h2>
+        <h2>Guardian Info</h2>
       </div>
+      <h3>Flight Status</h3>
+      <dl class="inline" *ngIf="guardianCallSheet">
+        <dt>App Date</dt>
+        <dd>{{utils.formatDate(guardianCallSheet.data.general.app_date)}}</dd>
+        <dt>Status</dt>
+        <dd>{{guardianCallSheet.data.flight.flight.status}}</dd>
+        <dt>Confirmed Date</dt>
+        <dd>{{utils.formatDate(guardianCallSheet.data.flight.flight.confirmed_date)}}</dd>
+        <dt>Confirmed By</dt>
+        <dd>{{guardianCallSheet.data.flight.flight.confirmed_by}}</dd>
+        <dt>Caller</dt>
+        <dd>{{guardianCallSheet.data.general.call.assigned_to}}</dd>
+      </dl>
       <h3>Personal</h3>
-      <dl *ngIf="guardianCallSheet">
+      <dl class="inline" *ngIf="guardianCallSheet">
         <dt>Phone</dt>
-        <dd><a href="tel:{{veteranCallSheet.data.general.address.phone_day}}">{{veteranCallSheet.data.general.address.phone_day}}</a></dd>
+        <dd><a href="tel:{{guardianCallSheet.data.general.address.phone_day}}">{{guardianCallSheet.data.general.address.phone_day}}</a></dd>
         <dt>Phone Evening</dt>
-        <dd><a href="tel:{{veteranCallSheet.data.general.address.phone_eve}}">{{veteranCallSheet.data.general.address.phone_eve}}</a></dd>
+        <dd><a href="tel:{{guardianCallSheet.data.general.address.phone_eve}}">{{guardianCallSheet.data.general.address.phone_eve}}</a></dd>
         <dt>Phone Mobile</dt>
-        <dd><a href="tel:{{veteranCallSheet.data.general.address.phone_mbl}}">{{veteranCallSheet.data.general.address.phone_mbl}}</a></dd>
+        <dd><a href="tel:{{guardianCallSheet.data.general.address.phone_mbl}}">{{guardianCallSheet.data.general.address.phone_mbl}}</a></dd>
         <dt>Email</dt>
-        <dd><a href="mailto:{{veteranCallSheet.data.general.address.email}}">{{veteranCallSheet.data.general.address.email}}</a></dd>
+        <dd><a href="mailto:{{guardianCallSheet.data.general.address.email}}">{{guardianCallSheet.data.general.address.email}}</a></dd>
       </dl>
       <h3>Emergency Contact</h3>
-      <dl *ngIf="guardianCallSheet">
+      <dl class="inline" *ngIf="guardianCallSheet">
         <dt>Name</dt>
-        <dd>{{veteranCallSheet.data.general.emerg_contact.name}}</dd>
+        <dd>{{guardianCallSheet.data.general.emerg_contact.name}}</dd>
         <dt>Relationship</dt>
-        <dd>{{veteranCallSheet.data.general.emerg_contact.relation}}</dd>
+        <dd>{{guardianCallSheet.data.general.emerg_contact.relation}}</dd>
         <dt>Phone</dt>
-        <dd><a href="tel:{{veteranCallSheet.data.general.emerg_contact.address.phone}}">{{veteranCallSheet.data.general.emerg_contact.address.phone}}</a></dd>
+        <dd><a href="tel:{{guardianCallSheet.data.general.emerg_contact.address.phone}}">{{guardianCallSheet.data.general.emerg_contact.address.phone}}</a></dd>
         <dt>Phone Evening</dt>
-        <dd><a href="tel:{{veteranCallSheet.data.general.emerg_contact.address.phone_eve}}">{{veteranCallSheet.data.general.emerg_contact.address.phone_eve}}</a></dd>
+        <dd><a href="tel:{{guardianCallSheet.data.general.emerg_contact.address.phone_eve}}">{{guardianCallSheet.data.general.emerg_contact.address.phone_eve}}</a></dd>
         <dt>Phone Mobile</dt>
-        <dd><a href="tel:{{veteranCallSheet.data.general.emerg_contact.address.phone_mbl}}">{{veteranCallSheet.data.general.emerg_contact.address.phone_mbl}}</a></dd>
+        <dd><a href="tel:{{guardianCallSheet.data.general.emerg_contact.address.phone_mbl}}">{{guardianCallSheet.data.general.emerg_contact.address.phone_mbl}}</a></dd>
         <dt>Email</dt>
-        <dd><a href="mailto:{{veteranCallSheet.data.general.emerg_contact.address.email}}">{{veteranCallSheet.data.general.emerg_contact.address.email}}</a></dd>
+        <dd><a href="mailto:{{guardianCallSheet.data.general.emerg_contact.address.email}}">{{guardianCallSheet.data.general.emerg_contact.address.email}}</a></dd>
       </dl>
     </div>
   </div>

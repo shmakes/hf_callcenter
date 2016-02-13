@@ -2,6 +2,7 @@ import {UserProfiles} from 'collections/user_profiles';
 import {CallCenters} from 'collections/call_centers';
 import {CallPackets} from 'collections/call_packets';
 import {VeteranCallSheets} from 'collections/veteran_call_sheets';
+import {GuardianCallSheets} from 'collections/guardian_call_sheets';
 
 var isSystemAdmin = function(userId: string) {
   var profile = UserProfiles.findOne( { userId: userId } );
@@ -86,6 +87,21 @@ Meteor.publish('veteranCallSheet', function(veteranCallSheetId) {
             : VeteranCallSheets.find( {
                 $and: [
                         { _id: veteranCallSheetId },
+                   //     { callerId: this.userId },
+                        { isRemoved: false }
+                      ]
+            } );
+  }
+});
+
+Meteor.publish('guardianCallSheet', function(guardianCallSheetId) {
+  check(guardianCallSheetId, String);
+  if(this.userId){
+    return isCenterAdmin(this.userId)
+            ? GuardianCallSheets.find( { _id: guardianCallSheetId } )
+            : GuardianCallSheets.find( {
+                $and: [
+                        { _id: guardianCallSheetId },
                    //     { callerId: this.userId },
                         { isRemoved: false }
                       ]
