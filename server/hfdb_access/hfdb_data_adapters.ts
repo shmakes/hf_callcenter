@@ -230,7 +230,8 @@ export class HFDataAdapters {
   static fillVetPacketData(packet: CallPacket, callSheet: VeteranCallSheet) : CallPacket {
     packet.veteranCallSheetId = callSheet._id;
     packet.veteranDbId = callSheet.data._id;
-    packet.veteranName = callSheet.data.general.name.first + ' ' + callSheet.data.general.name.last;
+    packet.veteranFirstName = callSheet.data.general.name.first;
+    packet.veteranLastName = callSheet.data.general.name.last;
     packet.veteranStatus = CallStatus.New;
 
     return packet;
@@ -239,7 +240,8 @@ export class HFDataAdapters {
   static fillGrdPacketData(packet: CallPacket, callSheet: GuardianCallSheet) : CallPacket {
     packet.guardianCallSheetId = callSheet._id;
     packet.guardianDbId = callSheet.data._id;
-    packet.guardianName = callSheet.data.general.name.first + ' ' + callSheet.data.general.name.last;
+    packet.guardianFirstName = callSheet.data.general.name.first;
+    packet.guardianLastName = callSheet.data.general.name.last;
     packet.guardianStatus = CallStatus.New;
 
     return packet;

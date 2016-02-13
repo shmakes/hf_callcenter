@@ -28,12 +28,12 @@
     <div class="row">
       <div class="label label-primary col-md-6 col-sm-12 col-xs-12">
         <a [routerLink]="['/CallSheetVeteran', {veteranCallSheetId: callPacket.veteranCallSheetId}]">
-          <h4>{{callPacket.veteranName}}</h4>
+          <h4>{{callPacket.veteranFirstName}} {{callPacket.veteranLastName}}</h4>
         </a>
       </div>
       <div class="label label-danger col-md-6 col-sm-12 col-xs-12">
         <a [routerLink]="['/CallPacket', {callPacketId: callPacket._id}]">
-          <h4>{{callPacket.guardianName}}</h4>
+          <h4>{{callPacket.guardianFirstName}} {{callPacket.guardianLastName}}</h4>
         </a>
       </div>
     </div>

@@ -25,36 +25,56 @@ export class CallPacketsList extends MeteorComponent {
   otherCallPackets: Mongo.Cursor<CallPacket>;
   unassignedCallPackets: Mongo.Cursor<CallPacket>;
   user: Meteor.User;
+  callCenterId: string;
   callCenter: CallCenter;
   utils: Utils;
   currentUserProfile: UserProfile;
   isCenterAdmin: boolean;
   packetsVisible: boolean;
   commentsVisible: boolean;
+  yourPackets: boolean;
+  otherPackets: boolean;
+  unassignedPackets: boolean;
+  sortSpec: any;
+  sortVetNameLast: boolean;
+  sortGrdNameLast: boolean;
 
   constructor (params: RouteParams) {
     super();
     this.showPackets();
     this.utils = new Utils();
-    var callCenterId = params.get('callCenterId');
+    this.callCenterId = params.get('callCenterId');
 
-    this.subscribe('callCenters', callCenterId, () => {
-        this.callCenter = CallCenters.findOne(callCenterId);
+    this.subscribe('callCenters', this.callCenterId, () => {
+        this.callCenter = CallCenters.findOne(this.callCenterId);
     }, true);
 
-    this.subscribe('callPackets', callCenterId, () => {
-      this.myCallPackets = CallPackets.find( { callerId: this.user._id } );
-      this.otherCallPackets = CallPackets.find( { 
-        $and: [ { callerId: { '$ne' : '' } }, 
-               { callerId: { '$ne' : this.user._id } } ] 
-      } );
-      this.unassignedCallPackets = CallPackets.find( { callerId: '' } );
-    }, true);
+    this.showYours();
+    this.sortVetLastName();
 
     this.subscribe('userProfiles', () => {
       this.currentUserProfile = UserProfiles.findOne( { userId: this.user._id } );
     }, true);
-    
+
+  }
+
+  callPacketListsSubscribe() {
+    this.subscribe('callPackets', this.callCenterId, () => {
+      if (this.yourPackets) {
+        this.myCallPackets = CallPackets.find( {
+          callerId: this.user._id }, this.sortSpec );
+      }
+      if (this.otherPackets) {
+        this.otherCallPackets = CallPackets.find( {
+          $and: [ { callerId: { '$ne' : '' } },
+                 { callerId: { '$ne' : this.user._id } } ]
+        }, this.sortSpec );
+      }
+      if (this.unassignedPackets) {
+        this.unassignedCallPackets = CallPackets.find( {
+          callerId: '' }, this.sortSpec );
+      }
+    }, true);
   }
 
   callStatusName(callStat: number) {
@@ -107,4 +127,50 @@ export class CallPacketsList extends MeteorComponent {
     this.packetsVisible  = false;
     this.commentsVisible = true;
   }
+
+  showYours() {
+    this.yourPackets       = true;
+    this.otherPackets      = false;
+    this.unassignedPackets = false;
+    this.callPacketListsSubscribe();
+  }
+
+  showOthers() {
+    this.yourPackets       = false;
+    this.otherPackets      = true;
+    this.unassignedPackets = false;
+    this.callPacketListsSubscribe();
+  }
+
+  showUnassigned() {
+    this.yourPackets       = false;
+    this.otherPackets      = false;
+    this.unassignedPackets = true;
+    this.callPacketListsSubscribe();
+  }
+
+  sortVetLastName() {
+    this.sortVetNameLast = true;
+    this.sortGrdNameLast = false;
+    this.sortSpec = { sort: {
+      veteranLastName: 1,
+      veteranFirstName: 1,
+      guardianLastName: 1,
+      guardianFirstName: 1 }
+    };
+    this.callPacketListsSubscribe();
+  }
+
+  sortGrdLastName() {
+    this.sortVetNameLast = false;
+    this.sortGrdNameLast = true;
+    this.sortSpec = { sort: {
+      guardianLastName: 1,
+      guardianFirstName: 1,
+      veteranLastName: 1,
+      veteranFirstName: 1 }
+    };
+    this.callPacketListsSubscribe();
+  }
+
 }
