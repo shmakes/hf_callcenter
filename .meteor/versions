@@ -12,8 +12,8 @@ barbatus:angular2@0.8.5_2
 barbatus:ng2-compilers@0.1.1
 barbatus:ng2-meteor-accounts@0.1.6
 barbatus:ng2-meteor-accounts-ui@0.1.3
-barbatus:ts-compilers@0.2.8_4
-barbatus:typescript@0.1.5
+barbatus:ts-compilers@0.2.8_5
+barbatus:typescript@0.1.5_1
 base64@1.0.4
 binary-heap@1.0.4
 blaze@2.1.3
