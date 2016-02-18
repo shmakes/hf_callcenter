@@ -2,6 +2,7 @@ import {Component, View} from 'angular2/core';
 import {NgFor} from 'angular2/common';
 import {CallCenters} from 'collections/call_centers';
 import {CallPackets} from 'collections/call_packets';
+import {Messages} from 'collections/messages';
 import {UserProfiles} from 'collections/user_profiles';
 import {RouterLink, RouteParams} from 'angular2/router';
 import {AccountsUI} from 'meteor-accounts-ui';
@@ -24,6 +25,7 @@ export class CallPacketsList extends MeteorComponent {
   myCallPackets: Mongo.Cursor<CallPacket>;
   otherCallPackets: Mongo.Cursor<CallPacket>;
   unassignedCallPackets: Mongo.Cursor<CallPacket>;
+  messages: Mongo.Cursor<Message>;
   user: Meteor.User;
   callCenterId: string;
   callCenter: CallCenter;
@@ -38,6 +40,7 @@ export class CallPacketsList extends MeteorComponent {
   sortSpec: any;
   sortVetNameLast: boolean;
   sortGrdNameLast: boolean;
+  messageListHandle: any;
 
   constructor (params: RouteParams) {
     super();
@@ -56,6 +59,7 @@ export class CallPacketsList extends MeteorComponent {
       this.currentUserProfile = UserProfiles.findOne( { userId: this.user._id } );
     }, true);
 
+    this.messageListsSubscribe();
   }
 
   callPacketListsSubscribe() {
@@ -74,6 +78,12 @@ export class CallPacketsList extends MeteorComponent {
         this.unassignedCallPackets = CallPackets.find( {
           callerId: '' }, this.sortSpec );
       }
+    }, true);
+  }
+
+  messageListsSubscribe() {
+    this.messageListHandle = this.subscribe('messages', this.callCenterId, () => {
+        this.messages = Messages.find({}, { sort: { createdAt: -1 } } );
     }, true);
   }
 
@@ -171,6 +181,20 @@ export class CallPacketsList extends MeteorComponent {
       veteranFirstName: 1 }
     };
     this.callPacketListsSubscribe();
+  }
+
+  addComment() {
+
+    var message = <Message> {
+      callCenterId: this.callCenterId,
+      content: 'Fake message at the center level.',
+      createdName: this.currentUserProfile.name,
+      isRemoved: false
+    }
+
+    this.messageListHandle.stop();
+    Messages.insert(message);
+    this.messageListsSubscribe();
   }
 
 }

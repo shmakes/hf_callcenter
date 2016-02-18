@@ -24,7 +24,7 @@
     </div>
   </div>
   <br />
-  <div class="row page-header">
+  <div class="row page-header" [hidden]="!packetsVisible">
     <div class="col-sm-6 col-xs-12">
       <ul class="nav nav-pills" [hidden]="!userIsCenterAdmin() || getCallCenterIsRemoved()">
         <li class="nav-item">
@@ -38,7 +38,7 @@
         </li>
       </ul>
     </div>
-    <div class="col-sm-6 col-xs-12">
+    <div class="col-sm-6 col-xs-12" [hidden]="!packetsVisible">
       <ul class="nav nav-pills">
         <li class="nav-item">
           Sort by:
@@ -52,8 +52,8 @@
       </ul>
     </div>
   </div>
-  <div [hidden]="!packetsVisible" >
-    <div [hidden]="!yourPackets" >
+  <div [hidden]="!packetsVisible">
+    <div [hidden]="!yourPackets">
       <div class="page-header">
         <h2>Your Call Packets</h2>
       </div>
@@ -212,46 +212,26 @@
         <h2>Comments</h2>
       </div>
       <div class="col-xs-6">
-        <button type="button" class="btn btn-sm btn-default">Add Comment</button>
+        <button type="button" class="btn btn-sm btn-default" (click)="addComment()">Add Comment</button>
       </div>
     </div>
     <ul class="list-group">
-      <li class="list-group-item">
+      <li *ngFor="#message of messages" class="list-group-item" [class.bg-inverse]="message.isRemoved">
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
-              <b>Some nice comment about the call center in general.</b>
+              <b>{{message.content}}</b>
             </div>
           </div>
           <div class="row">
             <div class="col-md-4 col-sm-12 col-xs-12">
-              Jane Smith wrote on 1/25/2005 at 4:45pm
+              {{message.createdName}} wrote {{utils.formatDate(message.createdAt)}}
             </div>
             <div class="col-md-4 col-sm-12 col-xs-12">
-              Ref:
+              Packet: {{message.packetId}}
             </div>
             <div class="col-md-4 col-sm-12 col-xs-12">
-              Tags: Announcement
-            </div>
-          </div>
-        </div>
-      </li>
-      <li class="list-group-item">
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12">
-              <b>Some specific comment about a veteran on this list.</b>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 col-sm-12 col-xs-12">
-              John Miller wrote on 1/25/2005 at 4:45pm
-            </div>
-            <div class="col-md-4 col-sm-12 col-xs-12">
-              Ref: <a href="#">Frank Salimeri</a>
-            </div>
-            <div class="col-md-4 col-sm-12 col-xs-12">
-              Tags: Veteran, Medical
+              Ref: {{message.veteranName}}
             </div>
           </div>
         </div>
