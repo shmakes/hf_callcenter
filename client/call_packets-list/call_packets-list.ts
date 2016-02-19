@@ -1,5 +1,5 @@
 import {Component, View} from 'angular2/core';
-import {NgFor} from 'angular2/common';
+import {NgFor, FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
 import {CallCenters} from 'collections/call_centers';
 import {CallPackets} from 'collections/call_packets';
 import {Messages} from 'collections/messages';
@@ -45,12 +45,18 @@ export class CallPacketsList extends MeteorComponent {
   callerFilter: Object;
   callers: Array<UserProfile>;
   users: Array<UserProfile>;
+  messagesForm: ControlGroup;
 
   constructor (params: RouteParams) {
     super();
     this.showPackets();
     this.utils = new Utils();
     this.callCenterId = params.get('callCenterId');
+
+    var fb = new FormBuilder();
+    this.messagesForm = fb.group({
+      content: ['', Validators.required]
+    });
 
     this.subscribe('callCenters', this.callCenterId, () => {
         this.callCenter = CallCenters.findOne(this.callCenterId);
@@ -60,7 +66,6 @@ export class CallPacketsList extends MeteorComponent {
     this.sortVetLastName();
 
     this.subscribe('userProfiles', () => {
-
       this.users = UserProfiles.find( { $and: [ { isRemoved: false }, { isValidated: true } ] } ).fetch();      
       this.currentUserProfile = UserProfiles.findOne( { userId: this.user._id } );
     }, true);
@@ -192,18 +197,6 @@ export class CallPacketsList extends MeteorComponent {
     this.callPacketListsSubscribe();
   }
 
-  addComment() {
-    var message = <Message> {
-      callCenterId: this.callCenterId,
-      content: 'Fake message at the center level.',
-      createdName: this.currentUserProfile.name,
-      isRemoved: false
-    }
-    this.messageListHandle.stop();
-    Messages.insert(message);
-    this.messageListsSubscribe();
-  }
-
   getCallers() {
     if (this.callers) {
       return this.callers;
@@ -235,6 +228,27 @@ export class CallPacketsList extends MeteorComponent {
     }
     this.callerFilter = { callerId: { '$ne' : this.user._id } }
     this.callPacketListsSubscribe();
+  }
+
+  addMessage(msg) {
+    if (this.messagesForm.valid) {
+      if (Meteor.userId())  {
+        let message = <Message> {
+          callCenterId: this.callCenterId,
+          content: msg.content,
+          createdName: this.currentUserProfile.name,
+          isRemoved: false
+        };
+
+        this.messageListHandle.stop();
+        Messages.insert(message);
+        this.messageListsSubscribe();
+
+        (<Control>this.messagesForm.controls['content']).updateValue('');
+      } else {
+        alert('Please log in.');
+      }
+    }
   }
 
 }

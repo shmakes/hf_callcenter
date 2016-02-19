@@ -13,3 +13,10 @@ dl.inline dt{
   display: inline-block;
   min-width: 150px;
 }
+pre {
+    white-space: pre-wrap;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #373a3c;
+}
