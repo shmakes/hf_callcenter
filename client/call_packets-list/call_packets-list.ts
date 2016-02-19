@@ -92,7 +92,7 @@ export class CallPacketsList extends MeteorComponent {
 
   messageListsSubscribe() {
     this.messageListHandle = this.subscribe('messages', this.callCenterId, () => {
-        this.messages = Messages.find({}, { sort: { createdAt: -1 } } );
+        this.messages = Messages.find();
     }, true);
   }
 

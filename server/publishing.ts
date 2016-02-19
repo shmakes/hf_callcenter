@@ -118,7 +118,7 @@ Meteor.publish('messages', function(callCenterId) {
                 $and: [
                         { callCenterId: callCenterId }
                       ]
-            } )
+            }, { sort: { createdAt: -1 } } )
             : Messages.find( {
                 $and: [
                         { callCenterId: callCenterId },
@@ -126,7 +126,7 @@ Meteor.publish('messages', function(callCenterId) {
                                  { createdBy: this.userId } ] },
                         { isRemoved: false }
                       ]
-            } );
+            }, { sort: { createdAt: -1 } } );
   }
 });
 
