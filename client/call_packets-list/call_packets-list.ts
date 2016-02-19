@@ -41,6 +41,10 @@ export class CallPacketsList extends MeteorComponent {
   sortVetNameLast: boolean;
   sortGrdNameLast: boolean;
   messageListHandle: any;
+  callerFilterId: string;
+  callerFilter: Object;
+  callers: Array<UserProfile>;
+  users: Array<UserProfile>;
 
   constructor (params: RouteParams) {
     super();
@@ -56,8 +60,13 @@ export class CallPacketsList extends MeteorComponent {
     this.sortVetLastName();
 
     this.subscribe('userProfiles', () => {
+
+      this.users = UserProfiles.find( { $and: [ { isRemoved: false }, { isValidated: true } ] } ).fetch();      
       this.currentUserProfile = UserProfiles.findOne( { userId: this.user._id } );
     }, true);
+
+    this.callerFilterId = '';
+    this.callerFilter = { callerId: { '$ne' : this.user._id } };
 
     this.messageListsSubscribe();
   }
@@ -71,7 +80,7 @@ export class CallPacketsList extends MeteorComponent {
       if (this.otherPackets) {
         this.otherCallPackets = CallPackets.find( {
           $and: [ { callerId: { '$ne' : '' } },
-                 { callerId: { '$ne' : this.user._id } } ]
+                  this.callerFilter ]
         }, this.sortSpec );
       }
       if (this.unassignedPackets) {
@@ -184,17 +193,48 @@ export class CallPacketsList extends MeteorComponent {
   }
 
   addComment() {
-
     var message = <Message> {
       callCenterId: this.callCenterId,
       content: 'Fake message at the center level.',
       createdName: this.currentUserProfile.name,
       isRemoved: false
     }
-
     this.messageListHandle.stop();
     Messages.insert(message);
     this.messageListsSubscribe();
+  }
+
+  getCallers() {
+    if (this.callers) {
+      return this.callers;
+    } else {
+      if (this.callCenter && this.users) {
+        let callers = new Array<UserProfile>();
+        for (var userId in this.callCenter.callers) {
+          let uId = this.callCenter.callers[userId];
+          for (var i in this.users) {
+            if (this.users[i].userId == uId) {
+              callers.push(this.users[i]);
+            }
+          }
+        }
+        this.callers = callers;
+        return callers;
+      }
+    }
+  }
+
+  changeCallerFilter(e) {
+    if (e && e.target) {
+      var callerId = e.target.value;
+      if (callerId.length > 1) {
+        this.callerFilter = { callerId: callerId };
+        this.callPacketListsSubscribe();
+        return;
+      }
+    }
+    this.callerFilter = { callerId: { '$ne' : this.user._id } }
+    this.callPacketListsSubscribe();
   }
 
 }
