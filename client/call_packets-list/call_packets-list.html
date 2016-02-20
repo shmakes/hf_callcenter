@@ -111,7 +111,7 @@
       </div>
 
       <select class="form-control" (change)="changeCallerFilter($event)" [(ngModel)]="callerFilterId">
-        <option value="">---</option>
+        <option value="">--All Packets But Yours--</option>
         <option *ngFor="#caller of getCallers()" value="{{caller.userId}}">{{caller.name}}</option>
       </select>
       <ul class="list-group">
