@@ -7,7 +7,7 @@ import {CallCenters} from 'collections/call_centers';
 })
 
 @View({
-  templateUrl: 'client/call_centers-form/call_centers-form.html',
+  templateUrl: '/client/call_centers-form/call_centers-form.html',
   directives: [FORM_DIRECTIVES]
 })
 
