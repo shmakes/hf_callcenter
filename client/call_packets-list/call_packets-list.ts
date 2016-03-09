@@ -1,5 +1,5 @@
 import {Component, View} from 'angular2/core';
-import {NgFor, FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
+import {NgFor, NgClass, FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators} from 'angular2/common';
 import {CallCenters} from 'collections/call_centers';
 import {CallPackets} from 'collections/call_packets';
 import {Messages} from 'collections/messages';
@@ -17,7 +17,7 @@ import {Utils} from 'client/utils';
 
 @View({
     templateUrl: '/client/call_packets-list/call_packets-list.html',
-    directives: [NgFor, RouterLink, AccountsUI]
+    directives: [NgFor, NgClass, RouterLink, AccountsUI, FORM_DIRECTIVES]
 })
 
 @InjectUser()

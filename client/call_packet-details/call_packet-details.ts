@@ -1,5 +1,5 @@
 import {Component, View} from 'angular2/core';
-import {FORM_DIRECTIVES, NgIf, NgFor} from 'angular2/common';
+import {FORM_DIRECTIVES, NgIf, NgFor, NgClass} from 'angular2/common';
 import {RouterLink, RouteParams, Router} from 'angular2/router';
 import {CallPackets} from 'collections/call_packets';
 import {CallCenters} from 'collections/call_centers';
@@ -18,7 +18,7 @@ import {CallType} from 'collections/enums';
 })
 @View({
   templateUrl: '/client/call_packet-details/call_packet-details.html',
-  directives: [NgFor, RouterLink, FORM_DIRECTIVES, NgIf, AccountsUI]
+  directives: [NgFor, NgClass, RouterLink, FORM_DIRECTIVES, NgIf, AccountsUI]
 })
 
 @RequireUser()

@@ -15,10 +15,10 @@
     <div class="col-sm-6 col-xs-12">
       <ul class="nav nav-pills">
         <li class="nav-item">
-          <a class="nav-link" [class.active]="historyVisible"  (click)="showHistory()">History</a>
+          <a class="nav-link" [ngClass]="{'active': historyVisible}" (click)="showHistory()">History</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [class.active]="infoVisible" (click)="showInfo()">Info</a>
+          <a class="nav-link" [ngClass]="{'active': infoVisible}" (click)="showInfo()">Info</a>
         </li>
       </ul>
     </div>

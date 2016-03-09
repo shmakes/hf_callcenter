@@ -1,5 +1,5 @@
 import {Component, View} from 'angular2/core';
-import {NgFor} from 'angular2/common';
+import {NgFor, NgClass, FORM_DIRECTIVES} from 'angular2/common';
 import {UserProfiles} from 'collections/user_profiles';
 import {CallCenters} from 'collections/call_centers';
 import {CallCentersForm} from 'client/call_centers-form/call_centers-form';
@@ -15,7 +15,7 @@ import {Utils} from 'client/utils';
 
 @View({
     templateUrl: '/client/call_centers-list/call_centers-list.html',
-    directives: [NgFor, CallCentersForm, RouterLink, AccountsUI]
+    directives: [NgFor, NgClass, CallCentersForm, RouterLink, AccountsUI, FORM_DIRECTIVES]
 })
 
 @InjectUser()

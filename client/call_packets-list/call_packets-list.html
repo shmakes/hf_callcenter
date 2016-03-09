@@ -15,10 +15,10 @@
     <div class="col-sm-6 col-xs-12">
       <ul class="nav nav-pills">
         <li class="nav-item">
-          <a class="nav-link" [class.active]="packetsVisible"  (click)="showPackets()">Packets</a>
+          <a class="nav-link" [ngClass]="{'active': packetsVisible}" (click)="showPackets()">Packets</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [class.active]="commentsVisible" (click)="showComments()">Comments</a>
+          <a class="nav-link" [ngClass]="{'active': commentsVisible}" (click)="showComments()">Comments</a>
         </li>
       </ul>
     </div>
@@ -28,13 +28,13 @@
     <div class="col-sm-6 col-xs-12">
       <ul class="nav nav-pills" [hidden]="!userIsCenterAdmin() || getCallCenterIsRemoved()">
         <li class="nav-item">
-          <a class="nav-link" [class.active]="yourPackets"  (click)="showYours()">Yours</a>
+          <a class="nav-link" [ngClass]="{'active': yourPackets}" (click)="showYours()">Yours</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [class.active]="otherPackets" (click)="showOthers()">Others</a>
+          <a class="nav-link" [ngClass]="{'active': otherPackets}" (click)="showOthers()">Others</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [class.active]="unassignedPackets" (click)="showUnassigned()">Unassigned</a>
+          <a class="nav-link" [ngClass]="{'active': unassignedPackets}" (click)="showUnassigned()">Unassigned</a>
         </li>
       </ul>
     </div>
@@ -44,10 +44,10 @@
           Sort by:
         </li>
         <li class="nav-item">
-          <a class="nav-link" [class.active]="sortVetNameLast" (click)="sortVetLastName()">Vet</a>
+          <a class="nav-link" [ngClass]="{'active': sortVetNameLast}" (click)="sortVetLastName()">Vet</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [class.active]="sortGrdNameLast" (click)="sortGrdLastName()">Grd</a>
+          <a class="nav-link" [ngClass]="{'active': sortGrdNameLast}" (click)="sortGrdLastName()">Grd</a>
         </li>
       </ul>
     </div>
@@ -58,7 +58,7 @@
         <h2>Your Call Packets</h2>
       </div>
       <ul class="list-group">
-        <li *ngFor="#callPacket of myCallPackets" class="list-group-item" [class.bg-inverse]="callPacket.isRemoved">
+        <li *ngFor="#callPacket of myCallPackets" class="list-group-item" [ngClass]="{'bg-inverse': callPacket.isRemoved}">
           <div class="container">
             <div class="row">
               <div class="label label-primary col-md-6 col-sm-12 col-xs-12">
@@ -115,7 +115,7 @@
         <option *ngFor="#caller of getCallers()" value="{{caller.userId}}">{{caller.name}}</option>
       </select>
       <ul class="list-group">
-        <li *ngFor="#callPacket of otherCallPackets" class="list-group-item" [class.bg-inverse]="callPacket.isRemoved">
+        <li *ngFor="#callPacket of otherCallPackets" class="list-group-item" [ngClass]="{'bg-inverse': callPacket.isRemoved}">
           <div class="container">
             <div class="row">
               <div class="label label-primary col-md-6 col-sm-12 col-xs-12">
@@ -172,7 +172,7 @@
         </div>
       </div>
       <ul class="list-group">
-        <li *ngFor="#callPacket of unassignedCallPackets" class="list-group-item" [class.bg-inverse]="callPacket.isRemoved">
+        <li *ngFor="#callPacket of unassignedCallPackets" class="list-group-item" [ngClass]="{'bg-inverse': callPacket.isRemoved}">
           <div class="container">
             <div class="row">
               <div class="label label-primary col-md-6 col-sm-12 col-xs-12">
@@ -232,7 +232,7 @@
       </div>
     </div>
     <ul class="list-group">
-      <li *ngFor="#message of messages" class="list-group-item" [class.bg-inverse]="message.isRemoved">
+      <li *ngFor="#message of messages" class="list-group-item" [ngClass]="{'bg-inverse': message.isRemoved}">
         <div class="container">
           <div class="row">
             <div class="col-xs-12">
