@@ -133,12 +133,27 @@ export class CallPacketsList extends MeteorComponent {
     if (this.userIsCenterAdmin()) {
       Meteor.call('getVeteranListForFlight', centerId, (error) => {
         if (error) {
-          alert(`Packets could not be added from flights. ${error}`);
+          alert(`Packets could not be added from flight. ${error}`);
           return;
         }
       });
     } else {
       alert('Please log in as a call center administrator to add new packets from a flight.');
+    }
+  }
+
+  updateFromFlight() {
+    var centerId = this.callCenter._id;
+
+    if (this.userIsCenterAdmin()) {
+      Meteor.call('updateDataFromFlight', centerId, (error) => {
+        if (error) {
+          alert(`Packets could not be updated from flight. ${error}`);
+          return;
+        }
+      });
+    } else {
+      alert('Please log in as a call center administrator to update packets from a flight.');
     }
   }
 

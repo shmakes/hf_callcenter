@@ -105,5 +105,9 @@ Meteor.methods({
   getVeteranListForFlight: function(callCenterId: string) {
     console.log('importCallSheets method on client');
     Meteor.call('importCallSheetsFromFlight',callCenterId);
+  },
+  updateDataFromFlight: function(callCenterId: string) {
+    console.log('updateCallSheets method on client');
+    Meteor.call('updateCallSheetsFromFlight',callCenterId);
   }
 });

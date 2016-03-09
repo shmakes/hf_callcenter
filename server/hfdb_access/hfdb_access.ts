@@ -1,4 +1,5 @@
 declare var process: any;
+declare var postData: any;
 
 import 'collections/methods';
 import {UserProfiles} from 'collections/user_profiles';
@@ -105,6 +106,56 @@ Meteor.methods({
     }
     console.log('*** Added ' + qtyAdded + ' new call packets to flight: ' + callCenter.flightName);
     console.log('*** Added ' + vetsAdded + ' veterans and ' + grdsAdded + ' guardiands to flight: ' + callCenter.flightName);
+  },
+  updateCallSheetsFromFlight: function(callCenterId: string) {
+    let currentUserProfile = UserProfiles.findOne( { userId: this.userId } );
+    let currentUserIsCenterAdmin = (!!currentUserProfile && currentUserProfile.isCenterAdmin);
+    if (!currentUserIsCenterAdmin) {
+      throw new Meteor.Error('401', 'Only call center administrators can update veteran packets.');
+    }
+
+    let callCenter = CallCenters.findOne( { _id: callCenterId } );
+    if (!callCenter) {
+      throw new Meteor.Error('404', 'Call center not found.');
+    }
+    console.log('Updating call packets for flight: ' + callCenter.flightName + ' to call center: ' + callCenter.name);
+
+    let packets = CallPackets.find(
+      { callCenterId: callCenterId },
+      {
+        fields: {
+          veteranDbId: 1,
+          guardianDbId: 1,
+          veteranCallSheetId: 1,
+          guardianCallSheetId: 1
+        }
+      }
+    ).fetch();
+    console.log('Packets to update: ' + packets.length);
+
+    let docIds = new Array<string>();
+    for (var p in packets) {
+      let packet = packets[p];
+      if (packet.veteranDbId) {
+        docIds.push(packet.veteranDbId);
+      }
+      if (packet.guardianDbId) {
+        docIds.push(packet.guardianDbId);
+      }
+    }
+    postData = {
+      "doc_ids": docIds
+    };
+    console.log('Call sheets to update: ' + docIds.length);
+
+    let options = { auth: process.env.COUCH_AUTH, data: postData };
+    let url = process.env.COUCH_URL + '/' + process.env.COUCH_DB
+        + '/_changes?include_docs=false&filter=_doc_ids';
+    console.log(url);
+    let response = HTTP.post(url, options);
+
+    let updateList = JSON.parse(response.content);
+    console.log('Docs from database: ' + updateList.results.length);
   }
 });
 
