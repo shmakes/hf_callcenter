@@ -25,3 +25,4 @@ momentjs:moment
 urigo:angular2-meteor@0.4.5_1
 barbatus:ng2-meteor-accounts@0.1.8_2
 barbatus:ng2-meteor-accounts-ui@0.1.4_2
+barbatus:typescript-compiler@0.5.0-beta.13
