@@ -13,7 +13,7 @@ barbatus:angular2@0.9.0
 barbatus:ng2-meteor-accounts@0.1.8_2
 barbatus:ng2-meteor-accounts-ui@0.1.4_2
 barbatus:ng2-typescript-compiler@0.5.0-beta.5
-barbatus:typescript-compiler@0.5.0-beta.13
+barbatus:typescript-compiler@0.5.0-beta.14
 barbatus:typescript-runtime@0.1.0-beta.1
 base64@1.0.4
 binary-heap@1.0.4
@@ -92,7 +92,7 @@ templating-tools@1.0.0
 tracker@1.0.9
 ui@1.0.8
 underscore@1.0.4
-urigo:angular2-meteor@0.4.5_1
+urigo:angular2-meteor@0.5.0
 url@1.0.5
 webapp@1.2.3
 webapp-hashing@1.0.5
