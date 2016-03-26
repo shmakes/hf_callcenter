@@ -1,5 +1,4 @@
 declare var process: any;
-declare var postData: any;
 
 import 'collections/methods';
 import {UserProfiles} from 'collections/user_profiles';
@@ -143,19 +142,45 @@ Meteor.methods({
         docIds.push(packet.guardianDbId);
       }
     }
-    postData = {
+    let postData = {
       "doc_ids": docIds
     };
     console.log('Call sheets to update: ' + docIds.length);
 
     let options = { auth: process.env.COUCH_AUTH, data: postData };
     let url = process.env.COUCH_URL + '/' + process.env.COUCH_DB
-        + '/_changes?include_docs=false&filter=_doc_ids';
+        + '/_changes?include_docs=true&filter=_doc_ids';
     console.log(url);
     let response = HTTP.post(url, options);
 
     let updateList = JSON.parse(response.content);
     console.log('Docs from database: ' + updateList.results.length);
+
+    let vetUpdate = 0;
+    let grdUpdate = 0;
+    for (var d in updateList.results) {
+      let cDoc = updateList.results[d].doc;
+      if (cDoc.type == 'Veteran') {
+        let dbDoc = VeteranDbDocs.findOne( { _id: cDoc._id } );
+        if (dbDoc) {
+          if (dbDoc._rev != cDoc._rev) {
+            console.log('UPDATED - Veteran: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
+            vetUpdate++;
+          }
+        }
+      } else if (cDoc.type == 'Guardian') {
+        let dbDoc = GuardianDbDocs.findOne( { _id: cDoc._id } );
+        if (dbDoc) {
+          if (dbDoc._rev != cDoc._rev) {
+            console.log('UPDATED - Guardian: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
+            grdUpdate++;
+          }
+        }
+      }
+    }
+
+    console.log('Updated ' + vetUpdate + ' veterans and ' + grdUpdate + ' guardians.');
+
   }
 });
 
