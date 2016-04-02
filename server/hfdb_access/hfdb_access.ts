@@ -156,6 +156,8 @@ Meteor.methods({
     let updateList = JSON.parse(response.content);
     console.log('Docs from database: ' + updateList.results.length);
 
+    let vetEval = 0;
+    let grdEval = 0;
     let vetUpdate = 0;
     let grdUpdate = 0;
     for (var d in updateList.results) {
@@ -170,8 +172,9 @@ Meteor.methods({
             if (result.updates.length > 0 || result.conflicts.length > 0) {
               console.log(result);
               console.log('UPDATED - Veteran: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
+              vetUpdate++;
             }
-            vetUpdate++;
+            vetEval++;
           }
         } else {
             console.log('MISSING - Veteran: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
@@ -186,8 +189,9 @@ Meteor.methods({
             if (result.updates.length > 0 || result.conflicts.length > 0) {
               console.log(result);
               console.log('UPDATED - Guardian: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
+              grdUpdate++;
             }
-            grdUpdate++;
+            grdEval++;
           }
         } else {
             console.log('MISSING - Guardian: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
@@ -195,7 +199,8 @@ Meteor.methods({
       }
     }
 
-    console.log('Updated ' + vetUpdate + ' veterans and ' + grdUpdate + ' guardians.');
+    console.log('Evaluated ' + vetEval + ' veterans and updated ' + vetUpdate);
+    console.log('Evaluated ' + grdEval + ' guardians and updated ' + grdUpdate);
 
   }
 });

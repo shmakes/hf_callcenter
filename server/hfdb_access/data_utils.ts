@@ -64,32 +64,53 @@ export class DataUtils {
                    nameRef: Name,
                    name:    Name,
                    result:  MergeResult) : MergeResult {
+    result = DataUtils.mergeValue('first', 'name', nameIn.first, nameRef.first, name.first, result, true);
+    result = DataUtils.mergeValue('middle', 'name', nameIn.middle, nameRef.middle, name.middle, result, false);
+    result = DataUtils.mergeValue('last', 'name', nameIn.last, nameRef.last, name.last, result, true);
+    result = DataUtils.mergeValue('nickname', 'name', nameIn.nickname, nameRef.nickname, name.nickname, result, false);
 
-    if (nameIn.first != nameRef.first) {
-      if(nameRef.first != name.first) {
+    return result;
+  }
+
+  static mergeValue(name:   string,
+                    parent: string,
+                    valIn:  any,
+                    valRef: any,
+                    val:    any,
+                    result: MergeResult,
+                    force:  boolean) : MergeResult {
+
+    if (valIn != valRef) {
+      if(valRef != val) {
+        let operation = (force 
+          ? `For ${parent}, overrode existing value of ${name}: "${val}" which was originally "${valRef}" with "${valIn}"`
+          : `For ${parent}, preserved existing value of ${name}: "${val}" which was originally "${valRef}" but was changed to "${valIn}"`);
+
         result.conflicts.push( <MergeProperty> {
-          propertyName:  'first',
-          parentName:    'Name',
-          desiredValue:  nameIn.first,
-          originalValue: nameRef.first,
-          currentValue:  name.first,
-          resultValue:   nameIn.first,
-          formatString:  'todo'
+          propertyName:  name,
+          parentName:    parent,
+          desiredValue:  valIn,
+          originalValue: valRef,
+          currentValue:  val,
+          resultValue:   (force ? valIn : val),
+          formatString:  operation
         });
-        name.first = nameIn.first;
-        nameRef.first = nameIn.first;
+        if (force) {
+          val = valIn;
+        }
+        valRef = valIn;
       } else {
         result.updates.push( <MergeProperty> {
-          propertyName:  'first',
-          parentName:    'Name',
-          desiredValue:  nameIn.first,
-          originalValue: nameRef.first,
-          currentValue:  name.first,
-          resultValue:   nameIn.first,
-          formatString:  'todo'
+          propertyName:  name,
+          parentName:    parent,
+          desiredValue:  valIn,
+          originalValue: valRef,
+          currentValue:  val,
+          resultValue:   valIn,
+          formatString:  `For ${parent}, updated existing value of ${name}: "${val}" with "${valIn}"`
         });
-        name.first = nameIn.first;
-        nameRef.first = nameIn.first;
+        val = valIn;
+        valRef = valIn;
       }
     }
 
