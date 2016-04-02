@@ -27,5 +27,25 @@ export class DataUtils {
     };
   }
 
+  static mergeVeteranDataIn(veteranDbDocIn: VeteranDbDoc,
+                            veteranDbDocRef: VeteranDbDoc,
+                            veteranCallSheet: VeteranCallSheet) : MergeResult {
+    // Merge
+
+    return <MergeResult> {
+      'messages':   ['Test']
+    };
+  }
+
+  static mergeGuardianDataIn(guardianDbDocIn: GuardianDbDoc,
+                            guardianDbDocRef: GuardianDbDoc,
+                            guardianCallSheet: GuardianCallSheet) : MergeResult {
+    // Merge
+
+    return <MergeResult> {
+      'messages':   ['Test']
+    };
+  }
+
 }
 

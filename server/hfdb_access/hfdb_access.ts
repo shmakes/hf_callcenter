@@ -162,19 +162,29 @@ Meteor.methods({
       let cDoc = updateList.results[d].doc;
       if (cDoc.type == 'Veteran') {
         let dbDoc = VeteranDbDocs.findOne( { _id: cDoc._id } );
-        if (dbDoc) {
+        let callSheet = VeteranCallSheets.findOne( { 'data._id': cDoc._id } );
+        if (dbDoc && callSheet) {
           if (dbDoc._rev != cDoc._rev) {
+            let result = DataUtils.mergeVeteranDataIn(cDoc, dbDoc, callSheet);
+            console.log(result);
             console.log('UPDATED - Veteran: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
             vetUpdate++;
           }
+        } else {
+            console.log('MISSING - Veteran: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
         }
       } else if (cDoc.type == 'Guardian') {
         let dbDoc = GuardianDbDocs.findOne( { _id: cDoc._id } );
-        if (dbDoc) {
+        let callSheet = GuardianCallSheets.findOne( { 'data._id': cDoc._id } );
+        if (dbDoc && callSheet) {
           if (dbDoc._rev != cDoc._rev) {
+            let result = DataUtils.mergeGuardianDataIn(cDoc, dbDoc, callSheet);
+            console.log(result);
             console.log('UPDATED - Guardian: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
             grdUpdate++;
           }
+        } else {
+            console.log('MISSING - Guardian: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
         }
       }
     }
