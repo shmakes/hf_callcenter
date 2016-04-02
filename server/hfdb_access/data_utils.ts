@@ -31,10 +31,21 @@ export class DataUtils {
                             veteranDbDocRef: VeteranDbDoc,
                             veteranCallSheet: VeteranCallSheet) : MergeResult {
     // Merge
-
-    return <MergeResult> {
-      'messages':   ['Test']
+    let result = <MergeResult> {
+      'docId': veteranDbDocIn._id,
+      'callSheetId': veteranCallSheet._id,
+      'messages':   ['Vet Test'],
+      'updates': new Array<MergeProperty>(),
+      'conflicts': new Array<MergeProperty>(),
     };
+
+    // Merge the name.
+    result = DataUtils.mergeName(veteranDbDocIn.general.name,
+                                 veteranDbDocRef.general.name,
+                                 veteranCallSheet.data.general.name,
+                                 result);
+
+    return result;
   }
 
   static mergeGuardianDataIn(guardianDbDocIn: GuardianDbDoc,
@@ -43,8 +54,46 @@ export class DataUtils {
     // Merge
 
     return <MergeResult> {
-      'messages':   ['Test']
+      'messages':   ['Grd Test'],
+      'updates': new Array<MergeProperty>(),
+      'conflicts': new Array<MergeProperty>()
     };
+  }
+
+  static mergeName(nameIn:  Name,
+                   nameRef: Name,
+                   name:    Name,
+                   result:  MergeResult) : MergeResult {
+
+    if (nameIn.first != nameRef.first) {
+      if(nameRef.first != name.first) {
+        result.conflicts.push( <MergeProperty> {
+          propertyName:  'first',
+          parentName:    'Name',
+          desiredValue:  nameIn.first,
+          originalValue: nameRef.first,
+          currentValue:  name.first,
+          resultValue:   nameIn.first,
+          formatString:  'todo'
+        });
+        name.first = nameIn.first;
+        nameRef.first = nameIn.first;
+      } else {
+        result.updates.push( <MergeProperty> {
+          propertyName:  'first',
+          parentName:    'Name',
+          desiredValue:  nameIn.first,
+          originalValue: nameRef.first,
+          currentValue:  name.first,
+          resultValue:   nameIn.first,
+          formatString:  'todo'
+        });
+        name.first = nameIn.first;
+        nameRef.first = nameIn.first;
+      }
+    }
+
+    return result;
   }
 
 }

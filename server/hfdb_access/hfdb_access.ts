@@ -161,26 +161,32 @@ Meteor.methods({
     for (var d in updateList.results) {
       let cDoc = updateList.results[d].doc;
       if (cDoc.type == 'Veteran') {
-        let dbDoc = VeteranDbDocs.findOne( { _id: cDoc._id } );
-        let callSheet = VeteranCallSheets.findOne( { 'data._id': cDoc._id } );
+        let fltDoc = HFDataAdapters.fillVeteranDbDoc(cDoc);
+        let dbDoc = VeteranDbDocs.findOne( { _id: fltDoc._id } );
+        let callSheet = VeteranCallSheets.findOne( { 'data._id': fltDoc._id } );
         if (dbDoc && callSheet) {
-          if (dbDoc._rev != cDoc._rev) {
-            let result = DataUtils.mergeVeteranDataIn(cDoc, dbDoc, callSheet);
-            console.log(result);
-            console.log('UPDATED - Veteran: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
+          if (dbDoc._rev != fltDoc._rev) {
+            let result = DataUtils.mergeVeteranDataIn(fltDoc, dbDoc, callSheet);
+            if (result.updates.length > 0 || result.conflicts.length > 0) {
+              console.log(result);
+              console.log('UPDATED - Veteran: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
+            }
             vetUpdate++;
           }
         } else {
             console.log('MISSING - Veteran: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
         }
       } else if (cDoc.type == 'Guardian') {
-        let dbDoc = GuardianDbDocs.findOne( { _id: cDoc._id } );
-        let callSheet = GuardianCallSheets.findOne( { 'data._id': cDoc._id } );
+        let fltDoc = HFDataAdapters.fillGuardianDbDoc(cDoc);
+        let dbDoc = GuardianDbDocs.findOne( { _id: fltDoc._id } );
+        let callSheet = GuardianCallSheets.findOne( { 'data._id': fltDoc._id } );
         if (dbDoc && callSheet) {
-          if (dbDoc._rev != cDoc._rev) {
-            let result = DataUtils.mergeGuardianDataIn(cDoc, dbDoc, callSheet);
-            console.log(result);
-            console.log('UPDATED - Guardian: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
+          if (dbDoc._rev != fltDoc._rev) {
+            let result = DataUtils.mergeGuardianDataIn(fltDoc, dbDoc, callSheet);
+            if (result.updates.length > 0 || result.conflicts.length > 0) {
+              console.log(result);
+              console.log('UPDATED - Guardian: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
+            }
             grdUpdate++;
           }
         } else {
