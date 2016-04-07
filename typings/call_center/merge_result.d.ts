@@ -3,7 +3,9 @@ declare type MergeResult = {
   callSheetId: string,
   messages:    string[],
   updates:     MergeProperty[],
-  conflicts:   MergeProperty[]
+  conflicts:   MergeProperty[],
+  dataRef:     any,
+  dataOut:     any
 }
 
 declare type MergeProperty = {

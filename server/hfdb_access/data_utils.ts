@@ -27,48 +27,93 @@ export class DataUtils {
     };
   }
 
-  static mergeVeteranDataIn(veteranDbDocIn: VeteranDbDoc,
-                            veteranDbDocRef: VeteranDbDoc,
-                            veteranCallSheet: VeteranCallSheet) : MergeResult {
+  static mergeVeteranDataIn(dbDocIn: VeteranDbDoc,
+                            dbDocRef: VeteranDbDoc,
+                            callSheet: VeteranCallSheet) : MergeResult {
     // Merge
     let result = <MergeResult> {
-      'docId': veteranDbDocIn._id,
-      'callSheetId': veteranCallSheet._id,
+      'docId': dbDocIn._id,
+      'callSheetId': callSheet._id,
       'messages':   ['Vet Test'],
       'updates': new Array<MergeProperty>(),
       'conflicts': new Array<MergeProperty>(),
     };
 
-    // Merge the name.
-    result = DataUtils.mergeName(veteranDbDocIn.general.name,
-                                 veteranDbDocRef.general.name,
-                                 veteranCallSheet.data.general.name,
-                                 result);
+    result = DataUtils.mergeGeneral(dbDocIn.general, dbDocRef.general, callSheet.data.general, result);
+    callSheet.data.general = result.dataOut;
+    dbDocRef.general = result.dataRef;
 
+    result.dataOut = callSheet;
+    result.dataRef = dbDocRef;
     return result;
   }
 
-  static mergeGuardianDataIn(guardianDbDocIn: GuardianDbDoc,
-                            guardianDbDocRef: GuardianDbDoc,
-                            guardianCallSheet: GuardianCallSheet) : MergeResult {
+  static mergeGuardianDataIn(dbDocIn: GuardianDbDoc,
+                             dbDocRef: GuardianDbDoc,
+                             callSheet: GuardianCallSheet) : MergeResult {
     // Merge
-
-    return <MergeResult> {
-      'messages':   ['Grd Test'],
+    let result = <MergeResult> {
+      'docId': dbDocIn._id,
+      'callSheetId': callSheet._id,
+      'messages':   ['Vet Test'],
       'updates': new Array<MergeProperty>(),
-      'conflicts': new Array<MergeProperty>()
+      'conflicts': new Array<MergeProperty>(),
     };
+
+    result = DataUtils.mergeGeneral(dbDocIn.general, dbDocRef.general, callSheet.data.general, result);
+    callSheet.data.general = result.dataOut;
+    dbDocRef.general = result.dataRef;
+
+    result.dataOut = callSheet;
+    result.dataRef = dbDocRef;
+    return result;
   }
 
-  static mergeName(nameIn:  Name,
-                   nameRef: Name,
-                   name:    Name,
-                   result:  MergeResult) : MergeResult {
-    result = DataUtils.mergeValue('first', 'name', nameIn.first, nameRef.first, name.first, result, true);
-    result = DataUtils.mergeValue('middle', 'name', nameIn.middle, nameRef.middle, name.middle, result, false);
-    result = DataUtils.mergeValue('last', 'name', nameIn.last, nameRef.last, name.last, result, true);
-    result = DataUtils.mergeValue('nickname', 'name', nameIn.nickname, nameRef.nickname, name.nickname, result, false);
 
+
+
+  static mergeGeneral(dataIn: General, dataRef: General, data: General, result: MergeResult) : MergeResult {
+    result = DataUtils.mergeName(dataIn.name, dataRef.name, data.name, result);
+    data.name = result.dataOut;
+    dataRef.name = result.dataRef;
+
+    result = DataUtils.mergeAddress(dataIn.address, dataRef.address, data.address, result);
+    data.address = result.dataOut;
+    dataRef.address = result.dataRef;
+
+
+    result.dataOut = data;
+    result.dataRef = dataRef;
+    return result;
+  }
+
+  static mergeName(nameIn: Name, nameRef: Name, name: Name, result: MergeResult) : MergeResult {
+    var props = ['first', 'middle', 'last', 'nickname'];
+
+    for (var p in props) {
+      var prop = props[p];
+      result = DataUtils.mergeValue(prop, 'name', nameIn[prop], nameRef[prop], name[prop], result, true);
+      name[prop] = result.dataOut;
+      nameRef[prop] = result.dataRef;
+    }
+
+    result.dataOut = name;
+    result.dataRef = nameRef;
+    return result;
+  }
+
+  static mergeAddress(addressIn: Address, addressRef: Address, address: Address, result: MergeResult) : MergeResult {
+    var props = ['street', 'city', 'county', 'state', 'zip', 'phone_day', 'phone_eve', 'phone_mbl', 'email'];
+
+    for (var p in props) {
+      var prop = props[p];
+      result = DataUtils.mergeValue(prop, 'address', addressIn[prop], addressRef[prop], address[prop], result, true);
+      address[prop] = result.dataOut;
+      addressRef[prop] = result.dataRef;
+    }
+
+    result.dataOut = address;
+    result.dataRef = addressRef;
     return result;
   }
 
@@ -80,12 +125,16 @@ export class DataUtils {
                     result: MergeResult,
                     force:  boolean) : MergeResult {
 
+    result.dataRef = valRef;
+    result.dataOut = val;
+
     if (valIn != valRef) {
+      result.dataRef = valIn;
       if(valRef != val) {
+        result.dataOut = (force ? valIn : val);
         let operation = (force 
           ? `For ${parent}, overrode existing value of ${name}: "${val}" which was originally "${valRef}" with "${valIn}"`
           : `For ${parent}, preserved existing value of ${name}: "${val}" which was originally "${valRef}" but was changed to "${valIn}"`);
-
         result.conflicts.push( <MergeProperty> {
           propertyName:  name,
           parentName:    parent,
@@ -95,11 +144,8 @@ export class DataUtils {
           resultValue:   (force ? valIn : val),
           formatString:  operation
         });
-        if (force) {
-          val = valIn;
-        }
-        valRef = valIn;
       } else {
+        result.dataOut = valIn;
         result.updates.push( <MergeProperty> {
           propertyName:  name,
           parentName:    parent,
@@ -109,8 +155,6 @@ export class DataUtils {
           resultValue:   valIn,
           formatString:  `For ${parent}, updated existing value of ${name}: "${val}" with "${valIn}"`
         });
-        val = valIn;
-        valRef = valIn;
       }
     }
 

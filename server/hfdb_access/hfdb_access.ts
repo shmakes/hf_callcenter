@@ -170,7 +170,10 @@ Meteor.methods({
           if (dbDoc._rev != fltDoc._rev) {
             let result = DataUtils.mergeVeteranDataIn(fltDoc, dbDoc, callSheet);
             if (result.updates.length > 0 || result.conflicts.length > 0) {
-              console.log(result);
+              VeteranDbDocs.update({_id: dbDoc._id}, result.dataRef);
+              VeteranCallSheets.update({_id: callSheet._id}, result.dataOut);
+
+              console.log(result.updates);
               console.log('UPDATED - Veteran: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
               vetUpdate++;
             }
@@ -187,7 +190,9 @@ Meteor.methods({
           if (dbDoc._rev != fltDoc._rev) {
             let result = DataUtils.mergeGuardianDataIn(fltDoc, dbDoc, callSheet);
             if (result.updates.length > 0 || result.conflicts.length > 0) {
-              console.log(result);
+              GuardianDbDocs.update({_id: dbDoc._id}, result.dataRef);
+              GuardianCallSheets.update({_id: callSheet._id}, result.dataOut);
+              console.log(result.updates);
               console.log('UPDATED - Guardian: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
               grdUpdate++;
             }
