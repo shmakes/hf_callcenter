@@ -39,6 +39,10 @@ export class DataUtils {
       'conflicts': new Array<MergeProperty>(),
     };
 
+    result = DataUtils.mergeValue('_rev', 'veteranData', dbDocIn._rev, dbDocRef._rev, callSheet.data._rev, result, true);
+    callSheet.data._rev = result.dataOut;
+    dbDocRef._rev = result.dataRef;
+
     result = DataUtils.mergeGeneral(dbDocIn.general, dbDocRef.general, callSheet.data.general, result);
     callSheet.data.general = result.dataOut;
     dbDocRef.general = result.dataRef;
@@ -60,6 +64,10 @@ export class DataUtils {
       'conflicts': new Array<MergeProperty>(),
     };
 
+    result = DataUtils.mergeValue('_rev', 'guardianData', dbDocIn._rev, dbDocRef._rev, callSheet.data._rev, result, true);
+    callSheet.data._rev = result.dataOut;
+    dbDocRef._rev = result.dataRef;
+
     result = DataUtils.mergeGeneral(dbDocIn.general, dbDocRef.general, callSheet.data.general, result);
     callSheet.data.general = result.dataOut;
     dbDocRef.general = result.dataRef;
@@ -72,6 +80,7 @@ export class DataUtils {
 
 
 
+  // *** Specific sub-objet Methods ***
   static mergeGeneral(dataIn: General, dataRef: General, data: General, result: MergeResult) : MergeResult {
     result = DataUtils.mergeName(dataIn.name, dataRef.name, data.name, result);
     data.name = result.dataOut;
@@ -81,6 +90,29 @@ export class DataUtils {
     data.address = result.dataOut;
     dataRef.address = result.dataRef;
 
+    result = DataUtils.mergeValue('size', 'shirt', dataIn.shirt.size, dataRef.shirt.size, data.shirt.size, result, true);
+    data.shirt.size = result.dataOut;
+    dataRef.shirt.size = result.dataRef;
+
+    ['app_date', 'birth_date', 'weight', 'gender'].map(function(prop) {
+      result = DataUtils.mergeValue(prop, 'general', dataIn[prop], dataRef[prop], data[prop], result, true);
+      data[prop] = result.dataOut;
+      dataRef[prop] = result.dataRef;
+    });
+
+    // Emergency Contact
+    // Call
+    // Apparel
+
+    //result = DataUtils.mergeMetadata(dataIn.metadata, dataRef.metadata, data.metadata, result);
+    //data.metadata = result.dataOut;
+    //dataRef.metadata = result.dataRef;
+
+    result = DataUtils.mergeValueObject('metadata', 
+      ['created_at', 'created_by', 'updated_at', 'updated_by'], 
+      dataIn.metadata, dataRef.metadata, data.metadata, result);
+    data.metadata = result.dataOut;
+    dataRef.metadata = result.dataRef;
 
     result.dataOut = data;
     result.dataRef = dataRef;
@@ -88,14 +120,11 @@ export class DataUtils {
   }
 
   static mergeName(nameIn: Name, nameRef: Name, name: Name, result: MergeResult) : MergeResult {
-    var props = ['first', 'middle', 'last', 'nickname'];
-
-    for (var p in props) {
-      var prop = props[p];
+    ['first', 'middle', 'last', 'nickname'].map(function(prop) {
       result = DataUtils.mergeValue(prop, 'name', nameIn[prop], nameRef[prop], name[prop], result, true);
       name[prop] = result.dataOut;
       nameRef[prop] = result.dataRef;
-    }
+    });
 
     result.dataOut = name;
     result.dataRef = nameRef;
@@ -103,17 +132,31 @@ export class DataUtils {
   }
 
   static mergeAddress(addressIn: Address, addressRef: Address, address: Address, result: MergeResult) : MergeResult {
-    var props = ['street', 'city', 'county', 'state', 'zip', 'phone_day', 'phone_eve', 'phone_mbl', 'email'];
-
-    for (var p in props) {
-      var prop = props[p];
+    ['street', 'city', 'county', 'state', 'zip', 'phone_day', 'phone_eve', 'phone_mbl', 'email'].map(function(prop) {
       result = DataUtils.mergeValue(prop, 'address', addressIn[prop], addressRef[prop], address[prop], result, true);
       address[prop] = result.dataOut;
       addressRef[prop] = result.dataRef;
-    }
+    });
 
     result.dataOut = address;
     result.dataRef = addressRef;
+    return result;
+  }
+
+
+
+
+
+  // *** General Methods ***
+  static mergeValueObject(parentName: string, valueNames: string[], dataIn: any, dataRef: any, dataOut: any, result: MergeResult) : MergeResult {
+    valueNames.map(function(prop) {
+      result = DataUtils.mergeValue(prop, parentName, dataIn[prop], dataRef[prop], dataOut[prop], result, true);
+      dataOut[prop] = result.dataOut;
+      dataRef[prop] = result.dataRef;
+    });
+
+    result.dataOut = dataOut;
+    result.dataRef = dataRef;
     return result;
   }
 

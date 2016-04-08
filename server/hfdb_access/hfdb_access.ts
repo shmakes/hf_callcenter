@@ -156,6 +156,7 @@ Meteor.methods({
     let updateList = JSON.parse(response.content);
     console.log('Docs from database: ' + updateList.results.length);
 
+    let forceUpdate = true;
     let vetEval = 0;
     let grdEval = 0;
     let vetUpdate = 0;
@@ -167,11 +168,17 @@ Meteor.methods({
         let dbDoc = VeteranDbDocs.findOne( { _id: fltDoc._id } );
         let callSheet = VeteranCallSheets.findOne( { 'data._id': fltDoc._id } );
         if (dbDoc && callSheet) {
-          if (dbDoc._rev != fltDoc._rev) {
+          if ((dbDoc._rev != fltDoc._rev) || forceUpdate) {
             let result = DataUtils.mergeVeteranDataIn(fltDoc, dbDoc, callSheet);
             if (result.updates.length > 0 || result.conflicts.length > 0) {
               VeteranDbDocs.update({_id: dbDoc._id}, result.dataRef);
               VeteranCallSheets.update({_id: callSheet._id}, result.dataOut);
+              CallPackets.update({veteranCallSheetId: callSheet._id}, {
+                $set: {
+                  veteranFirstName: callSheet.data.general.name.first,
+                  veteranLastName:  callSheet.data.general.name.last
+                }
+              });
 
               console.log(result.updates);
               console.log('UPDATED - Veteran: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
@@ -187,11 +194,18 @@ Meteor.methods({
         let dbDoc = GuardianDbDocs.findOne( { _id: fltDoc._id } );
         let callSheet = GuardianCallSheets.findOne( { 'data._id': fltDoc._id } );
         if (dbDoc && callSheet) {
-          if (dbDoc._rev != fltDoc._rev) {
+          if ((dbDoc._rev != fltDoc._rev) || forceUpdate) {
             let result = DataUtils.mergeGuardianDataIn(fltDoc, dbDoc, callSheet);
             if (result.updates.length > 0 || result.conflicts.length > 0) {
               GuardianDbDocs.update({_id: dbDoc._id}, result.dataRef);
               GuardianCallSheets.update({_id: callSheet._id}, result.dataOut);
+              CallPackets.update({guardianCallSheetId: callSheet._id}, {
+                $set: {
+                  guardianFirstName: callSheet.data.general.name.first,
+                  guardianLastName:  callSheet.data.general.name.last
+                }
+              });
+
               console.log(result.updates);
               console.log('UPDATED - Guardian: ' + dbDoc.general.name.first + ' ' + dbDoc.general.name.last);
               grdUpdate++;
